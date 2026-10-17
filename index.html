@@ -780,54 +780,6 @@ try {
   );
 }
 
-        /* MPANGILIO WA DASHBOARD NZIMA */
-body.dashboard-open > header,
-body.dashboard-open > footer {
-  display: none !important;
-}
-body.dashboard-open main {
-  width: 100%;
-  max-width: none;
-  min-height: 100vh;
-  margin: 0;
-  padding: 0;
-  display: block;
-}
-
-
-/* DASHBOARD IJAZE NAFASI YA MAIN */
-#loginCard {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-
-#loginCard:not(.hidden) {
-  max-width: 430px;
-}
-
-
-/* DASHBOARD KWENYE SIMU */
-@media (max-width: 500px) {
-  .sidebar {
-    width: 145px;
-    min-width: 145px;
-  }
-  .sidebar-brand {
-    padding: 18px 10px;
-    font-size: 20px;
-  }
-  .sidebar-menu {
-    padding: 12px 6px;
-  }
-  .sidebar-menu button {
-    padding: 12px 7px;
-    font-size: 11px;
-  }
-  .dashboard-content {
-    padding: 12px;
-  }}
-
       } catch (error) {
         console.error("DServices login error:", error);
 
