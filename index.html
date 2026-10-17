@@ -192,54 +192,6 @@
       display: none !important;
     }
 
-    /* MPANGILIO WA DASHBOARD NZIMA */
-body.dashboard-open > header,
-body.dashboard-open > footer {
-  display: none !important;
-}
-body.dashboard-open main {
-  width: 100%;
-  max-width: none;
-  min-height: 100vh;
-  margin: 0;
-  padding: 0;
-  display: block;
-}
-
-
-/* DASHBOARD IJAZE NAFASI YA MAIN */
-#loginCard {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-
-#loginCard:not(.hidden) {
-  max-width: 430px;
-}
-
-
-/* DASHBOARD KWENYE SIMU */
-@media (max-width: 500px) {
-  .sidebar {
-    width: 145px;
-    min-width: 145px;
-  }
-  .sidebar-brand {
-    padding: 18px 10px;
-    font-size: 20px;
-  }
-  .sidebar-menu {
-    padding: 12px 6px;
-  }
-  .sidebar-menu button {
-    padding: 12px 7px;
-    font-size: 11px;
-  }
-  .dashboard-content {
-    padding: 12px;
-  }
-}
 
 /* =====================================
    DSERVICES DASHBOARD
@@ -759,7 +711,74 @@ body.dashboard-open main {
         }
 
         loginCard.classList.add("hidden");
-        welcomeCard.classList.remove("hidden");
+welcomeCard.classList.remove("hidden");
+document.body.classList.add("dashboard-open");
+
+
+document.getElementById("dashboardUserRole").textContent =
+  String(user.role || "OWNER").toUpperCase();
+
+
+const dashboardMessage =
+  document.getElementById("dashboardMessage");
+
+
+showMessage(
+  dashboardMessage,
+  "Login imefanikiwa. Inapakia taarifa za dashboard...",
+  "info"
+);
+
+
+try {
+  const dashboardResult = await callAPI({
+    action: "getAdminDashboard",
+    token: sessionToken
+  });
+
+
+  if (dashboardResult && dashboardResult.success) {
+    const stats = dashboardResult.stats || {};
+
+
+    document.getElementById("statAccounts").textContent =
+      stats.accounts ?? 0;
+
+
+    document.getElementById("statUsers").textContent =
+      stats.users ?? 0;
+
+
+    document.getElementById("statServices").textContent =
+      stats.services ?? 0;
+
+
+    document.getElementById("statTeams").textContent =
+      stats.teams ?? 0;
+
+
+    showMessage(
+      dashboardMessage,
+      "Taarifa za dashboard zimepatikana.",
+      "success"
+    );
+  } else {
+    showMessage(
+      dashboardMessage,
+      dashboardResult && dashboardResult.message
+        ? dashboardResult.message
+        : "Imeshindwa kupata muhtasari.",
+      "error"
+    );
+  }
+} catch (dashboardError) {
+  console.error("Dashboard error:", dashboardError);
+  showMessage(
+    dashboardMessage,
+    "Muhtasari umeshindwa kupatikana. Jaribu tena.",
+    "error"
+  );
+}
 
         /* MPANGILIO WA DASHBOARD NZIMA */
 body.dashboard-open > header,
