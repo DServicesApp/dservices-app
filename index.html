@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#4b5320">
+
+
   <title>DServices</title>
 
 
@@ -35,7 +37,9 @@
     }
 
 
-    button, select, input {
+    button,
+    select,
+    input {
       font: inherit;
     }
 
@@ -46,7 +50,7 @@
 
 
     button:disabled {
-      opacity: .6;
+      opacity: 0.6;
       cursor: wait;
     }
 
@@ -56,7 +60,9 @@
     }
 
 
-    /* LOGIN */
+    /* =========================
+       LOGIN
+    ========================= */
 
 
     #loginScreen {
@@ -216,7 +222,9 @@
     }
 
 
-    /* UJUMBE */
+    /* =========================
+       UJUMBE
+    ========================= */
 
 
     .message {
@@ -253,34 +261,36 @@
     }
 
 
-    /* DASHBOARD */
-
-
-    #appScreen {
-      min-height: 100vh;
-    }
+    /* =========================
+       MSTARI WA JUU WA DSERVICES
+    ========================= */
 
 
     .topbar {
-      min-height: 72px;
+      min-height: 64px;
+      width: 100%;
       background: var(--green);
       color: white;
       border-bottom: 4px solid var(--orange);
-      padding: 10px 16px;
+      padding: 8px 14px;
       display: flex;
       align-items: center;
-      gap: 15px;
-      flex-wrap: wrap;
+      gap: 12px;
+      flex-wrap: nowrap;
     }
 
 
     .brand-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
       background: transparent;
       color: white;
       border: 0;
       font-weight: bold;
-      font-size: 21px;
-      padding: 8px 0;
+      font-size: 20px;
+      padding: 7px 0;
       white-space: nowrap;
     }
 
@@ -290,25 +300,27 @@
     }
 
 
-    .top-control {
-      display: flex;
-      align-items: center;
-      gap: 6px;
+    .menu-icon {
+      font-size: 22px;
+      line-height: 1;
     }
 
 
-    .top-control label {
-      font-size: 11px;
-      color: #f2f2f2;
+    .top-control {
+      display: flex;
+      align-items: center;
+      flex-shrink: 1;
+      min-width: 0;
     }
 
 
     .top-select {
-      max-width: 180px;
+      width: auto;
+      max-width: 190px;
       min-width: 100px;
-      padding: 9px 8px;
-      border-radius: 6px;
-      border: 1px solid #ffffff55;
+      padding: 9px 25px 9px 9px;
+      border-radius: 5px;
+      border: 1px solid #ffffff66;
       background: white;
       color: var(--green);
       font-size: 12px;
@@ -316,8 +328,15 @@
     }
 
 
+    .top-divider {
+      color: white;
+      opacity: 0.7;
+    }
+
+
     .top-spacer {
       flex: 1;
+      min-width: 4px;
     }
 
 
@@ -325,8 +344,9 @@
       display: flex;
       align-items: center;
       gap: 6px;
+      flex-shrink: 0;
       white-space: nowrap;
-      font-size: 11px;
+      font-size: 12px;
     }
 
 
@@ -348,19 +368,21 @@
       text-align: right;
       line-height: 1.5;
       white-space: nowrap;
+      flex-shrink: 0;
       font-size: 11px;
     }
 
 
     .icon-button {
       position: relative;
-      width: 38px;
-      height: 38px;
+      width: 35px;
+      height: 35px;
+      flex-shrink: 0;
       border: 1px solid #ffffff45;
       border-radius: 50%;
       background: transparent;
       color: white;
-      font-size: 18px;
+      font-size: 17px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -376,7 +398,7 @@
       background: var(--orange);
       border: 2px solid white;
       color: white;
-      font-size: 17px;
+      font-size: 16px;
       font-weight: bold;
     }
 
@@ -392,7 +414,14 @@
     }
 
 
-    /* ENEO KUU */
+    /* =========================
+       DASHBOARD
+    ========================= */
+
+
+    #appScreen {
+      min-height: 100vh;
+    }
 
 
     .main-content {
@@ -519,7 +548,11 @@
     }
 
 
-    /* PAZIA LA MENYU */
+    /* =========================
+       PAZIA LA MENYU
+    ========================= */
+
+
     .drawer-backdrop {
       position: fixed;
       inset: 0;
@@ -527,12 +560,16 @@
       background: #00000060;
       opacity: 0;
       visibility: hidden;
-      transition: opacity .2s ease, visibility .2s ease;
+      transition: opacity 0.2s ease, visibility 0.2s ease;
     }
+
+
     .drawer-backdrop.open {
       opacity: 1;
       visibility: visible;
     }
+
+
     .drawer {
       position: fixed;
       z-index: 1001;
@@ -543,13 +580,17 @@
       background: white;
       box-shadow: 5px 0 22px #00000020;
       transform: translateX(-105%);
-      transition: transform .25s ease;
+      transition: transform 0.25s ease;
       display: flex;
       flex-direction: column;
     }
+
+
     .drawer.open {
       transform: translateX(0);
     }
+
+
     .drawer-header {
       padding: 19px;
       background: var(--green);
@@ -560,6 +601,8 @@
       justify-content: space-between;
       gap: 10px;
     }
+
+
     .drawer-header h2 {
       margin: 0;
       font-size: 21px;
@@ -573,6 +616,8 @@
       font-size: 27px;
       padding: 0 5px;
     }
+
+
     .drawer-caption {
       padding: 16px 17px 8px;
       font-size: 11px;
@@ -622,7 +667,9 @@
     }
 
 
-    /* PANELI ZA ARIFA NA WASIFU */
+    /* =========================
+       PANELI ZA ARIFA NA WASIFU
+    ========================= */
 
 
     .floating-panel {
@@ -688,6 +735,11 @@
     }
 
 
+    /* =========================
+       TABLETI NA LAPTOP NDOGO
+    ========================= */
+
+
     @media (max-width: 1050px) {
       .topbar {
         gap: 10px;
@@ -705,10 +757,16 @@
     }
 
 
+    /* =========================
+       SIMU
+    ========================= */
+
+
     @media (max-width: 650px) {
       .topbar {
         padding: 10px;
         gap: 9px;
+        flex-wrap: wrap;
       }
 
 
@@ -731,7 +789,13 @@
 
       .top-select {
         width: 100%;
+        min-width: 0;
         max-width: none;
+      }
+
+
+      .top-divider {
+        display: none;
       }
 
 
@@ -748,6 +812,12 @@
       .date-time {
         flex: 1 1 auto;
         text-align: left;
+      }
+
+
+      .icon-button {
+        width: 32px;
+        height: 32px;
       }
 
 
@@ -788,16 +858,19 @@
       }
     }
 
-
+    /* =========================
+       SIMU NDOGO SANA
+    ========================= */
     @media (max-width: 360px) {
       .stats-grid {
         grid-template-columns: 1fr;
       }
+      .brand-button {
+        font-size: 17px;
+      }
     }
   </style>
 </head>
-
-
 <body>
 
 
@@ -810,12 +883,10 @@
       </div>
     </header>
 
-
     <main class="login-area">
       <section class="login-card">
-        <h2>INGIA KWENYE MFUMO</h2>
-        <p class="intro">Usimamizi wa huduma mbalimbali.</p>
-
+        <h2>App</h2>
+        <p class="intro">Usimamizi wa huduma.</p>
 
         <form id="loginForm">
           <div class="field">
@@ -830,7 +901,6 @@
             >
           </div>
 
-
           <div class="field">
             <label for="password">PASSWORD</label>
             <input
@@ -842,7 +912,6 @@
               required
             >
           </div>
-
 
           <div class="login-actions">
             <button class="btn btn-primary" id="loginButton" type="submit">
@@ -856,19 +925,17 @@
 
 
             <button class="btn" id="clearButton" type="button">
-              FUTA TAARIFA
+              RUDI
             </button>
           </div>
         </form>
-
-
         <div id="loginMessage" class="message" role="status"></div>
       </section>
     </main>
 
 
     <footer class="login-footer">
-      DServices — Huduma bora kwa ustawi wa jamii
+      Huduma bora, Ustawi wetu
     </footer>
   </section>
 
@@ -877,111 +944,86 @@
 
   <!-- MFUMO BAADA YA LOGIN -->
   <section id="appScreen" class="hidden">
-
-
     <header class="topbar">
+  <button
+    type="button"
+    class="brand-button"
+    id="brandButton"
+    aria-label="Fungua menyu"
+    title="Fungua menyu"
+  >
+    <span class="menu-icon">☰</span>
+    <span>DServices</span>
+  </button>
 
 
-      <button
-        type="button"
-        class="brand-button"
-        id="brandButton"
-        aria-label="Fungua menyu"
-      >
-        DServices
-      </button>
-
-
-      <div class="top-control">
-        <label for="serviceSelect">HUDUMA</label>
-        <select id="serviceSelect" class="top-select">
-          <option value="">Chagua huduma</option>
-        </select>
-      </div>
-
-
-      <div class="top-control">
-        <label for="moduleSelect">KIPENGELE</label>
-        <select id="moduleSelect" class="top-select" disabled>
-          <option value="">Chagua kipengele</option>
-        </select>
-      </div>
-
-
-      <div class="top-spacer"></div>
-
-
-      <div class="connection">
-        <span id="statusDot" class="status-dot"></span>
-        <span id="networkLabel">Online</span>
-      </div>
-
-
-      <div class="date-time">
-        <div id="clock">00:00:00</div>
-        <div id="dateLabel">Siku, tarehe</div>
-      </div>
-
-
-      <button
-        type="button"
-        class="icon-button"
-        id="notificationButton"
-        aria-label="Notifications"
-        title="Notifications"
-      >
-        ♧
-        <span class="notification-dot"></span>
-      </button>
-
-
-      <button
-        type="button"
-        class="icon-button avatar"
-        id="avatarButton"
-        aria-label="Wasifu"
-        title="Wasifu wa mtumiaji"
-      >
-        ?
-      </button>
-
-
-    </header>
-
-
+  <div class="top-control">
+    <select id="serviceSelect" class="top-select"
+            aria-label="Huduma">
+      <option value="">HUDUMA</option>
+    </select>
+  </div>
+  <span class="top-divider">|</span>
+  <div class="top-control">
+    <select id="moduleSelect" class="top-select"
+            aria-label="Kipengele" disabled>
+      <option value="">KIPENGELE</option>
+    </select>
+  </div>
+  <div class="top-spacer"></div>
+  <div class="connection">
+    <span id="statusDot" class="status-dot"></span>
+    <span id="networkLabel">Online</span>
+  </div>
+  <div class="date-time">
+    <div id="clock">00:00</div>
+    <div id="dateLabel">Siku, tarehe</div>
+  </div>
+  <button
+    type="button"
+    class="icon-button"
+    id="notificationButton"
+    aria-label="Taarifa"
+    title="Taarifa"
+  >
+    🔔
+    <span class="notification-dot"></span>
+  </button>
+  <button
+    type="button"
+    class="icon-button avatar"
+    id="avatarButton"
+    aria-label="Wasifu"
+    title="Wasifu wa mtumiaji"
+  >
+    ?
+  </button>
+</header>
 
 
     <!-- ENEO LA DASHBOARD -->
     <main class="main-content">
 
-
       <section id="welcomePanel" class="welcome-panel">
         <div class="welcome-icon">☰</div>
         <h2>Chagua huduma ili kuendelea</h2>
         <p>
-          Chagua huduma kwenye sehemu ya HUDUMA iliyo juu
-          ili kuanza kutumia DServices.
+          Chagua huduma kwenye sehemu ya HUDUMA.
         </p>
       </section>
 
 
       <!-- DASHBOARD YA ALL -->
       <section id="adminDashboard" class="hidden">
-
-
         <div class="page-heading">
           <h2>DASHBOARD YA DSERVICES</h2>
           <p>Muhtasari wa usimamizi wa mfumo mzima.</p>
         </div>
-
-
         <div class="stats-grid">
           <article class="stat-card">
             <h3>TAASISI / ACCOUNTS</h3>
             <div class="stat-number" id="statAccounts">—</div>
           </article>
-
-
           <article class="stat-card">
             <h3>WATUMIAJI</h3>
             <div class="stat-number" id="statUsers">—</div>
@@ -992,8 +1034,6 @@
             <h3>HUDUMA ZA MFUMO</h3>
             <div class="stat-number" id="statServices">—</div>
           </article>
-
-
           <article class="stat-card">
             <h3>TIMU</h3>
             <div class="stat-number" id="statTeams">—</div>
@@ -1172,23 +1212,21 @@
 
     const $ = id => document.getElementById(id);
 
-
     let sessionToken = null;
     let currentUser = null;
     let selectedService = "";
     let selectedModule = "";
     let adminStatsLoaded = false;
 
-
     const allServices = [
       "ELIMU",
-      "BIASHARA",
       "SHAMBA",
+      "BIASHARA",
+      "USAIDIZI",
+      "SALUNI",
       "MATUKIO",
-      "MIAMALA",
-      "USAIDIZI"
+      "MIKOPO & AKIBA"
     ];
-
 
     const serviceModules = {
       "ELIMU": [
@@ -1199,6 +1237,10 @@
         "EXAMS RESULT"
       ],
 
+      "SHAMBA": [
+        "MAZAO",
+        "MIFUGO"
+      ],
 
       "BIASHARA": [
         "MANUNUZI",
@@ -1208,41 +1250,32 @@
         "TAARIFA"
       ],
 
+      "USAIDIZI": [
+        "HUDUMA",
+        "ODA",
+        "TAARIFA"
+      ],
 
-      "SHAMBA": [
-        "WATUMISHI",
-        "GHALA / STOO",
-        "MATUMIZI",
-        "MAVUNO",
-        "MAUZO",
+      "SALUNI": [
+        "USUSI & MAPAMBO",
+        "TAARIFA",
         "HISTORIA"
       ],
 
 
       "MATUKIO": [
-        "MATUKIO",
-        "MAJUKUMU",
-        "MAHUDHURIO",
+        "SHEREHE",
+        "VIKAO",
+        "MIKUTANO",
         "TAARIFA"
       ],
 
-
-      "MIAMALA": [
-        "MIAMALA",
-        "MAPATO",
-        "MATUMIZI",
-        "TAARIFA"
-      ],
-
-
-      "USAIDIZI": [
-        "MAOMBI",
-        "HUDUMA ZA USAIDIZI",
+      "MIKOPO & AKIBA": [
+        "VIKOBA",
+        "HISA",
         "TAARIFA"
       ]
     };
-
-
 
 
     const adminMenu = [
@@ -1265,12 +1298,22 @@
         "WANAFUNZI",
         "WATUMISHI",
         "MAHUDHURIO",
+        "MITIHANI & MATOKEO",
         "MALIPO",
         "MATUMIZI",
-        "MADENI",
+        "HALI YA MICHANGO",
         "TAARIFA"
       ],
 
+      
+      "SHAMBA": [
+        "DASHBOARD",
+        "WATUMISHI",
+        "GHALA / STOO/ MAVUNO",
+        "MATUMIZI",
+        "MAUZO",
+        "HISTORIA"
+      ],
 
       "BIASHARA": [
         "DASHBOARD",
@@ -1282,16 +1325,26 @@
       ],
 
 
-      "SHAMBA": [
+      "USAIDIZI": [
         "DASHBOARD",
-        "WATUMISHI",
-        "GHALA / STOO",
+        "MAJUKUM",
+        "MALIPO",
         "MATUMIZI",
-        "MAVUNO",
-        "MAUZO",
+        "TAARIFA",
         "HISTORIA"
       ],
 
+      
+      "SALUNI": [
+        "DASHBOARD",
+        "WATUMISHI",
+        "MANUNUZI",
+        "MATUMIZI",
+        "MALIPO",
+        "STOO",
+        "TAARIFA",
+        "HISTORIA"
+      ],
 
       "MATUKIO": [
         "DASHBOARD",
@@ -1301,30 +1354,18 @@
         "TAARIFA"
       ],
 
-
-      "MIAMALA": [
+      "MIKOPO & AKIBA": [
         "DASHBOARD",
-        "MIAMALA",
-        "MAPATO",
-        "MATUMIZI",
-        "TAARIFA"
-      ],
-
-
-      "USAIDIZI": [
-        "DASHBOARD",
-        "MAOMBI",
-        "HUDUMA ZA USAIDIZI",
+        "WANACHAMA & UONGOZI",
+        "AKIBA",
+        "MIKOPO",
+        "HISTORIA",
         "TAARIFA"
       ]
     };
 
 
-
-
     /* API */
-
-
     async function callAPI(payload) {
       const response = await fetch(API_URL, {
         method: "POST",
@@ -1339,13 +1380,8 @@
       if (!response.ok) {
         throw new Error("Server imeshindwa kupokea ombi.");
       }
-
-
       return await response.json();
     }
-
-
-
 
     function showMessage(element, message, type = "info") {
       element.textContent = message;
@@ -1360,15 +1396,10 @@
       element.className = "message";
     }
 
-
-
-
     function isOwner() {
       const role = String(currentUser?.role || "")
         .trim()
         .toUpperCase();
-
-
       return [
         "OWNER",
         "SUPER ADMIN",
@@ -1424,15 +1455,11 @@
 
 
     /* LOGIN */
-
-
     $("loginForm").addEventListener("submit", async event => {
       event.preventDefault();
 
-
       const username = $("username").value.trim();
       const password = $("password").value;
-
 
       if (!username || !password) {
         showMessage(
@@ -1443,7 +1470,6 @@
         return;
       }
 
-
       if (!navigator.onLine) {
         showMessage(
           $("loginMessage"),
@@ -1453,10 +1479,8 @@
         return;
       }
 
-
       $("loginButton").disabled = true;
       $("loginButton").textContent = "INAINGIA...";
-
 
       showMessage(
         $("loginMessage"),
@@ -1464,14 +1488,12 @@
         "info"
       );
 
-
       try {
         const result = await callAPI({
           action: "login",
           username,
           password
         });
-
 
         if (!result || result.success !== true) {
           showMessage(
@@ -1482,7 +1504,6 @@
           return;
         }
 
-
         if (!result.token || !result.user) {
           showMessage(
             $("loginMessage"),
@@ -1492,13 +1513,10 @@
           return;
         }
 
-
         sessionToken = result.token;
         currentUser = result.user;
 
-
         $("password").value = "";
-
 
         openApplication();
 
@@ -1506,20 +1524,17 @@
       } catch (error) {
         console.error("DServices login error:", error);
 
-
         showMessage(
           $("loginMessage"),
           "Imeshindikana kuwasiliana na mfumo. Kagua mtandao kisha ujaribu tena.",
           "error"
         );
 
-
       } finally {
         $("loginButton").disabled = false;
         $("loginButton").textContent = "INGIA";
       }
     });
-
 
 
 
@@ -1535,7 +1550,6 @@
         currentUser.username ||
         $("username").value.trim();
 
-
       const username =
         currentUser.username ||
         $("username").value.trim();
@@ -1543,7 +1557,6 @@
 
       $("avatarButton").textContent =
         String(fullName).trim().charAt(0).toUpperCase() || "?";
-
 
       $("profileName").textContent = fullName;
       $("profileUsername").textContent = username;
@@ -1558,8 +1571,6 @@
         Eneo kuu linaonyesha ujumbe wa kuchagua huduma.
       */
       showWelcome();
-
-
       updateNetwork();
       updateClock();
       setInterval(updateClock, 1000);
@@ -1569,19 +1580,13 @@
 
 
     /* HUDUMA */
-
-
     function populateServiceOptions() {
       const select = $("serviceSelect");
       select.replaceChildren();
-
-
       const placeholder = document.createElement("option");
       placeholder.value = "";
       placeholder.textContent = "Chagua huduma";
       select.appendChild(placeholder);
-
-
       getAuthorizedServices().forEach(service => {
         const option = document.createElement("option");
         option.value = service;
@@ -1635,73 +1640,35 @@
 
 
       populateModules();
-
-
       if (selectedService === "ALL") {
         await showAdminDashboard();
       } else {
         showServiceDashboard();
       }
-
-
       buildDrawerMenu();
-    });
 
-
-
-
-    function populateModules() {
-      const select = $("moduleSelect");
-      select.replaceChildren();
-
-
-      const placeholder = document.createElement("option");
-      placeholder.value = "";
-      placeholder.textContent = "ALL — Vipengele";
-      select.appendChild(placeholder);
-
-
-      const modules = serviceModules[selectedService] || [];
-
-
-      modules.forEach(module => {
-        const option = document.createElement("option");
-        option.value = module;
-        option.textContent = module;
-        select.appendChild(option);
-      });
-
-
-      select.disabled = selectedService === "ALL";
-    }
-
-
-
-
-    $("moduleSelect").addEventListener("change", () => {
-      selectedModule = $("moduleSelect").value;
-
-
-      if (selectedService === "ALL") {
-        return;
-      }
-
-
-      if (!selectedService) {
-        showWelcome();
-        return;
-      }
-
-
-      showServiceDashboard();
-    });
-
+ function populateModules() {
+  const select = $("moduleSelect");
+  select.replaceChildren();
+  const allOption = document.createElement("option");
+  allOption.value = "ALL";
+  allOption.textContent = "ALL";
+  select.appendChild(allOption);
+  const modules = serviceModules[selectedService] || [];
+  modules.forEach(module => {
+    const option = document.createElement("option");
+    option.value = module;
+    option.textContent = module;
+    select.appendChild(option);
+  });
+  select.disabled = false;
+  select.value = "ALL";
+  selectedModule = "ALL";
+}
 
 
 
     /* DASHBOARD YA MWANZO */
-
-
     function showWelcome() {
       $("welcomePanel").classList.remove("hidden");
       $("adminDashboard").classList.add("hidden");
@@ -1712,8 +1679,6 @@
 
 
     /* DASHBOARD YA MSIMAMIZI */
-
-
     async function showAdminDashboard() {
       $("welcomePanel").classList.add("hidden");
       $("serviceDashboard").classList.add("hidden");
@@ -1782,8 +1747,6 @@
 
 
     /* DASHBOARD YA HUDUMA */
-
-
     function showServiceDashboard() {
       $("welcomePanel").classList.add("hidden");
       $("adminDashboard").classList.add("hidden");
@@ -1817,45 +1780,28 @@
 
 
     /* PAZIA LA MENYU */
-
-
     function openDrawer() {
       buildDrawerMenu();
 
 
       $("menuDrawer").classList.add("open");
       $("drawerBackdrop").classList.add("open");
-
-
       document.body.style.overflow = "hidden";
     }
-
-
-
 
     function closeDrawer() {
       $("menuDrawer").classList.remove("open");
       $("drawerBackdrop").classList.remove("open");
-
-
       document.body.style.overflow = "";
     }
-
-
-
 
     $("brandButton").addEventListener("click", openDrawer);
     $("closeDrawer").addEventListener("click", closeDrawer);
     $("drawerBackdrop").addEventListener("click", closeDrawer);
 
-
-
-
     function buildDrawerMenu() {
       const menu = $("drawerMenu");
       menu.replaceChildren();
-
-
       let items = [];
 
 
@@ -1941,7 +1887,6 @@
         $("adminDashboard").classList.remove("hidden");
         $("serviceDashboard").classList.add("hidden");
 
-
         const headings = {
           accounts: "TAASISI / ACCOUNTS",
           users: "WATUMIAJI",
@@ -1951,33 +1896,25 @@
           settings: "MIPANGILIO YA MFUMO",
           audit: "UKAGUZI WA MFUMO"
         };
-
-
         const heading = headings[item.page] || item.label;
 
-
-        $("adminDashboard").querySelector(".page-heading h2")
-          .textContent = heading;
-
-
-        $("adminDashboard").querySelector(".page-heading p")
-          .textContent =
-            "Sehemu ya " + heading +
-            " imechaguliwa. Uunganishaji wa taarifa zake utafuata.";
-
-
+        $("adminDashboard")
+  .querySelector(".stats-grid")
+  .classList.remove("hidden");
+$("adminDashboard")
+  .querySelector(".page-heading h2")
+  .textContent = "DASHBOARD YA DSERVICES";
+$("adminDashboard")
+  .querySelector(".page-heading p")
+  .textContent = "Muhtasari wa usimamizi wa mfumo mzima.";
         $("adminDashboard").querySelector(".stats-grid")
           .classList.add("hidden");
-
-
         showMessage(
           $("adminMessage"),
           "Umefungua " + heading +
           ". Data na vitendo vya sehemu hii vinahitaji kuunganishwa na API yake.",
           "info"
         );
-
-
         return;
       }
 
@@ -1992,8 +1929,6 @@
 
 
         selectedModule = item.label;
-
-
         const available = Array.from($("moduleSelect").options)
           .some(option => option.value === selectedModule);
 
@@ -2007,8 +1942,6 @@
           $("moduleSelect").appendChild(option);
           $("moduleSelect").value = selectedModule;
         }
-
-
         showServiceDashboard();
       }
     }
@@ -2017,8 +1950,6 @@
 
 
     /* NOTIFICATIONS */
-
-
     $("notificationButton").addEventListener("click", () => {
       $("profilePanel").classList.add("hidden");
       $("notificationPanel").classList.toggle("hidden");
@@ -2028,8 +1959,6 @@
 
 
     /* PROFILE */
-
-
     $("avatarButton").addEventListener("click", () => {
       $("notificationPanel").classList.add("hidden");
       $("profilePanel").classList.toggle("hidden");
@@ -2088,8 +2017,6 @@
 
 
     /* ONLINE / OFFLINE */
-
-
     function updateNetwork() {
       const online = navigator.onLine;
       $("networkLabel").textContent =
@@ -2110,8 +2037,6 @@
 
 
     /* FEEDBACK */
-
-
     $("feedbackButton").addEventListener("click", () => {
       const message = encodeURIComponent(
         "Habari DServices, nina maoni kuhusu mfumo."
