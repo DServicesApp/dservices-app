@@ -1,0 +1,12 @@
+{
+  "name": "DServices",
+  "short_name": "DServices",
+  "description": "Mfumo wa usimamizi wa huduma mbalimbali",
+  "lang": "sw",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f4f6f8",
+  "theme_color": "#4b5320"
+}
