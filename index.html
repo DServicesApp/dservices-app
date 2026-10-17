@@ -135,5 +135,38 @@
     window.addEventListener("online", checkConnection);
     window.addEventListener("offline", checkConnection);
   </script>
+  <script>
+const API_URL = "WEKA_URL_YAKO_HAPA";
+
+
+document.getElementById("apiTestButton").addEventListener("click", async function () {
+  const result = document.getElementById("apiTestResult");
+
+
+  result.textContent = "Inajaribu kuunganisha...";
+
+
+  try {
+    const response = await fetch(API_URL + "?action=test", {
+      method: "GET",
+      redirect: "follow"
+    });
+
+
+    const data = await response.json();
+
+
+    if (data.success === true) {
+      result.textContent = "Imefanikiwa: " + data.message;
+    } else {
+      result.textContent = "API haijakubali ombi.";
+    }
+  } catch (error) {
+    result.textContent =
+      "Muunganisho umeshindwa. Kagua URL, ruhusa na mawasiliano ya mtandao.";
+  }
+});
+</script>
+
 </body>
 </html>
