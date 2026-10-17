@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#4b5320">
+
+  <title>DServices</title>
+
+  <style>
+    :root {
+      --green: #4b5320;
+      --orange: #f28c28;
+      --background: #f4f6f8;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: var(--background);
+      color: #222;
+    }
+
+    header {
+      background: var(--green);
+      color: white;
+      padding: 20px;
+      border-bottom: 4px solid var(--orange);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 25px;
+    }
+
+    main {
+      max-width: 700px;
+      margin: 35px auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px #00000012;
+    }
+
+    h2 {
+      color: var(--green);
+    }
+
+    .status {
+      padding: 12px;
+      border-radius: 8px;
+      background: #eef4e8;
+      margin-top: 20px;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 18px;
+      background: var(--green);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #666;
+      font-size: 13px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>DServices</h1>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>Karibu DServices</h2>
+
+      <p>
+        Mfumo wa usimamizi wa huduma mbalimbali.
+      </p>
+
+      <div class="status" id="networkStatus">
+        Inakagua hali ya mtandao...
+      </div>
+
+      <button onclick="checkConnection()">
+        Kagua Mtandao
+      </button>
+    </section>
+  </main>
+
+  <footer>
+    DServices — Huduma bora kwa ustawi wa jamii
+  </footer>
+
+  <script>
+    function checkConnection() {
+      const status = document.getElementById("networkStatus");
+
+      if (navigator.onLine) {
+        status.textContent =
+          "Mtandao upo. DServices imefunguka.";
+      } else {
+        status.textContent =
+          "Hakuna mtandao. Huu bado ni ukurasa wa majaribio.";
+      }
+    }
+
+    checkConnection();
+
+    window.addEventListener("online", checkConnection);
+    window.addEventListener("offline", checkConnection);
+  </script>
+</body>
+</html>
