@@ -6,9 +6,7 @@
   <meta name="theme-color" content="#4b5320">
   <link rel="manifest" href="./manifest.json">
 
-
   <title>DServices | Login</title>
-
 
   <style>
     :root {
@@ -27,8 +25,6 @@
     * {
       box-sizing: border-box;
     }
-
-
     body {
       margin: 0;
       min-height: 100vh;
@@ -38,8 +34,6 @@
       display: flex;
       flex-direction: column;
     }
-
-
     header {
       background: var(--green);
       color: var(--white);
@@ -47,40 +41,28 @@
       border-bottom: 4px solid var(--orange);
       text-align: center;
     }
-
-
     header h1 {
       margin: 0;
       font-size: 28px;
       letter-spacing: 0.4px;
     }
-
-
     .header-lines {
       display: flex;
       justify-content: center;
       gap: 5px;
       margin-top: 10px;
     }
-
-
     .header-lines span {
       width: 48px;
       height: 3px;
       border-radius: 3px;
     }
-
-
     .line-green {
       background: #ffffff;
     }
-
-
     .line-orange {
       background: var(--orange);
     }
-
-
     main {
       width: 100%;
       max-width: 430px;
@@ -91,8 +73,6 @@
       align-items: center;
       justify-content: center;
     }
-
-
     .card {
       width: 100%;
       background: var(--white);
@@ -101,16 +81,12 @@
       box-shadow: 0 3px 15px #0000000d;
       border: 1px solid #e9ece6;
     }
-
-
     .card h2 {
       color: var(--green);
       text-align: center;
       margin: 0 0 8px;
       font-size: 22px;
     }
-
-
     .subtitle {
       text-align: center;
       color: var(--muted);
@@ -118,13 +94,9 @@
       margin: 0 0 27px;
       line-height: 1.5;
     }
-
-
     .field {
       margin-bottom: 18px;
     }
-
-
     label {
       display: block;
       font-weight: bold;
@@ -132,8 +104,6 @@
       color: var(--green);
       margin-bottom: 8px;
     }
-
-
     input {
       width: 100%;
       padding: 13px 12px;
@@ -262,14 +232,9 @@
     }
   </style>
 </head>
-
-
 <body>
-
-
   <header>
     <h1>DServices</h1>
-
 
     <div class="header-lines">
       <span class="line-green"></span>
@@ -277,16 +242,12 @@
     </div>
   </header>
 
-
   <main>
-
 
     <!-- LOGIN -->
     <section class="card" id="loginCard">
 
-
-      <h2>INGIA KWENYE MFUMO</h2>
-
+      <h2>MFUMO</h2>
 
       <p class="subtitle">
         Usimamizi wa huduma mbalimbali.
@@ -355,7 +316,6 @@
         TOKA
       </button>
 
-
       <div
         id="loginMessage"
         class="message"
@@ -372,18 +332,14 @@
     <!-- BAADA YA LOGIN -->
     <section class="card hidden" id="welcomeCard">
 
-
       <h2>KARIBU DSERVICES</h2>
-
-
+      
       <p class="subtitle">
         Umeingia kwenye mfumo.
       </p>
 
 
       <div class="user-details" id="userDetails"></div>
-
-
       <div
         id="welcomeMessage"
         class="message"
@@ -399,13 +355,8 @@
       >
         TOKA KWENYE MFUMO
       </button>
-
-
     </section>
-
-
   </main>
-
 
   <footer>
     Huduma bora huleta ustawi
@@ -424,7 +375,6 @@
     const API_URL =
       "https://script.google.com/macros/s/AKfycbwrqIq6RG_9-9hyU3AhDii8xpn1ctVy8VNaYFyMplqRV0c8LtaSJ8hqZ1Ap4IwP8Fsv/exec";
 
-
     const loginForm = document.getElementById("loginForm");
     const loginButton = document.getElementById("loginButton");
     const loginMessage = document.getElementById("loginMessage");
@@ -434,15 +384,12 @@
     const welcomeMessage = document.getElementById("welcomeMessage");
     const networkStatus = document.getElementById("networkStatus");
 
-
     let sessionToken = null;
-
 
     function showMessage(element, message, type) {
       element.textContent = message;
       element.className = "message show " + type;
     }
-
 
     function updateNetworkStatus() {
       networkStatus.textContent = navigator.onLine
@@ -450,14 +397,10 @@
         : "Mtandao: Haupo";
     }
 
-
     window.addEventListener("online", updateNetworkStatus);
     window.addEventListener("offline", updateNetworkStatus);
 
-
     updateNetworkStatus();
-
-
 
 
     /*
@@ -622,18 +565,13 @@
       const row = document.createElement("div");
       const heading = document.createElement("strong");
 
-
       heading.textContent = label + ": ";
       row.appendChild(heading);
       row.appendChild(
         document.createTextNode(String(value || "-"))
       );
-
-
       userDetails.appendChild(row);
     }
-
-
 
 
     // TOKA KWENYE UKURASA
@@ -641,16 +579,12 @@
       .addEventListener("click", function() {
         document.getElementById("username").value = "";
         document.getElementById("password").value = "";
-
-
         showMessage(
           loginMessage,
           "Umefuta taarifa ulizoingiza.",
           "info"
         );
       });
-
-
 
 
     // MAONI
@@ -668,21 +602,15 @@
         );
       });
 
-
-
-
     // KUTOKA KWENYE SESSION
     document.getElementById("logoutButton")
       .addEventListener("click", async function() {
         const token = sessionToken;
 
-
         sessionToken = null;
-
 
         welcomeCard.classList.add("hidden");
         loginCard.classList.remove("hidden");
-
 
         document.getElementById("username").value = "";
         document.getElementById("password").value = "";
@@ -712,8 +640,6 @@
           }
         }
       });
-
-
   </script>
 
 
