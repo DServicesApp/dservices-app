@@ -4,169 +4,718 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#4b5320">
-<link rel="manifest" href="./manifest.json">
-  <title>DServices</title>
+  <link rel="manifest" href="./manifest.json">
+
+
+  <title>DServices | Login</title>
+
 
   <style>
     :root {
       --green: #4b5320;
       --orange: #f28c28;
       --background: #f4f6f8;
+      --white: #ffffff;
+      --text: #252525;
+      --muted: #666666;
+      --border: #d9ded4;
+      --success: #e7f5e9;
+      --error: #fdebea;
     }
+
 
     * {
       box-sizing: border-box;
     }
 
+
     body {
       margin: 0;
+      min-height: 100vh;
       font-family: Arial, sans-serif;
       background: var(--background);
-      color: #222;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
     }
+
 
     header {
       background: var(--green);
-      color: white;
-      padding: 20px;
+      color: var(--white);
+      padding: 19px 16px 15px;
       border-bottom: 4px solid var(--orange);
+      text-align: center;
     }
+
 
     header h1 {
       margin: 0;
-      font-size: 25px;
+      font-size: 28px;
+      letter-spacing: 0.4px;
     }
+
+
+    .header-lines {
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+      margin-top: 10px;
+    }
+
+
+    .header-lines span {
+      width: 48px;
+      height: 3px;
+      border-radius: 3px;
+    }
+
+
+    .line-green {
+      background: #ffffff;
+    }
+
+
+    .line-orange {
+      background: var(--orange);
+    }
+
 
     main {
-      max-width: 700px;
-      margin: 35px auto;
-      padding: 20px;
+      width: 100%;
+      max-width: 430px;
+      margin: auto;
+      padding: 28px 18px;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
+
 
     .card {
-      background: white;
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px #00000012;
+      width: 100%;
+      background: var(--white);
+      padding: 28px 23px;
+      border-radius: 13px;
+      box-shadow: 0 3px 15px #0000000d;
+      border: 1px solid #e9ece6;
     }
 
-    h2 {
+
+    .card h2 {
       color: var(--green);
+      text-align: center;
+      margin: 0 0 8px;
+      font-size: 22px;
     }
 
-    .status {
-      padding: 12px;
-      border-radius: 8px;
-      background: #eef4e8;
-      margin-top: 20px;
+
+    .subtitle {
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      margin: 0 0 27px;
+      line-height: 1.5;
     }
+
+
+    .field {
+      margin-bottom: 18px;
+    }
+
+
+    label {
+      display: block;
+      font-weight: bold;
+      font-size: 13px;
+      color: var(--green);
+      margin-bottom: 8px;
+    }
+
+
+    input {
+      width: 100%;
+      padding: 13px 12px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      font-size: 16px;
+      background: #ffffff;
+      outline: none;
+    }
+
+
+    input:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 2px #4b53201c;
+    }
+
 
     button {
       width: 100%;
-      padding: 14px;
-      margin-top: 18px;
-      background: var(--green);
-      color: white;
+      padding: 13px;
       border: none;
-      border-radius: 8px;
-      font-size: 16px;
+      border-radius: 7px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
     }
+
+
+    button:disabled {
+      opacity: 0.65;
+      cursor: wait;
+    }
+
+
+    .btn-login {
+      background: var(--green);
+      color: var(--white);
+    }
+
+
+    .btn-feedback {
+      background: #ffffff;
+      color: var(--green);
+      border: 1px solid var(--green);
+    }
+
+
+    .btn-exit {
+      background: #eeeeee;
+      color: #333333;
+    }
+
+
+    .message {
+      display: none;
+      padding: 12px;
+      margin-top: 17px;
+      border-radius: 7px;
+      font-size: 13px;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+
+
+    .message.show {
+      display: block;
+    }
+
+
+    .message.success {
+      background: var(--success);
+      color: #205b2b;
+    }
+
+
+    .message.error {
+      background: var(--error);
+      color: #922b21;
+    }
+
+
+    .message.info {
+      background: #eef3f8;
+      color: #244765;
+    }
+
+
+    .hidden {
+      display: none !important;
+    }
+
+
+    .user-details {
+      background: #f4f6f0;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px 0 10px;
+      line-height: 1.8;
+      overflow-wrap: anywhere;
+    }
+
+
+    .user-details strong {
+      color: var(--green);
+    }
+
 
     footer {
       text-align: center;
-      padding: 20px;
-      color: #666;
-      font-size: 13px;
+      padding: 17px 12px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+
+    @media (max-width: 360px) {
+      .card {
+        padding: 23px 17px;
+      }
+
+
+      header h1 {
+        font-size: 25px;
+      }
     }
   </style>
 </head>
 
+
 <body>
+
+
   <header>
     <h1>DServices</h1>
+
+
+    <div class="header-lines">
+      <span class="line-green"></span>
+      <span class="line-orange"></span>
+    </div>
   </header>
 
-  <main>
-    <section class="card">
-      <h2>Karibu DServices</h2>
 
-      <p>
-       Usimamizi wa huduma mbalimbali.
+  <main>
+
+
+    <!-- LOGIN -->
+    <section class="card" id="loginCard">
+
+
+      <h2>INGIA KWENYE MFUMO</h2>
+
+
+      <p class="subtitle">
+        Usimamizi wa huduma mbalimbali.
       </p>
 
-      <div class="status" id="networkStatus">
-        Inafunguka...
-      </div>
 
-      <button onclick="checkConnection()">
-        Kagua Mtandao
+      <form id="loginForm">
+
+
+        <div class="field">
+          <label for="username">USERNAME</label>
+
+
+          <input
+            type="text"
+            id="username"
+            name="username"
+            autocomplete="username"
+            placeholder="Ingiza username yako"
+            required
+          >
+        </div>
+
+
+        <div class="field">
+          <label for="password">PASSWORD</label>
+
+
+          <input
+            type="password"
+            id="password"
+            name="password"
+            autocomplete="current-password"
+            placeholder="Ingiza password yako"
+            required
+          >
+        </div>
+
+
+        <button
+          type="submit"
+          class="btn-login"
+          id="loginButton"
+        >
+          INGIA
+        </button>
+
+
+      </form>
+
+
+      <button
+        type="button"
+        class="btn-feedback"
+        id="feedbackButton"
+      >
+        MAONI
       </button>
-      <button id="apiTestButton" type="button">
-  Jaribu Muunganisho wa DServices
-</button>
 
 
-<p id="apiTestResult" role="status">
-  Muunganisho bado haujajaribiwa.
-</p>
+      <button
+        type="button"
+        class="btn-exit"
+        id="exitButton"
+      >
+        TOKA
+      </button>
+
+
+      <div
+        id="loginMessage"
+        class="message"
+        role="status"
+        aria-live="polite"
+      ></div>
+
 
     </section>
+
+
+
+
+    <!-- BAADA YA LOGIN -->
+    <section class="card hidden" id="welcomeCard">
+
+
+      <h2>KARIBU DSERVICES</h2>
+
+
+      <p class="subtitle">
+        Umeingia kwenye mfumo.
+      </p>
+
+
+      <div class="user-details" id="userDetails"></div>
+
+
+      <div
+        id="welcomeMessage"
+        class="message"
+        role="status"
+        aria-live="polite"
+      ></div>
+
+
+      <button
+        type="button"
+        class="btn-exit"
+        id="logoutButton"
+      >
+        TOKA KWENYE MFUMO
+      </button>
+
+
+    </section>
+
+
   </main>
+
 
   <footer>
     Huduma bora huleta ustawi
+    <br>
+    <span id="networkStatus">Inakagua mtandao...</span>
   </footer>
 
-  <script>
-    function checkConnection() {
-      const status = document.getElementById("networkStatus");
 
-      if (navigator.onLine) {
-        status.textContent =
-          "Mtandao upo. imefunguka.";
-      } else {
-        status.textContent =
-          "Hakuna mtandao. Huu bado ni ukurasa wa majaribio.";
-      }
+
+
+  <script>
+    "use strict";
+
+
+    // API ILIYOKWISHAJARIBIWA
+    const API_URL =
+      "https://script.google.com/macros/s/AKfycbwrqIq6RG_9-9hyU3AhDii8xpn1ctVy8VNaYFyMplqRV0c8LtaSJ8hqZ1Ap4IwP8Fsv/exec";
+
+
+    const loginForm = document.getElementById("loginForm");
+    const loginButton = document.getElementById("loginButton");
+    const loginMessage = document.getElementById("loginMessage");
+    const loginCard = document.getElementById("loginCard");
+    const welcomeCard = document.getElementById("welcomeCard");
+    const userDetails = document.getElementById("userDetails");
+    const welcomeMessage = document.getElementById("welcomeMessage");
+    const networkStatus = document.getElementById("networkStatus");
+
+
+    let sessionToken = null;
+
+
+    function showMessage(element, message, type) {
+      element.textContent = message;
+      element.className = "message show " + type;
     }
 
-    checkConnection();
 
-    window.addEventListener("online", checkConnection);
-    window.addEventListener("offline", checkConnection);
-  </script>
-  <script>
-const API_URL = "https://script.google.com/macros/s/AKfycbwrqIq6RG_9-9hyU3AhDii8xpn1ctVy8VNaYFyMplqRV0c8LtaSJ8hqZ1Ap4IwP8Fsv/exec";
-
-
-document.getElementById("apiTestButton").addEventListener("click", async function () {
-  const result = document.getElementById("apiTestResult");
+    function updateNetworkStatus() {
+      networkStatus.textContent = navigator.onLine
+        ? "Mtandao: Upo"
+        : "Mtandao: Haupo";
+    }
 
 
-  result.textContent = "Inajaribu kuunganisha...";
+    window.addEventListener("online", updateNetworkStatus);
+    window.addEventListener("offline", updateNetworkStatus);
 
 
-  try {
-    const response = await fetch(API_URL + "?action=test", {
-      method: "GET",
-      redirect: "follow"
+    updateNetworkStatus();
+
+
+
+
+    /*
+      Tunatuma JSON kama text/plain ili kuepuka
+      ombi la CORS preflight katika hali zinazowezekana.
+
+
+      Hata hivyo, kivinjari kinaweza bado kuzuia
+      majibu kutokana na sera za Apps Script.
+    */
+    async function callAPI(payload) {
+      const response = await fetch(API_URL, {
+        method: "POST",
+        redirect: "follow",
+        headers: {
+          "Content-Type": "text/plain;charset=UTF-8"
+        },
+        body: JSON.stringify(payload)
+      });
+
+
+      if (!response.ok) {
+        throw new Error("Server imeshindwa kupokea ombi.");
+      }
+
+
+      return await response.json();
+    }
+
+
+
+
+    // KUINGIA
+    loginForm.addEventListener("submit", async function(event) {
+      event.preventDefault();
+
+
+      const username = document.getElementById("username")
+        .value.trim();
+
+
+      const password = document.getElementById("password")
+        .value;
+
+
+      if (!username || !password) {
+        showMessage(
+          loginMessage,
+          "Tafadhali jaza username na password.",
+          "error"
+        );
+        return;
+      }
+
+
+      if (!navigator.onLine) {
+        showMessage(
+          loginMessage,
+          "Hakuna mtandao. Unganisha mtandao ujaribu tena.",
+          "error"
+        );
+        return;
+      }
+
+
+      loginButton.disabled = true;
+      loginButton.textContent = "INAINGIA...";
+
+
+      showMessage(
+        loginMessage,
+        "Inathibitisha taarifa zako...",
+        "info"
+      );
+
+
+      try {
+        const result = await callAPI({
+          action: "login",
+          username: username,
+          password: password
+        });
+
+
+        if (!result || result.success !== true) {
+          showMessage(
+            loginMessage,
+            result && result.message
+              ? result.message
+              : "Login haikukubaliwa. Kagua taarifa zako.",
+            "error"
+          );
+          return;
+        }
+
+
+        if (!result.token || !result.user) {
+          showMessage(
+            loginMessage,
+            "Majibu ya API hayajakamilika. Tafadhali wasiliana na msimamizi.",
+            "error"
+          );
+          return;
+        }
+
+
+        sessionToken = result.token;
+
+
+        // Usihifadhi password kwenye browser.
+        document.getElementById("password").value = "";
+
+
+        const user = result.user;
+
+
+        // textContent hutumika kuzuia HTML isiyoaminika.
+        userDetails.replaceChildren();
+
+
+        addDetail("Mtumiaji", user.fullName || user.name || user.username || username);
+        addDetail("Username", user.username || username);
+
+
+        if (user.role) {
+          addDetail("Nafasi", user.role);
+        }
+
+
+        loginCard.classList.add("hidden");
+        welcomeCard.classList.remove("hidden");
+
+
+        showMessage(
+          welcomeMessage,
+          "Login imefanikiwa. Hatua inayofuata ni kuunganisha dashboard na menyu za programu.",
+          "success"
+        );
+
+
+      } catch (error) {
+        console.error("DServices login error:", error);
+
+
+        showMessage(
+          loginMessage,
+          "Imeshindikana kuwasiliana na API. Huenda kivinjari kimezuia majibu ya Apps Script. Jaribu tena; usibadilishe password yako.",
+          "error"
+        );
+
+
+      } finally {
+        loginButton.disabled = false;
+        loginButton.textContent = "INGIA";
+      }
     });
 
 
-    const data = await response.json();
 
 
-    if (data.success === true) {
-      result.textContent = "Imefanikiwa: " + data.message;
-    } else {
-      result.textContent = "API haijakubali ombi.";
+    function addDetail(label, value) {
+      const row = document.createElement("div");
+      const heading = document.createElement("strong");
+
+
+      heading.textContent = label + ": ";
+      row.appendChild(heading);
+      row.appendChild(
+        document.createTextNode(String(value || "-"))
+      );
+
+
+      userDetails.appendChild(row);
     }
-  } catch (error) {
-    result.textContent =
-      "Muunganisho umeshindwa. Kagua URL, ruhusa na mawasiliano ya mtandao.";
-  }
-});
-</script>
+
+
+
+
+    // TOKA KWENYE UKURASA
+    document.getElementById("exitButton")
+      .addEventListener("click", function() {
+        document.getElementById("username").value = "";
+        document.getElementById("password").value = "";
+
+
+        showMessage(
+          loginMessage,
+          "Umefuta taarifa ulizoingiza.",
+          "info"
+        );
+      });
+
+
+
+
+    // MAONI
+    document.getElementById("feedbackButton")
+      .addEventListener("click", function() {
+        const message = encodeURIComponent(
+          "Habari DServices, nina maoni kuhusu mfumo."
+        );
+
+
+        window.open(
+          "https://wa.me/255716328888?text=" + message,
+          "_blank",
+          "noopener,noreferrer"
+        );
+      });
+
+
+
+
+    // KUTOKA KWENYE SESSION
+    document.getElementById("logoutButton")
+      .addEventListener("click", async function() {
+        const token = sessionToken;
+
+
+        sessionToken = null;
+
+
+        welcomeCard.classList.add("hidden");
+        loginCard.classList.remove("hidden");
+
+
+        document.getElementById("username").value = "";
+        document.getElementById("password").value = "";
+
+
+        showMessage(
+          loginMessage,
+          "Umetoka kwenye ukurasa wa mfumo.",
+          "info"
+        );
+
+
+        /*
+          API yako ya sasa inapaswa kutekeleza logout(token).
+          Ikiwa ombi litashindwa, ukurasa bado utafungwa,
+          lakini session ya upande wa server inaweza kubaki
+          mpaka token iishe muda wake.
+        */
+        if (token) {
+          try {
+            await callAPI({
+              action: "logout",
+              token: token
+            });
+          } catch (error) {
+            console.warn("Logout ya server haikukamilika.");
+          }
+        }
+      });
+
+
+  </script>
+
 
 </body>
 </html>
