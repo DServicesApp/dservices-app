@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#4b5320">
   <link rel="manifest" href="./manifest.json">
+  <title>DServices</title>
 
-  <title>DServices | Login</title>
 
   <style>
     :root {
@@ -17,14 +17,12 @@
       --text: #252525;
       --muted: #666666;
       --border: #d9ded4;
-      --success: #e7f5e9;
-      --error: #fdebea;
     }
 
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
+
+
     body {
       margin: 0;
       min-height: 100vh;
@@ -34,35 +32,42 @@
       display: flex;
       flex-direction: column;
     }
-    header {
+
+
+    body > header {
       background: var(--green);
       color: var(--white);
       padding: 19px 16px 15px;
       border-bottom: 4px solid var(--orange);
       text-align: center;
     }
-    header h1 {
+
+
+    body > header h1 {
       margin: 0;
       font-size: 28px;
-      letter-spacing: 0.4px;
     }
+
+
     .header-lines {
       display: flex;
       justify-content: center;
       gap: 5px;
       margin-top: 10px;
     }
+
+
     .header-lines span {
       width: 48px;
       height: 3px;
       border-radius: 3px;
     }
-    .line-green {
-      background: #ffffff;
-    }
-    .line-orange {
-      background: var(--orange);
-    }
+
+
+    .line-green { background: #fff; }
+    .line-orange { background: var(--orange); }
+
+
     main {
       width: 100%;
       max-width: 430px;
@@ -73,6 +78,8 @@
       align-items: center;
       justify-content: center;
     }
+
+
     .card {
       width: 100%;
       background: var(--white);
@@ -81,12 +88,16 @@
       box-shadow: 0 3px 15px #0000000d;
       border: 1px solid #e9ece6;
     }
+
+
     .card h2 {
       color: var(--green);
       text-align: center;
       margin: 0 0 8px;
       font-size: 22px;
     }
+
+
     .subtitle {
       text-align: center;
       color: var(--muted);
@@ -94,9 +105,11 @@
       margin: 0 0 27px;
       line-height: 1.5;
     }
-    .field {
-      margin-bottom: 18px;
-    }
+
+
+    .field { margin-bottom: 18px; }
+
+
     label {
       display: block;
       font-weight: bold;
@@ -104,15 +117,19 @@
       color: var(--green);
       margin-bottom: 8px;
     }
+
+
     input {
       width: 100%;
       padding: 13px 12px;
       border: 1px solid var(--border);
       border-radius: 7px;
       font-size: 16px;
-      background: #ffffff;
+      background: #fff;
       outline: none;
     }
+
+
     input:focus {
       border-color: var(--green);
       box-shadow: 0 0 0 2px #4b53201c;
@@ -132,27 +149,27 @@
 
 
     button:disabled {
-      opacity: 0.65;
+      opacity: .65;
       cursor: wait;
     }
 
 
     .btn-login {
       background: var(--green);
-      color: var(--white);
+      color: #fff;
     }
 
 
     .btn-feedback {
-      background: #ffffff;
+      background: #fff;
       color: var(--green);
       border: 1px solid var(--green);
     }
 
 
     .btn-exit {
-      background: #eeeeee;
-      color: #333333;
+      background: #eee;
+      color: #333;
     }
 
 
@@ -167,19 +184,17 @@
     }
 
 
-    .message.show {
-      display: block;
-    }
+    .message.show { display: block; }
 
 
     .message.success {
-      background: var(--success);
+      background: #e7f5e9;
       color: #205b2b;
     }
 
 
     .message.error {
-      background: var(--error);
+      background: #fdebea;
       color: #922b21;
     }
 
@@ -188,141 +203,156 @@
       background: #eef3f8;
       color: #244765;
     }
-    .hidden {
-      display: none !important;
+
+
+    .hidden { display: none !important; }
+
+
+    /* DASHBOARD */
+
+
+    .dashboard {
+      display: flex;
+      width: 100%;
+      min-height: 100vh;
+      background: var(--background);
+      align-self: stretch;
     }
 
 
-/* =====================================
-   DSERVICES DASHBOARD
-===================================== */
-.dashboard {
-  display: flex;
-  width: 100%;
-  min-height: 100vh;
-  background: var(--background);
-}
-.sidebar {
-  width: 235px;
-  min-width: 235px;
-  background: var(--green);
-  color: var(--white);
-  display: flex;
-  flex-direction: column;
-  border-right: 1px solid var(--border);
-}
-.sidebar-brand {
-  padding: 22px 18px;
-  font-size: 23px;
-  font-weight: bold;
-  border-bottom: 4px solid var(--orange);
-}
-.sidebar-menu {
-  padding: 16px 10px;
-  flex: 1;
-}
-.sidebar-menu button {
-  width: 100%;
-  margin: 4px 0;
-  padding: 13px 12px;
-  text-align: left;
-  background: transparent;
-  color: var(--white);
-  border-radius: 6px;
-  font-size: 13px;
-}
-.sidebar-menu button:hover,
-.sidebar-menu button.active {
-  background: #ffffff20;
-  border-left: 4px solid var(--orange);
-}
-.sidebar-bottom {
-  padding: 10px;
-}
-.sidebar-bottom button {
-  background: var(--orange);
-  color: #ffffff;
-}
-.dashboard-main {
-  flex: 1;
-  min-width: 0;
-}
-.dashboard-topbar {
-  min-height: 68px;
-  padding: 15px 22px;
-  background: #ffffff;
-  border-bottom: 3px solid var(--orange);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-.dashboard-topbar h2 {
-  margin: 0;
-  color: var(--green);
-  font-size: 19px;
-}
-.dashboard-content {
-  padding: 24px;
-}
-.dashboard-heading {
-  margin-bottom: 22px;
-}
-.dashboard-heading h2 {
-  margin: 0 0 7px;
-  color: var(--green);
-  font-size: 23px;
-}
-.dashboard-heading p {
-  margin: 0;
-  color: var(--muted);
-  font-size: 14px;
-}
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
-}
-.stat-card {
-  padding: 22px;
-  background: #ffffff;
-  border: 1px solid #e5e9e1;
-  border-radius: 10px;
-  border-left: 5px solid var(--orange);
-  box-shadow: 0 3px 12px #00000008;
-}
-.stat-card h3 {
-  margin: 0 0 15px;
-  color: var(--muted);
-  font-size: 14px;
-}
-.stat-number {
-  color: var(--green);
-  font-size: 30px;
-  font-weight: bold;
-}
-.dashboard-message {
-  margin-top: 20px;
-}
-@media (max-width: 700px) {
-  .sidebar {
-    width: 185px;
-    min-width: 185px;
-  }
-  .dashboard-content {
-    padding: 15px;
-  }
-  .stats-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-  .dashboard-topbar {
-    padding: 14px;
-  }
-  .dashboard-topbar h2 {
-    font-size: 16px;
-  }
-}
+    .sidebar {
+      width: 235px;
+      min-width: 235px;
+      background: var(--green);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+    }
+
+
+    .sidebar-brand {
+      padding: 22px 18px;
+      font-size: 23px;
+      font-weight: bold;
+      border-bottom: 4px solid var(--orange);
+    }
+
+
+    .sidebar-menu {
+      padding: 16px 10px;
+      flex: 1;
+    }
+
+
+    .sidebar-menu button {
+      width: 100%;
+      margin: 4px 0;
+      padding: 13px 12px;
+      text-align: left;
+      background: transparent;
+      color: #fff;
+      border-radius: 6px;
+      font-size: 13px;
+    }
+
+
+    .sidebar-menu button:hover,
+    .sidebar-menu button.active {
+      background: #ffffff20;
+      border-left: 4px solid var(--orange);
+    }
+
+
+    .sidebar-bottom { padding: 10px; }
+
+
+    .sidebar-bottom button {
+      background: var(--orange);
+      color: #fff;
+    }
+
+
+    .dashboard-main {
+      flex: 1;
+      min-width: 0;
+    }
+
+
+    .dashboard-topbar {
+      min-height: 68px;
+      padding: 15px 22px;
+      background: #fff;
+      border-bottom: 3px solid var(--orange);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--green);
+      text-align: left;
+    }
+
+
+    .dashboard-topbar h2 {
+      margin: 0;
+      color: var(--green);
+      font-size: 19px;
+    }
+
+
+    .dashboard-content { padding: 24px; }
+
+
+    .dashboard-heading { margin-bottom: 22px; }
+
+
+    .dashboard-heading h2 {
+      margin: 0 0 7px;
+      color: var(--green);
+      font-size: 23px;
+    }
+
+
+    .dashboard-heading p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+
+    .stat-card {
+      padding: 22px;
+      background: #fff;
+      border: 1px solid #e5e9e1;
+      border-radius: 10px;
+      border-left: 5px solid var(--orange);
+      box-shadow: 0 3px 12px #00000008;
+    }
+
+
+    .stat-card h3 {
+      margin: 0 0 15px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+
+    .stat-number {
+      color: var(--green);
+      font-size: 30px;
+      font-weight: bold;
+    }
+
+
+    .dashboard-message { margin-top: 20px; }
+
+
     .user-details {
       background: #f4f6f0;
       padding: 15px;
@@ -332,9 +362,32 @@
       overflow-wrap: anywhere;
     }
 
-    .user-details strong {
-      color: var(--green);
+
+    .user-details strong { color: var(--green); }
+
+
+    body.dashboard-open { display: block; }
+
+
+    body.dashboard-open > header,
+    body.dashboard-open > footer {
+      display: none !important;
     }
+
+
+    body.dashboard-open main {
+      width: 100%;
+      max-width: none;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      display: block;
+    }
+
+
+    body.dashboard-open #welcomeCard { display: flex; }
+
+
     footer {
       text-align: center;
       padding: 17px 12px;
@@ -343,47 +396,83 @@
     }
 
 
-    @media (max-width: 360px) {
-      .card {
-        padding: 23px 17px;
+    @media (max-width: 700px) {
+      .sidebar {
+        width: 165px;
+        min-width: 165px;
       }
 
 
-      header h1 {
-        font-size: 25px;
+      .sidebar-brand {
+        padding: 18px 12px;
+        font-size: 20px;
+      }
+
+
+      .sidebar-menu { padding: 12px 7px; }
+
+
+      .sidebar-menu button {
+        padding: 12px 8px;
+        font-size: 12px;
+      }
+
+
+      .dashboard-content { padding: 15px; }
+
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+
+      .dashboard-topbar { padding: 14px; }
+
+
+      .dashboard-topbar h2 { font-size: 16px; }
+
+
+      .stat-card { padding: 17px; }
+    }
+
+
+    @media (max-width: 360px) {
+      .card { padding: 23px 17px; }
+
+
+      body > header h1 { font-size: 25px; }
+
+
+      .sidebar {
+        width: 132px;
+        min-width: 132px;
       }
     }
   </style>
 </head>
+
+
 <body>
   <header>
     <h1>DServices</h1>
-
     <div class="header-lines">
       <span class="line-green"></span>
       <span class="line-orange"></span>
     </div>
   </header>
 
-  <main>
 
+  <main>
     <!-- LOGIN -->
     <section class="card" id="loginCard">
-
       <h2>MFUMO</h2>
-
-      <p class="subtitle">
-        Usimamizi wa huduma mbalimbali.
-      </p>
+      <p class="subtitle">Usimamizi wa huduma mbalimbali.</p>
 
 
       <form id="loginForm">
-
-
         <div class="field">
           <label for="username">USERNAME</label>
-
-
           <input
             type="text"
             id="username"
@@ -397,8 +486,6 @@
 
         <div class="field">
           <label for="password">PASSWORD</label>
-
-
           <input
             type="password"
             id="password"
@@ -410,134 +497,103 @@
         </div>
 
 
-        <button
-          type="submit"
-          class="btn-login"
-          id="loginButton"
-        >
+        <button type="submit" class="btn-login" id="loginButton">
           INGIA
         </button>
-
-
       </form>
 
 
-      <button
-        type="button"
-        class="btn-feedback"
-        id="feedbackButton"
-      >
+      <button type="button" class="btn-feedback" id="feedbackButton">
         MAONI
       </button>
 
 
-      <button
-        type="button"
-        class="btn-exit"
-        id="exitButton"
-      >
+      <button type="button" class="btn-exit" id="exitButton">
         TOKA
       </button>
 
-      <div
-        id="loginMessage"
-        class="message"
-        role="status"
-        aria-live="polite"
-      ></div>
+
+      <div id="loginMessage" class="message" role="status" aria-live="polite"></div>
     </section>
 
 
+    <!-- DASHBOARD -->
+    <section class="dashboard hidden" id="welcomeCard">
+      <aside class="sidebar">
+        <div class="sidebar-brand">DServices</div>
 
 
-    <!-- BAADA YA LOGIN -->
-   <!-- DASHBOARD YA DSERVICES -->
-<section class="dashboard hidden" id="welcomeCard">
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <div class="sidebar-brand">
-      DServices
-    </div>
-    <nav class="sidebar-menu">
-      <button type="button" class="active" data-page="dashboard">
-        DASHBOARD
-      </button>
-      <button type="button" data-page="accounts">
-        TAASISI
-      </button>
-      <button type="button" data-page="users">
-        WATUMIAJI
-      </button>
-      <button type="button" data-page="services">
-        HUDUMA
-      </button>
-      <button type="button" data-page="teams">
-        TIMU
-      </button>
-      <button type="button" data-page="management">
-        USIMAMIZI
-      </button>
-      <button type="button" data-page="reports">
-        TAARIFA
-      </button>
-    </nav>
-    <div class="sidebar-bottom">
-      <button type="button" id="logoutButton">
-        TOKA
-      </button>
-    </div>
-  </aside>
-  <!-- ENEO KUU -->
-  <div class="dashboard-main">
-    <header class="dashboard-topbar">
-      <h2 id="dashboardPageTitle">DASHBOARD</h2>
-      <span id="dashboardUserRole">OWNER</span>
-    </header>
-    <div class="dashboard-content">
-      <div class="dashboard-heading">
-        <h2>KARIBU DSERVICES</h2>
-        <p>Muhtasari wa usimamizi wa jukwaa.</p>
+        <nav class="sidebar-menu" aria-label="Menyu kuu">
+          <button type="button" class="active" data-page="dashboard">DASHBOARD</button>
+          <button type="button" data-page="accounts">TAASISI</button>
+          <button type="button" data-page="users">WATUMIAJI</button>
+          <button type="button" data-page="services">HUDUMA</button>
+          <button type="button" data-page="teams">TIMU</button>
+          <button type="button" data-page="management">USIMAMIZI</button>
+          <button type="button" data-page="reports">TAARIFA</button>
+        </nav>
+
+
+        <div class="sidebar-bottom">
+          <button type="button" id="logoutButton">TOKA</button>
+        </div>
+      </aside>
+
+
+      <div class="dashboard-main">
+        <header class="dashboard-topbar">
+          <h2 id="dashboardPageTitle">DASHBOARD</h2>
+          <span id="dashboardUserRole">OWNER</span>
+        </header>
+
+
+        <div class="dashboard-content">
+          <div class="dashboard-heading">
+            <h2 id="dashboardHeading">KARIBU DSERVICES</h2>
+            <p id="dashboardSubtitle">Muhtasari wa usimamizi wa jukwaa.</p>
+          </div>
+
+
+          <div class="stats-grid" id="dashboardStats">
+            <article class="stat-card">
+              <h3>TAASISI</h3>
+              <div class="stat-number" id="statAccounts">—</div>
+            </article>
+
+
+            <article class="stat-card">
+              <h3>WATUMIAJI</h3>
+              <div class="stat-number" id="statUsers">—</div>
+            </article>
+
+
+            <article class="stat-card">
+              <h3>HUDUMA</h3>
+              <div class="stat-number" id="statServices">—</div>
+            </article>
+
+
+            <article class="stat-card">
+              <h3>TIMU</h3>
+              <div class="stat-number" id="statTeams">—</div>
+            </article>
+          </div>
+
+
+          <div
+            id="dashboardMessage"
+            class="message dashboard-message"
+            role="status"
+            aria-live="polite"
+          ></div>
+
+
+          <div class="user-details" id="userDetails"></div>
+        </div>
       </div>
-      <div class="stats-grid">
-
-
-        <article class="stat-card">
-          <h3>TAASISI</h3>
-          <div class="stat-number" id="statAccounts">—</div>
-        </article>
-
-
-        <article class="stat-card">
-          <h3>WATUMIAJI</h3>
-          <div class="stat-number" id="statUsers">—</div>
-        </article>
-
-
-        <article class="stat-card">
-          <h3>HUDUMA</h3>
-          <div class="stat-number" id="statServices">—</div>
-        </article>
-
-
-        <article class="stat-card">
-          <h3>TIMU</h3>
-          <div class="stat-number" id="statTeams">—</div>
-        </article>
-      </div>
-      <div
-        id="dashboardMessage"
-        class="message dashboard-message"
-        role="status"
-        aria-live="polite"
-      ></div>
-
-
-      <div class="user-details" id="userDetails"></div>
-    </div>
-  </div>
-</section>
-
+    </section>
   </main>
+
 
   <footer>
     Huduma bora huleta ustawi
@@ -546,15 +602,14 @@
   </footer>
 
 
-
-
   <script>
     "use strict";
 
 
-    // API ILIYOKWISHAJARIBIWA
+    // API URL yako ya awali imehifadhiwa.
     const API_URL =
       "https://script.google.com/macros/s/AKfycbwrqIq6RG_9-9hyU3AhDii8xpn1ctVy8VNaYFyMplqRV0c8LtaSJ8hqZ1Ap4IwP8Fsv/exec";
+
 
     const loginForm = document.getElementById("loginForm");
     const loginButton = document.getElementById("loginButton");
@@ -562,15 +617,21 @@
     const loginCard = document.getElementById("loginCard");
     const welcomeCard = document.getElementById("welcomeCard");
     const userDetails = document.getElementById("userDetails");
-    const welcomeMessage = document.getElementById("welcomeMessage");
     const networkStatus = document.getElementById("networkStatus");
+    const dashboardMessage = document.getElementById("dashboardMessage");
+
 
     let sessionToken = null;
 
+
     function showMessage(element, message, type) {
+      if (!element) return;
+
+
       element.textContent = message;
       element.className = "message show " + type;
     }
+
 
     function updateNetworkStatus() {
       networkStatus.textContent = navigator.onLine
@@ -578,20 +639,12 @@
         : "Mtandao: Haupo";
     }
 
+
     window.addEventListener("online", updateNetworkStatus);
     window.addEventListener("offline", updateNetworkStatus);
-
     updateNetworkStatus();
 
 
-    /*
-      Tunatuma JSON kama text/plain ili kuepuka
-      ombi la CORS preflight katika hali zinazowezekana.
-
-
-      Hata hivyo, kivinjari kinaweza bado kuzuia
-      majibu kutokana na sera za Apps Script.
-    */
     async function callAPI(payload) {
       const response = await fetch(API_URL, {
         method: "POST",
@@ -612,6 +665,20 @@
     }
 
 
+    function addDetail(label, value) {
+      const row = document.createElement("div");
+      const heading = document.createElement("strong");
+
+
+      heading.textContent = label + ": ";
+      row.appendChild(heading);
+      row.appendChild(
+        document.createTextNode(String(value || "-"))
+      );
+
+
+      userDetails.appendChild(row);
+    }
 
 
     // KUINGIA
@@ -619,12 +686,8 @@
       event.preventDefault();
 
 
-      const username = document.getElementById("username")
-        .value.trim();
-
-
-      const password = document.getElementById("password")
-        .value;
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value;
 
 
       if (!username || !password) {
@@ -649,13 +712,7 @@
 
       loginButton.disabled = true;
       loginButton.textContent = "INAINGIA...";
-
-
-      showMessage(
-        loginMessage,
-        "Inathibitisha taarifa...",
-        "info"
-      );
+      showMessage(loginMessage, "Inathibitisha taarifa...", "info");
 
 
       try {
@@ -689,20 +746,17 @@
 
 
         sessionToken = result.token;
-
-
-        // Usihifadhi password kwenye browser.
         document.getElementById("password").value = "";
 
 
         const user = result.user;
 
 
-        // textContent hutumika kuzuia HTML isiyoaminika.
         userDetails.replaceChildren();
-
-
-        addDetail("Mtumiaji", user.fullName || user.name || user.username || username);
+        addDetail(
+          "Mtumiaji",
+          user.fullName || user.name || user.username || username
+        );
         addDetail("Username", user.username || username);
 
 
@@ -710,171 +764,219 @@
           addDetail("Nafasi", user.role);
         }
 
+
         loginCard.classList.add("hidden");
-welcomeCard.classList.remove("hidden");
-document.body.classList.add("dashboard-open");
+        welcomeCard.classList.remove("hidden");
+        document.body.classList.add("dashboard-open");
 
 
-document.getElementById("dashboardUserRole").textContent =
-  String(user.role || "OWNER").toUpperCase();
+        document.getElementById("dashboardUserRole").textContent =
+          String(user.role || "OWNER").toUpperCase();
 
 
-const dashboardMessage =
-  document.getElementById("dashboardMessage");
+        showMessage(
+          dashboardMessage,
+          "Login imefanikiwa. Inapakia taarifa za dashboard...",
+          "info"
+        );
 
 
-showMessage(
-  dashboardMessage,
-  "Login imefanikiwa. Inapakia taarifa za dashboard...",
-  "info"
-);
+        try {
+          const dashboardResult = await callAPI({
+            action: "getAdminDashboard",
+            token: sessionToken
+          });
 
 
-try {
-  const dashboardResult = await callAPI({
-    action: "getAdminDashboard",
-    token: sessionToken
-  });
+          if (dashboardResult && dashboardResult.success) {
+            const stats = dashboardResult.stats || {};
 
 
-  if (dashboardResult && dashboardResult.success) {
-    const stats = dashboardResult.stats || {};
+            document.getElementById("statAccounts").textContent =
+              stats.accounts ?? 0;
 
 
-    document.getElementById("statAccounts").textContent =
-      stats.accounts ?? 0;
+            document.getElementById("statUsers").textContent =
+              stats.users ?? 0;
 
 
-    document.getElementById("statUsers").textContent =
-      stats.users ?? 0;
+            document.getElementById("statServices").textContent =
+              stats.services ?? 0;
 
 
-    document.getElementById("statServices").textContent =
-      stats.services ?? 0;
+            document.getElementById("statTeams").textContent =
+              stats.teams ?? 0;
 
 
-    document.getElementById("statTeams").textContent =
-      stats.teams ?? 0;
+            showMessage(
+              dashboardMessage,
+              "Taarifa za dashboard zimepatikana.",
+              "success"
+            );
+          } else {
+            showMessage(
+              dashboardMessage,
+              dashboardResult && dashboardResult.message
+                ? dashboardResult.message
+                : "Imeshindwa kupata muhtasari.",
+              "error"
+            );
+          }
+        } catch (dashboardError) {
+          console.error("Dashboard error:", dashboardError);
 
 
-    showMessage(
-      dashboardMessage,
-      "Taarifa za dashboard zimepatikana.",
-      "success"
-    );
-  } else {
-    showMessage(
-      dashboardMessage,
-      dashboardResult && dashboardResult.message
-        ? dashboardResult.message
-        : "Imeshindwa kupata muhtasari.",
-      "error"
-    );
-  }
-} catch (dashboardError) {
-  console.error("Dashboard error:", dashboardError);
-  showMessage(
-    dashboardMessage,
-    "Muhtasari umeshindwa kupatikana. Jaribu tena.",
-    "error"
-  );
-}
-
+          showMessage(
+            dashboardMessage,
+            "Umeingia, lakini muhtasari haukupatikana. Jaribu tena.",
+            "error"
+          );
+        }
       } catch (error) {
         console.error("DServices login error:", error);
 
+
         showMessage(
           loginMessage,
-          "Imeshindikana kuwasiliana na API. Huenda kivinjari kimezuia majibu ya Apps Script. Jaribu tena; usibadilishe password yako.",
+          "Imeshindikana kuwasiliana na API. Kagua mtandao kisha jaribu tena.",
           "error"
         );
-
       } finally {
         loginButton.disabled = false;
         loginButton.textContent = "INGIA";
       }
     });
 
-    function addDetail(label, value) {
-      const row = document.createElement("div");
-      const heading = document.createElement("strong");
 
-      heading.textContent = label + ": ";
-      row.appendChild(heading);
-      row.appendChild(
-        document.createTextNode(String(value || "-"))
+    // KITufe CHA KUFUTA TAARIFA ZA LOGIN
+    document.getElementById("exitButton").addEventListener("click", function() {
+      document.getElementById("username").value = "";
+      document.getElementById("password").value = "";
+
+
+      showMessage(
+        loginMessage,
+        "Umefuta taarifa ulizoingiza.",
+        "info"
       );
-      userDetails.appendChild(row);
-    }
+    });
 
 
-    // TOKA KWENYE UKURASA
-    document.getElementById("exitButton")
-      .addEventListener("click", function() {
-        document.getElementById("username").value = "";
-        document.getElementById("password").value = "";
-        showMessage(
-          loginMessage,
-          "Umefuta taarifa ulizoingiza.",
-          "info"
-        );
-      });
+    // MAONI KUPITIA WHATSAPP
+    document.getElementById("feedbackButton").addEventListener("click", function() {
+      const message = encodeURIComponent(
+        "Habari DServices, nina maoni kuhusu mfumo."
+      );
 
 
-    // MAONI
-    document.getElementById("feedbackButton")
-      .addEventListener("click", function() {
-        const message = encodeURIComponent(
-          "Habari DServices, nina maoni kuhusu mfumo."
-        );
+      window.open(
+        "https://wa.me/255716328888?text=" + message,
+        "_blank",
+        "noopener,noreferrer"
+      );
+    });
 
 
-        window.open(
-          "https://wa.me/255716328888?text=" + message,
-          "_blank",
-          "noopener,noreferrer"
-        );
-      });
-
-    // KUTOKA KWENYE SESSION
-    document.getElementById("logoutButton")
-      .addEventListener("click", async function() {
-        const token = sessionToken;
-
-        sessionToken = null;
-
-        welcomeCard.classList.add("hidden");
-        document.body.classList.remove("dashboard-open");
-        loginCard.classList.remove("hidden");
-        document.getElementById("username").value = "";
-        document.getElementById("password").value = "";
-
-        showMessage(
-          loginMessage,
-          "Umetoka kwenye ukurasa wa mfumo.",
-          "info"
-        );
+    // KUTOKA KWENYE DASHBOARD
+    document.getElementById("logoutButton").addEventListener("click", async function() {
+      const token = sessionToken;
 
 
-        /*
-          API yako ya sasa inapaswa kutekeleza logout(token).
-          Ikiwa ombi litashindwa, ukurasa bado utafungwa,
-          lakini session ya upande wa server inaweza kubaki
-          mpaka token iishe muda wake.
-        */
-        if (token) {
-          try {
-            await callAPI({
-              action: "logout",
-              token: token
-            });
-          } catch (error) {
-            console.warn("Logout ya server haikukamilika.");
-          }
+      sessionToken = null;
+      welcomeCard.classList.add("hidden");
+      document.body.classList.remove("dashboard-open");
+      loginCard.classList.remove("hidden");
+
+
+      document.getElementById("username").value = "";
+      document.getElementById("password").value = "";
+
+
+      showMessage(
+        loginMessage,
+        "Umetoka kwenye ukurasa wa mfumo.",
+        "info"
+      );
+
+
+      if (token) {
+        try {
+          await callAPI({
+            action: "logout",
+            token: token
+          });
+        } catch (error) {
+          console.warn("Logout ya server haikukamilika.", error);
+        }
+      }
+    });
+
+
+    // MENYU ZA DASHBOARD
+    const pageLabels = {
+      dashboard: "DASHBOARD",
+      accounts: "TAASISI",
+      users: "WATUMIAJI",
+      services: "HUDUMA",
+      teams: "TIMU",
+      management: "USIMAMIZI",
+      reports: "TAARIFA"
+    };
+
+
+    document.querySelectorAll(".sidebar-menu button[data-page]").forEach(function(button) {
+      button.addEventListener("click", function() {
+        document.querySelectorAll(".sidebar-menu button[data-page]").forEach(function(item) {
+          item.classList.remove("active");
+        });
+
+
+        button.classList.add("active");
+
+
+        const page = button.dataset.page;
+
+
+        document.getElementById("dashboardPageTitle").textContent =
+          pageLabels[page] || "DASHBOARD";
+
+
+        if (page === "dashboard") {
+          document.getElementById("dashboardHeading").textContent =
+            "KARIBU DSERVICES";
+
+
+          document.getElementById("dashboardSubtitle").textContent =
+            "Muhtasari wa usimamizi wa jukwaa.";
+
+
+          document.getElementById("dashboardStats").classList.remove("hidden");
+
+
+          showMessage(
+            dashboardMessage,
+            "Unaangalia muhtasari wa DServices.",
+            "info"
+          );
+        } else {
+          document.getElementById("dashboardHeading").textContent =
+            pageLabels[page] || "DSERVICES";
+   document.getElementById("dashboardSubtitle").textContent =
+            "Sehemu hii itaunganishwa na taarifa zake katika hatua inayofuata.";
+
+
+          document.getElementById("dashboardStats").classList.add("hidden");
+
+
+          showMessage(
+            dashboardMessage,
+            "Menyu ya " + (pageLabels[page] || page) +
+              " imechaguliwa. Ukurasa wake bado haujaunganishwa na data.",
+            "info"
+          );
         }
       });
+    });
   </script>
-
-
 </body>
 </html>
