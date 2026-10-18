@@ -2214,12 +2214,8 @@ $("sendSMS").addEventListener("click", () => {
 
       closeDrawer();
       closeFloatingPanels();
-
-
       $("appScreen").classList.add("hidden");
       $("loginScreen").classList.remove("hidden");
-
-
       $("username").value = "";
       $("password").value = "";
 
@@ -2232,15 +2228,11 @@ $("sendSMS").addEventListener("click", () => {
 
       $("adminDashboard").querySelector(".stats-grid")
         .classList.remove("hidden");
-
-
       showMessage(
         $("loginMessage"),
         "Umetoka kwenye mfumo.",
         "info"
       );
-
-
       if (token) {
         try {
           await callAPI({
@@ -2263,6 +2255,27 @@ $("sendSMS").addEventListener("click", () => {
         closeFloatingPanels();
       }
     });
+</script>
+  <script>
+  // KUSAJILI SERVICE WORKER
+  if ("serviceWorker" in navigator) {
+   window.addEventListener("load", () => {
+      navigator.serviceWorker
+        .register("./service-worker.js")
+        .then(registration => {
+          console.log(
+            "DServices Service Worker imesajiliwa:",
+            registration.scope
+          );
+        })
+        .catch(error => {
+          console.error(
+            "Service Worker imeshindwa kusajiliwa:",
+            error
+          );
+        });
+    });
+  }
 </script>
 </body>
 </html>
