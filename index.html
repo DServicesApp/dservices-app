@@ -4,10 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#4b5320">
-
-
   <title>DServices</title>
-
 
   <style>
     :root {
@@ -21,13 +18,9 @@
       --success: #23833d;
       --danger: #b42318;
     }
-
-
     * {
       box-sizing: border-box;
     }
-
-
     body {
       margin: 0;
       min-height: 100vh;
@@ -47,31 +40,131 @@
     button {
       cursor: pointer;
     }
-
-
     button:disabled {
       opacity: 0.6;
       cursor: wait;
     }
-
-
     .hidden {
       display: none !important;
     }
+
+    /* FOMU YA MAONI */
+.feedback-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: #00000070;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  overflow-y: auto;
+}
+
+
+.feedback-modal {
+  width: 100%;
+  max-width: 460px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px #00000030;
+}
+
+
+.feedback-header {
+  background: var(--green);
+  color: white;
+  padding: 15px;
+  border-bottom: 4px solid var(--orange);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.feedback-header h2 {
+  margin: 0;
+  font-size: 17px;
+}
+
+
+.feedback-close {
+  border: none;
+  background: transparent;
+  color: white;
+  font-size: 27px;
+  cursor: pointer;
+}
+
+
+.feedback-body {
+  padding: 18px;
+}
+
+
+.feedback-body label {
+  display: block;
+  color: var(--green);
+  font-size: 12px;
+  font-weight: bold;
+  margin: 12px 0 6px;
+}
+
+
+.feedback-body input,
+.feedback-body select,
+.feedback-body textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #fff;
+  color: #333;
+  font: inherit;
+  font-size: 14px;
+}
+
+
+.feedback-body textarea {
+  resize: vertical;
+}
+
+
+.feedback-date-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.feedback-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 18px;
+}
+.feedback-actions button {
+  width: 100%;
+  min-height: 44px;
+  cursor: pointer;
+}
+.feedback-error {
+  color: #c0392b;
+  font-size: 13px;
+  margin: 8px 0;
+}
+
 
 
     /* =========================
        LOGIN
     ========================= */
-
-
     #loginScreen {
       min-height: 100vh;
       display: flex;
       flex-direction: column;
     }
-
-
     .login-header {
       background: var(--green);
       color: white;
@@ -79,8 +172,6 @@
       padding: 22px 15px 17px;
       border-bottom: 4px solid var(--orange);
     }
-
-
     .login-header h1 {
       margin: 0;
       font-size: 28px;
@@ -182,8 +273,6 @@
       padding: 12px 15px;
       font-weight: bold;
     }
-
-
     .btn-primary {
       color: white;
       background: var(--green);
@@ -201,19 +290,13 @@
       background: white;
       border: 1px solid var(--green);
     }
-
-
     .login-actions {
       display: grid;
       gap: 9px;
     }
-
-
     .login-actions .btn {
       width: 100%;
     }
-
-
     .login-footer {
       text-align: center;
       padding: 15px;
@@ -225,8 +308,6 @@
     /* =========================
        UJUMBE
     ========================= */
-
-
     .message {
       display: none;
       padding: 12px;
@@ -248,7 +329,6 @@
       background: #eaf2f9;
     }
 
-
     .message.success {
       color: #205b2b;
       background: #e7f5e9;
@@ -264,8 +344,6 @@
     /* =========================
        MSTARI WA JUU WA DSERVICES
     ========================= */
-
-
     .topbar {
       min-height: 64px;
       width: 100%;
@@ -417,13 +495,9 @@
     /* =========================
        DASHBOARD
     ========================= */
-
-
     #appScreen {
       min-height: 100vh;
     }
-
-
     .main-content {
       padding: 28px;
       max-width: 1500px;
@@ -444,8 +518,6 @@
       border-radius: 12px;
       box-shadow: 0 3px 12px #00000006;
     }
-
-
     .welcome-icon {
       width: 64px;
       height: 64px;
@@ -458,15 +530,11 @@
       font-size: 29px;
       margin-bottom: 17px;
     }
-
-
     .welcome-panel h2 {
       color: var(--green);
       margin: 0 0 9px;
       font-size: 23px;
     }
-
-
     .welcome-panel p {
       color: var(--muted);
       font-size: 14px;
@@ -551,8 +619,6 @@
     /* =========================
        PAZIA LA MENYU
     ========================= */
-
-
     .drawer-backdrop {
       position: fixed;
       inset: 0;
@@ -668,10 +734,8 @@
 
 
     /* =========================
-       PANELI ZA ARIFA NA WASIFU
+       PANELI ZA TARIFA NA WASIFU
     ========================= */
-
-
     .floating-panel {
       position: fixed;
       z-index: 1100;
@@ -738,8 +802,6 @@
     /* =========================
        TABLETI NA LAPTOP NDOGO
     ========================= */
-
-
     @media (max-width: 1050px) {
       .topbar {
         gap: 10px;
@@ -760,67 +822,45 @@
     /* =========================
        SIMU
     ========================= */
-
-
     @media (max-width: 650px) {
       .topbar {
         padding: 10px;
         gap: 9px;
         flex-wrap: wrap;
       }
-
-
       .brand-button {
         font-size: 19px;
       }
-
-
       .top-control {
         flex: 1 1 42%;
         display: block;
       }
-
-
       .top-control label {
         display: block;
         margin-bottom: 4px;
       }
-
-
       .top-select {
         width: 100%;
         min-width: 0;
         max-width: none;
       }
-
-
       .top-divider {
         display: none;
       }
-
-
       .top-spacer {
         display: none;
       }
-
-
       .connection {
         flex: 1 1 auto;
       }
-
-
       .date-time {
         flex: 1 1 auto;
         text-align: left;
       }
-
-
       .icon-button {
         width: 32px;
         height: 32px;
       }
-
-
       .main-content {
         padding: 15px;
       }
@@ -1052,21 +1092,14 @@
         </div>
       </section>
 
-
-
-
       <!-- DASHBOARD YA HUDUMA YA KAWAIDA -->
       <section id="serviceDashboard" class="hidden">
-
-
         <div class="page-heading">
           <h2 id="serviceHeading">HUDUMA</h2>
           <p id="serviceDescription">
             Chagua kipengele ili kuendelea.
           </p>
         </div>
-
-
         <div class="section-panel">
           <h3 id="moduleHeading">Karibu</h3>
           <p id="serviceMessage">
@@ -1126,10 +1159,6 @@
 
 
   </aside>
-
-
-
-
   <!-- NOTIFICATIONS -->
   <section id="notificationPanel" class="floating-panel hidden">
     <button type="button" class="panel-close" data-close-panel="notificationPanel">
@@ -1150,33 +1179,26 @@
       ×
     </button>
 
-
     <h3>Wasifu wa Mtumiaji</h3>
-
-
     <div class="profile-row">
       <strong>Jina:</strong>
       <span id="profileName">—</span>
     </div>
-
 
     <div class="profile-row">
       <strong>Username:</strong>
       <span id="profileUsername">—</span>
     </div>
 
-
     <div class="profile-row">
       <strong>Nafasi:</strong>
       <span id="profileRole">—</span>
     </div>
 
-
     <div class="profile-row">
       <strong>Muunganisho:</strong>
       <span id="profileNetwork">—</span>
     </div>
-
 
     <p class="panel-note">
       Mabadiliko ya PIN yataunganishwa na huduma ya usalama
@@ -1192,10 +1214,87 @@
       TOKA KWENYE MFUMO
     </button>
   </section>
+  <!-- FOMU YA MAONI -->
+<div id="feedbackModal" class="feedback-overlay hidden">
+  <section class="feedback-modal">
 
 
+    <header class="feedback-header">
+      <h2>MAONI YA DSERVICES</h2>
+      <button type="button" id="feedbackClose"
+        class="feedback-close">×</button>
+    </header>
 
 
+    <form id="feedbackForm" class="feedback-body">
+
+
+      <label for="feedbackName">JINA KAMILI</label>
+      <input
+        type="text"
+        id="feedbackName"
+        placeholder="Andika jina lako kamili"
+        required
+      >
+
+
+      <label for="feedbackPhone">SIMU</label>
+      <input
+        type="tel"
+        id="feedbackPhone"
+        placeholder="Namba yako ya simu"
+        required
+      >
+
+
+      <label for="feedbackType">AINA YA MAONI</label>
+      <select id="feedbackType" required>
+        <option value="">-- Chagua aina ya maoni --</option>
+        <option value="Pongezi">PONGEZI</option>
+        <option value="Pendekezo">PENDEKEZO</option>
+        <option value="Malalamiko">MALALAMIKO</option>
+        <option value="Swali">SWALI</option>
+        <option value="Changamoto ya Mfumo">CHANGAMOTO YA MFUMO</option>
+        <option value="Nyingine">NYINGINE</option>
+      </select>
+
+
+      <label for="feedbackText">UJUMBE</label>
+      <textarea
+        id="feedbackText"
+        placeholder="Andika ujumbe wako hapa..."
+        rows="4"
+        maxlength="2000"
+        required
+      ></textarea>
+
+
+      <div class="feedback-date-row">
+        <div>
+          <label for="feedbackDate">TAREHE</label>
+          <input type="date" id="feedbackDate" required>
+        </div>
+
+
+        <div>
+          <label for="feedbackTime">MUDA</label>
+          <input type="time" id="feedbackTime" required>
+        </div>
+      </div>
+      <p id="feedbackError" class="feedback-error"></p>
+      <div class="feedback-actions">
+        <button type="button" id="sendWhatsApp"
+          class="btn btn-primary">
+          WHATSAPP
+        </button>
+        <button type="button" id="sendSMS"
+          class="btn btn-orange">
+          SMS
+        </button>
+      </div>
+    </form>
+  </section>
+</div>
   <script>
     "use strict";
 
@@ -1206,9 +1305,6 @@
     */
     const API_URL =
       "https://script.google.com/macros/s/AKfycbwrqIq6RG_9-9hyU3AhDii8xpn1ctVy8VNaYFyMplqRV0c8LtaSJ8hqZ1Ap4IwP8Fsv/exec";
-
-
-
 
     const $ = id => document.getElementById(id);
 
@@ -1289,9 +1385,6 @@
       { label: "UKAGUZI WA MFUMO", page: "audit" }
     ];
 
-
-
-
     const serviceMenu = {
       "ELIMU": [
         "DASHBOARD",
@@ -1304,7 +1397,6 @@
         "HALI YA MICHANGO",
         "TAARIFA"
       ],
-
       
       "SHAMBA": [
         "DASHBOARD",
@@ -1324,7 +1416,6 @@
         "TAARIFA"
       ],
 
-
       "USAIDIZI": [
         "DASHBOARD",
         "MAJUKUM",
@@ -1334,7 +1425,6 @@
         "HISTORIA"
       ],
 
-      
       "SALUNI": [
         "DASHBOARD",
         "WATUMISHI",
@@ -1561,8 +1651,6 @@
       $("profileName").textContent = fullName;
       $("profileUsername").textContent = username;
       $("profileRole").textContent = currentUser.role || "—";
-
-
       populateServiceOptions();
 
 
@@ -1592,7 +1680,7 @@
         option.value = service;
         option.textContent =
           service === "ALL"
-            ? "ALL — USIMAMIZI WA MFUMO"
+            ? "ALL — USIMAMIMIZI"
             : service;
 
 
@@ -1600,53 +1688,53 @@
       });
     }
 
+    /* HUDUMA ZINAPOBADILISHWA */
+$("serviceSelect").addEventListener("change", async () => {
+  selectedService = $("serviceSelect").value;
+  selectedModule = "";
 
 
-
-    $("serviceSelect").addEventListener("change", async () => {
-      selectedService = $("serviceSelect").value;
-      selectedModule = "";
+  closeDrawer();
+  closeFloatingPanels();
 
 
-      closeDrawer();
-      closeFloatingPanels();
+  if (!selectedService) {
+    $("moduleSelect").replaceChildren();
 
 
-      if (!selectedService) {
-        $("moduleSelect").replaceChildren();
+    const option = document.createElement("option");
+    option.value = "";
+    option.textContent = "Chagua kipengele";
 
 
-        const option = document.createElement("option");
-        option.value = "";
-        option.textContent = "Chagua kipengele";
+    $("moduleSelect").appendChild(option);
+    $("moduleSelect").disabled = true;
 
 
-        $("moduleSelect").appendChild(option);
-        $("moduleSelect").disabled = true;
+    showWelcome();
+    return;
+  }
 
 
-        showWelcome();
-        return;
-      }
+  if (selectedService === "ALL" && !isOwner()) {
+    showWelcome();
+    return;
+  }
 
 
-      if (
-        selectedService === "ALL" &&
-        !isOwner()
-      ) {
-        showWelcome();
-        return;
-      }
+  populateModules();
 
 
-      populateModules();
-      if (selectedService === "ALL") {
-        await showAdminDashboard();
-      } else {
-        showServiceDashboard();
-      }
-      buildDrawerMenu();
+  if (selectedService === "ALL") {
+    await showAdminDashboard();
+  } else {
+    showServiceDashboard();
+  }
+  buildDrawerMenu();
+});
 
+
+/* KUJAZA VIPENGELE VYA HUDUMA */
  function populateModules() {
   const select = $("moduleSelect");
   select.replaceChildren();
@@ -1666,8 +1754,6 @@
   selectedModule = "ALL";
 }
 
-
-
     /* DASHBOARD YA MWANZO */
     function showWelcome() {
       $("welcomePanel").classList.remove("hidden");
@@ -1676,20 +1762,15 @@
     }
 
 
-
-
     /* DASHBOARD YA MSIMAMIZI */
     async function showAdminDashboard() {
       $("welcomePanel").classList.add("hidden");
       $("serviceDashboard").classList.add("hidden");
       $("adminDashboard").classList.remove("hidden");
 
-
       if (adminStatsLoaded) return;
-
-
+    
       hideMessage($("adminMessage"));
-
 
       try {
         const result = await callAPI({
@@ -1697,10 +1778,8 @@
           token: sessionToken
         });
 
-
         if (result && result.success) {
           const stats = result.stats || {};
-
 
           $("statAccounts").textContent =
             stats.accounts ?? 0;
@@ -1709,17 +1788,13 @@
           $("statUsers").textContent =
             stats.users ?? 0;
 
-
           $("statServices").textContent =
             stats.services ?? 0;
-
 
           $("statTeams").textContent =
             stats.teams ?? 0;
 
-
           adminStatsLoaded = true;
-
 
         } else {
           showMessage(
@@ -1729,7 +1804,6 @@
             "error"
           );
         }
-
 
       } catch (error) {
         console.error("Dashboard error:", error);
@@ -1744,8 +1818,6 @@
     }
 
 
-
-
     /* DASHBOARD YA HUDUMA */
     function showServiceDashboard() {
       $("welcomePanel").classList.add("hidden");
@@ -1754,7 +1826,6 @@
 
 
       $("serviceHeading").textContent = selectedService;
-
 
       $("serviceDescription").textContent =
         selectedModule
@@ -1771,19 +1842,13 @@
           ? "Umechagua " + selectedModule +
             " ndani ya huduma ya " + selectedService + "."
           : "Chagua kipengele kwenye sehemu ya KIPENGELE iliyo juu.";
-
-
       hideMessage($("serviceNotice"));
     }
-
-
 
 
     /* PAZIA LA MENYU */
     function openDrawer() {
       buildDrawerMenu();
-
-
       $("menuDrawer").classList.add("open");
       $("drawerBackdrop").classList.add("open");
       document.body.style.overflow = "hidden";
@@ -1976,9 +2041,6 @@ $("adminDashboard")
       $("profilePanel").classList.add("hidden");
     }
 
-
-
-
     document.querySelectorAll("[data-close-panel]").forEach(button => {
       button.addEventListener("click", () => {
         $(button.dataset.closePanel).classList.add("hidden");
@@ -1986,11 +2048,7 @@ $("adminDashboard")
     });
 
 
-
-
     /* SAA NA TAREHE */
-
-
     function updateClock() {
       const now = new Date();
 
@@ -2009,11 +2067,8 @@ $("adminDashboard")
         year: "numeric"
       });
 
-
       $("dateLabel").textContent = date;
     }
-
-
 
 
     /* ONLINE / OFFLINE */
@@ -2037,37 +2092,170 @@ $("adminDashboard")
 
 
     /* FEEDBACK */
-    $("feedbackButton").addEventListener("click", () => {
-      const message = encodeURIComponent(
-        "Habari DServices, nina maoni kuhusu mfumo."
-      );
+   /* =====================================================
+   DSERVICES - MAONI
+===================================================== */
+const WHATSAPP_NUMBER = "255716328888";
+const SMS_NUMBER = "0762524614";
+const feedbackModal = $("feedbackModal");
+const feedbackForm = $("feedbackForm");
+
+// Kuweka tarehe na muda wa sasa
+function setFeedbackDateTime() {
+  const now = new Date();
+  const date =
+    now.getFullYear() + "-" +
+    String(now.getMonth() + 1).padStart(2, "0") + "-" +
+ String(now.getDate()).padStart(2, "0");
+  const time =
+String(now.getHours()).padStart(2, "0") + ":" +
+    String(now.getMinutes()).padStart(2, "0");
+
+  $("feedbackDate").value = date;
+  $("feedbackTime").value = time;
+}
 
 
-      window.open(
-        "https://wa.me/255716328888?text=" + message,
-        "_blank",
-        "noopener,noreferrer"
-      );
+// Kufungua fomu ya maoni
+$("feedbackButton").addEventListener("click", () => {
+  feedbackForm.reset();
+  $("feedbackError").textContent = "";
+  setFeedbackDateTime();
+  feedbackModal.classList.remove("hidden");
+});
+
+// Kufunga fomu
+function closeFeedbackForm() {
+  feedbackModal.classList.add("hidden");
+}
+$("feedbackClose").addEventListener("click", closeFeedbackForm);
+
+// Kukusanya taarifa za maoni
+function getFeedbackData(method) {
+  if (!feedbackForm.reportValidity()) {
+    return null;
+  }
+  const data = {
+    name: $("feedbackName").value.trim(),
+    phone: $("feedbackPhone").value.trim(),
+    type: $("feedbackType").value,
+    message: $("feedbackText").value.trim(),
+    date: $("feedbackDate").value,
+    time: $("feedbackTime").value,
+    method: method
+  };
+  if (
+    !data.name ||
+    !data.phone ||
+    !data.type ||
+    !data.message ||
+    !data.date ||
+    !data.time
+  ) {
+    $("feedbackError").textContent =
+      "Tafadhali jaza sehemu zote za fomu.";
+    return null;
+  }
+  return data;
+}
+
+
+// Kutengeneza ujumbe wa WhatsApp au SMS
+function buildFeedbackMessage(data) {
+  return (
+    "MAONI YA DSERVICES\n\n" +
+    "Jina Kamili: " + data.name + "\n" +
+    "Simu: " + data.phone + "\n" +
+    "Aina ya Maoni: " + data.type + "\n" +
+    "Ujumbe: " + data.message + "\n" +
+    "Tarehe: " + data.date + "\n" +
+    "Muda: " + data.time
+  );
+}
+
+// Kuhifadhi maoni kwanza, kisha kufungua WhatsApp/SMS
+async function saveFeedbackAndOpen(method) {
+  const data = getFeedbackData(method);
+  if (!data) return;
+  const errorElement = $("feedbackError");
+  const whatsappButton = $("sendWhatsApp");
+  const smsButton = $("sendSMS");
+
+
+  // Kufungua dirisha mapema ili kupunguza uwezekano
+  // wa browser kuzuia kufungua programu baada ya kuhifadhi.
+  const targetWindow = window.open("about:blank", "_blank");
+  whatsappButton.disabled = true;
+  smsButton.disabled = true;
+  errorElement.textContent = "Tafadhali subiri, tunahifadhi maoni...";
+  try {
+    // Hatua ya kwanza: hifadhi taarifa kwenye Google Sheets
+    const result = await callAPI({
+      action: "saveFeedback",
+      data: data
     });
+    if (!result || result.success !== true) {
+      throw new Error(
+        result && result.message
+          ? result.message
+          : "Maoni hayakuhifadhiwa. Tafadhali jaribu tena."
+      );}
 
-    /* FUTA TAARIFA ZA LOGIN */
-    $("clearButton").addEventListener("click", () => {
-      $("username").value = "";
-      $("password").value = "";
 
+    // Hatua ya pili: tengeneza ujumbe wa kutuma
+    const message = buildFeedbackMessage(data);
+    let url = "";
+    if (method === "WHATSAPP") {
+      url =
+        "https://wa.me/" +
+        WHATSAPP_NUMBER +
+        "?text=" +
+        encodeURIComponent(message);
+    } else {
+      url =
+        "sms:" +
+        SMS_NUMBER +
+        "?body=" +
+        encodeURIComponent(message);
+    }
 
-      showMessage(
-        $("loginMessage"),
-        "Taarifa ulizoingiza zimefutwa.",
-        "info"
-      );
-    });
+    // Funga fomu baada ya kuhifadhi kufanikiwa
+    closeFeedbackForm();
+
+    // Fungua programu iliyochaguliwa
+    if (targetWindow && !targetWindow.closed) {
+      targetWindow.location.href = url;
+    } else {
+      window.location.href = url;
+    }
+  } catch (error) {
+    // Usifungue WhatsApp/SMS kama kuhifadhi kumeshindwa
+    if (targetWindow && !targetWindow.closed) {
+      targetWindow.close();
+    }
+    errorElement.textContent =
+      error.message ||
+      "Imeshindikana kuhifadhi maoni. Tafadhali jaribu tena.";
+  } finally {
+    whatsappButton.disabled = false;
+    smsButton.disabled = false;
+  }}
+
+// Kitufe cha WhatsApp
+$("sendWhatsApp").addEventListener("click", () => {
+  saveFeedbackAndOpen("WHATSAPP");
+});
+
+// Kitufe cha SMS
+$("sendSMS").addEventListener("click", () => {
+  saveFeedbackAndOpen("SMS");
+});
+
 
 
     /* LOGOUT */
     async function logout() {
       const token = sessionToken;
-
       sessionToken = null;
       currentUser = null;
       selectedService = "";
@@ -2125,6 +2313,6 @@ $("adminDashboard")
         closeFloatingPanels();
       }
     });
-  </script>
+</script>
 </body>
 </html>
