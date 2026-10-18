@@ -29,13 +29,11 @@
       color: var(--text);
     }
 
-
     button,
     select,
     input {
       font: inherit;
     }
-
 
     button {
       cursor: pointer;
@@ -61,7 +59,6 @@
   overflow-y: auto;
 }
 
-
 .feedback-modal {
   width: 100%;
   max-width: 460px;
@@ -71,7 +68,6 @@
   border-radius: 12px;
   box-shadow: 0 8px 30px #00000030;
 }
-
 
 .feedback-header {
   background: var(--green);
@@ -83,12 +79,10 @@
   align-items: center;
 }
 
-
 .feedback-header h2 {
   margin: 0;
   font-size: 17px;
 }
-
 
 .feedback-close {
   border: none;
@@ -98,11 +92,9 @@
   cursor: pointer;
 }
 
-
 .feedback-body {
   padding: 18px;
 }
-
 
 .feedback-body label {
   display: block;
@@ -111,7 +103,6 @@
   font-weight: bold;
   margin: 12px 0 6px;
 }
-
 
 .feedback-body input,
 .feedback-body select,
@@ -127,11 +118,9 @@
   font-size: 14px;
 }
 
-
 .feedback-body textarea {
   resize: vertical;
 }
-
 
 .feedback-date-row {
   display: grid;
@@ -177,7 +166,6 @@
       font-size: 28px;
     }
 
-
     .login-lines {
       display: flex;
       justify-content: center;
@@ -185,23 +173,19 @@
       margin-top: 10px;
     }
 
-
     .login-lines span {
       width: 40px;
       height: 3px;
       border-radius: 5px;
     }
 
-
     .login-lines span:first-child {
       background: white;
     }
 
-
     .login-lines span:last-child {
       background: var(--orange);
     }
-
 
     .login-area {
       flex: 1;
@@ -213,7 +197,6 @@
       align-items: center;
     }
 
-
     .login-card {
       width: 100%;
       background: white;
@@ -223,13 +206,11 @@
       box-shadow: 0 4px 16px #00000008;
     }
 
-
     .login-card h2 {
       color: var(--green);
       text-align: center;
       margin: 0 0 8px;
     }
-
 
     .login-card .intro {
       text-align: center;
@@ -238,11 +219,9 @@
       margin: 0 0 25px;
     }
 
-
     .field {
       margin-bottom: 18px;
     }
-
 
     .field label {
       display: block;
@@ -252,7 +231,6 @@
       font-weight: bold;
     }
 
-
     .field input {
       width: 100%;
       padding: 13px;
@@ -261,11 +239,30 @@
       outline: none;
     }
 
-
     .field input:focus {
       border-color: var(--green);
     }
 
+    .password-wrapper {
+  position: relative;
+  width: 100%;
+}
+.password-wrapper input {
+  width: 100%;
+  padding-right: 48px;
+}
+.password-toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 19px;
+  padding: 5px;
+  color: var(--green);
+}
 
     .btn {
       border: 0;
@@ -278,12 +275,10 @@
       background: var(--green);
     }
 
-
     .btn-orange {
       color: white;
       background: var(--orange);
     }
-
 
     .btn-outline {
       color: var(--green);
@@ -291,18 +286,23 @@
       border: 1px solid var(--green);
     }
     .login-actions {
-      display: grid;
-      gap: 9px;
-    }
-    .login-actions .btn {
-      width: 100%;
-    }
-    .login-footer {
-      text-align: center;
-      padding: 15px;
-      font-size: 12px;
-      color: var(--muted);
-    }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.login-actions .btn {
+  width: auto;
+  min-width: 90px;
+}
+.login-footer {
+  text-align: center;
+  padding: 15px;
+  font-size: 12px;
+  color: var(--muted);
+}
 
 
     /* =========================
@@ -323,7 +323,6 @@
       display: block;
     }
 
-
     .message.info {
       color: #244765;
       background: #eaf2f9;
@@ -333,7 +332,6 @@
       color: #205b2b;
       background: #e7f5e9;
     }
-
 
     .message.error {
       color: #922b21;
@@ -357,7 +355,6 @@
       flex-wrap: nowrap;
     }
 
-
     .brand-button {
       display: inline-flex;
       align-items: center;
@@ -372,17 +369,14 @@
       white-space: nowrap;
     }
 
-
     .brand-button:hover {
       color: #ffd6ad;
     }
-
 
     .menu-icon {
       font-size: 22px;
       line-height: 1;
     }
-
 
     .top-control {
       display: flex;
@@ -390,7 +384,6 @@
       flex-shrink: 1;
       min-width: 0;
     }
-
 
     .top-select {
       width: auto;
@@ -405,18 +398,15 @@
       font-weight: bold;
     }
 
-
     .top-divider {
       color: white;
       opacity: 0.7;
     }
 
-
     .top-spacer {
       flex: 1;
       min-width: 4px;
     }
-
 
     .connection {
       display: flex;
@@ -427,7 +417,6 @@
       font-size: 12px;
     }
 
-
     .status-dot {
       width: 9px;
       height: 9px;
@@ -436,11 +425,9 @@
       background: #66df7a;
     }
 
-
     .status-dot.offline {
       background: #ff8c82;
     }
-
 
     .date-time {
       text-align: right;
@@ -466,11 +453,9 @@
       justify-content: center;
     }
 
-
     .icon-button:hover {
       background: #ffffff18;
     }
-
 
     .avatar {
       background: var(--orange);
@@ -942,27 +927,37 @@
           </div>
 
           <div class="field">
-            <label for="password">PASSWORD</label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              autocomplete="current-password"
-              placeholder="Ingiza password yako"
-              required
-            >
-          </div>
+  <label for="password">PASSWORD</label>
+  <div class="password-wrapper">
+    <input
+      id="password"
+      name="password"
+      type="password"
+   autocomplete="current-password"
+      placeholder="Ingiza password yako"
+      required
+    >
+    <button
+      type="button"
+      class="password-toggle"
+      id="togglePassword"
+      aria-label="Onyesha password"
+      aria-pressed="false"
+    >
+      👁
+    </button>
+  </div>
+</div>
+
 
           <div class="login-actions">
             <button class="btn btn-primary" id="loginButton" type="submit">
               INGIA
             </button>
 
-
             <button class="btn btn-outline" id="feedbackButton" type="button">
               MAONI
             </button>
-
 
             <button class="btn" id="clearButton" type="button">
               RUDI
@@ -978,9 +973,6 @@
       Huduma bora, Ustawi wetu
     </footer>
   </section>
-
-
-
 
   <!-- MFUMO BAADA YA LOGIN -->
   <section id="appScreen" class="hidden">
@@ -1108,12 +1100,9 @@
           <div id="serviceNotice" class="message" role="status"></div>
         </div>
 
-
       </section>
 
-
     </main>
-
 
     <footer class="app-footer">
       DServices
@@ -1121,15 +1110,9 @@
   </section>
 
 
-
-
   <!-- PAZIA LA MENYU -->
   <div id="drawerBackdrop" class="drawer-backdrop"></div>
-
-
   <aside id="menuDrawer" class="drawer" aria-label="Menyu ya DServices">
-
-
     <div class="drawer-header">
       <h2>DServices</h2>
       <button
@@ -1141,23 +1124,15 @@
         ×
       </button>
     </div>
-
-
     <div class="drawer-caption" id="drawerCaption">
-      MENYU YA HUDUMA
+      MENYU
     </div>
-
-
     <nav id="drawerMenu" class="drawer-menu"></nav>
-
-
     <div class="drawer-bottom">
       <button type="button" class="btn btn-orange" id="logoutButton">
         TOKA
       </button>
     </div>
-
-
   </aside>
   <!-- NOTIFICATIONS -->
   <section id="notificationPanel" class="floating-panel hidden">
@@ -1170,64 +1145,100 @@
     </p>
   </section>
 
-
-
-
-  <!-- PROFILE -->
-  <section id="profilePanel" class="floating-panel hidden">
-    <button type="button" class="panel-close" data-close-panel="profilePanel">
-      ×
-    </button>
-
-    <h3>Wasifu wa Mtumiaji</h3>
-    <div class="profile-row">
-      <strong>Jina:</strong>
-      <span id="profileName">—</span>
-    </div>
-
-    <div class="profile-row">
-      <strong>Username:</strong>
-      <span id="profileUsername">—</span>
-    </div>
-
-    <div class="profile-row">
-      <strong>Nafasi:</strong>
-      <span id="profileRole">—</span>
-    </div>
-
-    <div class="profile-row">
-      <strong>Muunganisho:</strong>
-      <span id="profileNetwork">—</span>
-    </div>
-
-    <p class="panel-note">
-      Mabadiliko ya PIN yataunganishwa na huduma ya usalama
-      ya mfumo katika hatua yake maalumu.
-    </p>
-
-
-    <button
-      type="button"
-      class="btn btn-outline panel-button"
-      id="profileLogoutButton"
+ <!-- PROFILE -->
+<section id="profilePanel" class="floating-panel hidden">
+  <button
+    type="button"
+    class="panel-close"
+    data-close-panel="profilePanel"
+  >
+    ×
+  </button>
+  <h3>Wasifu wa Mtumiaji</h3>
+  <div class="profile-row">
+    <strong>Jina:</strong>
+    <span id="profileName">—</span>
+  </div>
+  <div class="profile-row">
+    <strong>Username:</strong>
+    <span id="profileUsername">—</span>
+  </div>
+  <div class="profile-row">
+    <strong>Nafasi:</strong>
+    <span id="profileRole">—</span>
+  </div>
+  <div class="profile-row">
+    <strong>Muunganisho:</strong>
+    <span id="profileNetwork">—</span>
+  </div>
+  <hr>
+  <h3>Badilisha Password</h3>
+  <form id="changePasswordForm">
+    <label for="oldPassword">
+      PASSWORD YA ZAMANI
+    </label>
+    <input
+      type="password"
+      id="oldPassword"
+      autocomplete="current-password"
+      placeholder="Ingiza password ya zamani"
+      required
     >
-      TOKA KWENYE MFUMO
+    <label for="newPassword">
+      PASSWORD MPYA
+    </label>
+    <input
+      type="password"
+      id="newPassword"
+      autocomplete="new-password"
+      placeholder="Ingiza password mpya"
+      required
+      minlength="6"
+    >
+    <label for="confirmPassword">
+      RUDIA PASSWORD MPYA
+    </label>
+    <input
+      type="password"
+      id="confirmPassword"
+      autocomplete="new-password"
+      placeholder="Rudia password mpya"
+      required
+      minlength="6"
+    >
+    <p
+      id="changePasswordMessage"
+      class="panel-note"
+      role="status"
+      aria-live="polite"
+    ></p>
+    <button
+      type="submit"
+      class="btn btn-primary panel-button"
+      id="changePasswordButton"
+    >
+      BADILISHA PASSWORD
     </button>
-  </section>
-  <!-- FOMU YA MAONI -->
-<div id="feedbackModal" class="feedback-overlay hidden">
+  </form>
+  <hr>
+  <button
+    type="button"
+    class="btn btn-outline panel-button"
+    id="profileLogoutButton"
+  >
+    TOKA
+  </button>
+</section>
+
+    <!-- FOMU YA MAONI -->
+<div id="feedbackModal" class="feedback-overlay hidden">  
   <section class="feedback-modal">
-
-
     <header class="feedback-header">
       <h2>MAONI YA DSERVICES</h2>
       <button type="button" id="feedbackClose"
         class="feedback-close">×</button>
     </header>
-
-
     <form id="feedbackForm" class="feedback-body">
-
 
       <label for="feedbackName">JINA KAMILI</label>
       <input
@@ -1236,7 +1247,6 @@
         placeholder="Andika jina lako kamili"
         required
       >
-
 
       <label for="feedbackPhone">SIMU</label>
       <input
@@ -1258,7 +1268,6 @@
         <option value="Nyingine">NYINGINE</option>
       </select>
 
-
       <label for="feedbackText">UJUMBE</label>
       <textarea
         id="feedbackText"
@@ -1268,13 +1277,11 @@
         required
       ></textarea>
 
-
       <div class="feedback-date-row">
         <div>
           <label for="feedbackDate">TAREHE</label>
           <input type="date" id="feedbackDate" required>
         </div>
-
 
         <div>
           <label for="feedbackTime">MUDA</label>
@@ -1387,7 +1394,6 @@
 
     const serviceMenu = {
       "ELIMU": [
-        "DASHBOARD",
         "WANAFUNZI",
         "WATUMISHI",
         "MAHUDHURIO",
@@ -1399,7 +1405,6 @@
       ],
       
       "SHAMBA": [
-        "DASHBOARD",
         "WATUMISHI",
         "GHALA / STOO/ MAVUNO",
         "MATUMIZI",
@@ -1408,7 +1413,6 @@
       ],
 
       "BIASHARA": [
-        "DASHBOARD",
         "MANUNUZI",
         "MAUZO",
         "WATEJA",
@@ -1417,7 +1421,6 @@
       ],
 
       "USAIDIZI": [
-        "DASHBOARD",
         "MAJUKUM",
         "MALIPO",
         "MATUMIZI",
@@ -1426,7 +1429,6 @@
       ],
 
       "SALUNI": [
-        "DASHBOARD",
         "WATUMISHI",
         "MANUNUZI",
         "MATUMIZI",
@@ -1437,7 +1439,6 @@
       ],
 
       "MATUKIO": [
-        "DASHBOARD",
         "MATUKIO",
         "MAJUKUMU",
         "MAHUDHURIO",
@@ -1445,7 +1446,6 @@
       ],
 
       "MIKOPO & AKIBA": [
-        "DASHBOARD",
         "WANACHAMA & UONGOZI",
         "AKIBA",
         "MIKOPO",
@@ -1478,9 +1478,6 @@
       element.className = "message show " + type;
     }
 
-
-
-
     function hideMessage(element) {
       element.textContent = "";
       element.className = "message";
@@ -1499,8 +1496,6 @@
     }
 
 
-
-
     /*
       Huduma za mtumiaji zisibuniwe kama hazijatumwa na API.
       OWNER anaweza kuona huduma zote pamoja na ALL.
@@ -1509,10 +1504,7 @@
       if (isOwner()) {
         return ["ALL", ...allServices];
       }
-
-
       const user = currentUser || {};
-
 
       const supplied =
         user.services ||
@@ -1520,16 +1512,13 @@
         user.huduma ||
         [];
 
-
       if (!Array.isArray(supplied)) {
         return [];
       }
 
-
       return supplied
         .map(item => {
           if (typeof item === "string") return item.toUpperCase();
-
 
           return String(
             item.service ||
@@ -1542,15 +1531,27 @@
     }
 
 
-
-
     /* LOGIN */
+    // KUONYESHA AU KUFICHA PASSWORD
+const passwordInput = $("password");
+const togglePassword = $("togglePassword");
+togglePassword.addEventListener("click", () => {
+  const isHidden = passwordInput.type === "password";
+  passwordInput.type = isHidden ? "text" : "password";
+  togglePassword.textContent = isHidden ? "🙈" : "👁";
+  togglePassword.setAttribute(
+    "aria-label",
+    isHidden ? "Ficha password" : "Onyesha password"
+  );
+  togglePassword.setAttribute(
+    "aria-pressed",
+    String(isHidden)
+  );
+});
     $("loginForm").addEventListener("submit", async event => {
       event.preventDefault();
-
       const username = $("username").value.trim();
       const password = $("password").value;
-
       if (!username || !password) {
         showMessage(
           $("loginMessage"),
@@ -1626,12 +1627,9 @@
       }
     });
 
-
-
     function openApplication() {
       $("loginScreen").classList.add("hidden");
       $("appScreen").classList.remove("hidden");
-
 
       const fullName =
         currentUser.fullName ||
@@ -1664,9 +1662,6 @@
       setInterval(updateClock, 1000);
     }
 
-
-
-
     /* HUDUMA */
     function populateServiceOptions() {
       const select = $("serviceSelect");
@@ -1680,10 +1675,8 @@
         option.value = service;
         option.textContent =
           service === "ALL"
-            ? "ALL — USIMAMIMIZI"
+            ? "ALL (USIMAMIMIZI)"
             : service;
-
-
         select.appendChild(option);
       });
     }
@@ -1692,25 +1685,15 @@
 $("serviceSelect").addEventListener("change", async () => {
   selectedService = $("serviceSelect").value;
   selectedModule = "";
-
-
   closeDrawer();
   closeFloatingPanels();
-
-
   if (!selectedService) {
     $("moduleSelect").replaceChildren();
-
-
     const option = document.createElement("option");
     option.value = "";
     option.textContent = "Chagua kipengele";
-
-
     $("moduleSelect").appendChild(option);
     $("moduleSelect").disabled = true;
-
-
     showWelcome();
     return;
   }
@@ -1720,11 +1703,7 @@ $("serviceSelect").addEventListener("change", async () => {
     showWelcome();
     return;
   }
-
-
   populateModules();
-
-
   if (selectedService === "ALL") {
     await showAdminDashboard();
   } else {
@@ -1760,7 +1739,6 @@ $("serviceSelect").addEventListener("change", async () => {
       $("adminDashboard").classList.add("hidden");
       $("serviceDashboard").classList.add("hidden");
     }
-
 
     /* DASHBOARD YA MSIMAMIZI */
     async function showAdminDashboard() {
@@ -1872,19 +1850,14 @@ $("serviceSelect").addEventListener("change", async () => {
 
       if (selectedService === "ALL" && isOwner()) {
         $("drawerCaption").textContent =
-          "MENYU YA USIMAMIZI WA MFUMO";
-
-
+          "MENYU USIMAMIZI";
         items = adminMenu;
-
-
       } else if (
         selectedService &&
         selectedService !== "ALL"
       ) {
         $("drawerCaption").textContent =
           "MENYU YA " + selectedService;
-
 
         const permittedItems =
           serviceMenu[selectedService] || ["DASHBOARD"];
@@ -1894,18 +1867,13 @@ $("serviceSelect").addEventListener("change", async () => {
           label,
           page: label
         }));
-
-
       } else {
         $("drawerCaption").textContent =
           "CHAGUA HUDUMA KWANZA";
-
-
         const note = document.createElement("p");
         note.textContent = "Chagua huduma ili kuendelea.";
         note.style.cssText =
           "padding:10px 8px;color:#687078;font-size:13px;line-height:1.6";
-
 
         menu.appendChild(note);
         return;
@@ -1915,29 +1883,21 @@ $("serviceSelect").addEventListener("change", async () => {
       items.forEach(item => {
         const button = document.createElement("button");
 
-
         button.type = "button";
         button.className = "drawer-item";
         button.textContent = item.label;
-
 
         button.addEventListener("click", () => {
           closeDrawer();
           openMenuPage(item);
         });
 
-
         menu.appendChild(button);
       });
     }
 
-
-
-
     function openMenuPage(item) {
       closeFloatingPanels();
-
-
       if (
         selectedService === "ALL" &&
         isOwner()
@@ -1946,12 +1906,10 @@ $("serviceSelect").addEventListener("change", async () => {
           showAdminDashboard();
           return;
         }
-
-
         $("welcomePanel").classList.add("hidden");
         $("adminDashboard").classList.remove("hidden");
         $("serviceDashboard").classList.add("hidden");
-
+        
         const headings = {
           accounts: "TAASISI / ACCOUNTS",
           users: "WATUMIAJI",
@@ -1983,7 +1941,6 @@ $("adminDashboard")
         return;
       }
 
-
       if (selectedService) {
         if (item.label === "DASHBOARD") {
           selectedModule = "";
@@ -1992,11 +1949,9 @@ $("adminDashboard")
           return;
         }
 
-
         selectedModule = item.label;
         const available = Array.from($("moduleSelect").options)
           .some(option => option.value === selectedModule);
-
 
         if (available) {
           $("moduleSelect").value = selectedModule;
@@ -2028,19 +1983,14 @@ $("adminDashboard")
       $("notificationPanel").classList.add("hidden");
       $("profilePanel").classList.toggle("hidden");
 
-
       $("profileNetwork").textContent =
         navigator.onLine ? "Online" : "Offline";
     });
-
-
-
 
     function closeFloatingPanels() {
       $("notificationPanel").classList.add("hidden");
       $("profilePanel").classList.add("hidden");
     }
-
     document.querySelectorAll("[data-close-panel]").forEach(button => {
       button.addEventListener("click", () => {
         $(button.dataset.closePanel).classList.add("hidden");
