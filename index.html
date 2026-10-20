@@ -1048,7 +1048,7 @@
       <!-- DASHBOARD YA ALL -->
       <section id="adminDashboard" class="hidden">
         <div class="page-heading">
-          <h2>DASHBOARD YA DSERVICES</h2>
+          <h2>DASHBOARD YA DS APP</h2>
           <p>Muhtasari wa usimamizi wa mfumo mzima.</p>
         </div>
         <div class="stats-grid">
@@ -1319,6 +1319,7 @@
     let currentUser = null;
     let selectedService = "";
     let selectedModule = "";
+    let selectedMenu = "MUHTASARI";
     let adminStatsLoaded = false;
 
     const allServices = [
@@ -1717,15 +1718,14 @@ $("serviceSelect").addEventListener("change", async () => {
   buildDrawerMenu();
 });
 
-
 /* KUJAZA VIPENGELE VYA HUDUMA */
- function populateModules() {
+function populateModules() {
   const select = $("moduleSelect");
   select.replaceChildren();
-  const allOption = document.createElement("option");
-  allOption.value = "ALL";
-  allOption.textContent = "ALL";
-  select.appendChild(allOption);
+  const placeholder = document.createElement("option");
+  placeholder.value = "";
+  placeholder.textContent = "Chagua kipengele";
+  select.appendChild(placeholder);
   const modules = serviceModules[selectedService] || [];
   modules.forEach(module => {
     const option = document.createElement("option");
@@ -1734,9 +1734,21 @@ $("serviceSelect").addEventListener("change", async () => {
     select.appendChild(option);
   });
   select.disabled = false;
-  select.value = "ALL";
-  selectedModule = "ALL";
+  select.value = "";
+  selectedModule = "";
 }
+/* KIPENGELE KINAPOCHAGULIWA */
+$("moduleSelect").addEventListener("change", () => {
+  selectedModule = $("moduleSelect").value;
+  closeDrawer();
+  closeFloatingPanels();
+  if (!selectedModule) {
+    showWelcome();
+    return;
+  }
+  showServiceDashboard();
+  buildDrawerMenu();
+});
 
     /* DASHBOARD YA MWANZO */
     function showWelcome() {
@@ -1800,33 +1812,36 @@ $("serviceSelect").addEventListener("change", async () => {
       }
     }
 
+/* DASHBOARD YA HUDUMA */
+function showServiceDashboard() {
+  $("welcomePanel").classList.add("hidden");
+  $("adminDashboard").classList.add("hidden");
+  $("serviceDashboard").classList.remove("hidden");
 
-    /* DASHBOARD YA HUDUMA */
-    function showServiceDashboard() {
-      $("welcomePanel").classList.add("hidden");
-      $("adminDashboard").classList.add("hidden");
-      $("serviceDashboard").classList.remove("hidden");
+  // Jina la huduma
+  $("serviceHeading").textContent = selectedService;
 
+  // Maelezo ya kipengele kilichochaguliwa
+  $("serviceDescription").textContent =
+    selectedModule
+      ? "Kipengele kilichochaguliwa: " + selectedModule
+      : "Chagua kipengele cha huduma unayotaka kutumia.";
 
-      $("serviceHeading").textContent = selectedService;
+  // Kichwa kikuu: KIPENGELE - MENYU
+  $("moduleHeading").textContent =
+    selectedModule
+      ? selectedModule + " - " + (selectedMenu || "MUHTASARI")
+      : selectedService;
 
-      $("serviceDescription").textContent =
-        selectedModule
-          ? "Kipengele kilichochaguliwa: " + selectedModule
-          : "Chagua kipengele cha huduma unayotaka kutumia.";
-
-
-      $("moduleHeading").textContent =
-        selectedModule || selectedService;
-
-
-      $("serviceMessage").textContent =
-        selectedModule
-          ? "Umechagua " + selectedModule +
-            " ndani ya huduma ya " + selectedService + "."
-          : "Chagua kipengele kwenye sehemu ya KIPENGELE iliyo juu.";
-      hideMessage($("serviceNotice"));
-    }
+  // Ujumbe wa sasa
+  $("serviceMessage").textContent =
+    selectedModule
+      ? "Umechagua kipengele " + selectedModule +
+        " ndani ya huduma ya " + selectedService +
+        ". Menyu: " + (selectedMenu || "MUHTASARI") + "."
+      : "Chagua kipengele kwenye sehemu ya KIPENGELE iliyo juu.";
+  hideMessage($("serviceNotice"));
+}
 
 
     /* PAZIA LA MENYU */
@@ -1851,8 +1866,6 @@ $("serviceSelect").addEventListener("change", async () => {
       const menu = $("drawerMenu");
       menu.replaceChildren();
       let items = [];
-
-
       if (selectedService === "ALL" && isOwner()) {
         $("drawerCaption").textContent =
           "MENYU USIMAMIZI";
@@ -1901,58 +1914,68 @@ $("serviceSelect").addEventListener("change", async () => {
       });
     }
 
-    function openMenuPage(item) {
-      closeFloatingPanels();
-      if (
-        selectedService === "ALL" &&
-        isOwner()
-      ) {
-        if (item.page === "adminDashboard") {
-          showAdminDashboard();
-          return;
-        }
-        $("welcomePanel").classList.add("hidden");
-        $("adminDashboard").classList.remove("hidden");
-        $("serviceDashboard").classList.add("hidden");
-        
-        const headings = {
-          accounts: "TAASISI / ACCOUNTS",
-          users: "WATUMIAJI",
-          teams: "TIMU ZA USIMAMIZI",
-          systemServices: "HUDUMA ZA MFUMO",
-          subscriptions: "USAJILI NA MALIPO",
-          settings: "MIPANGILIO YA MFUMO",
-          audit: "UKAGUZI WA MFUMO"
-        };
-        const heading = headings[item.page] || item.label;
+   /* KUFUNGUA MENYU ILIYOCHAGULIWA */
+function openMenuPage(item) {
+  closeFloatingPanels();
 
-        $("adminDashboard")
-  .querySelector(".stats-grid")
-  .classList.remove("hidden");
-$("adminDashboard")
-  .querySelector(".page-heading h2")
-  .textContent = "DASHBOARD YA DSERVICES";
-$("adminDashboard")
-  .querySelector(".page-heading p")
-  .textContent = "Muhtasari wa usimamizi wa mfumo mzima.";
-        $("adminDashboard").querySelector(".stats-grid")
-          .classList.add("hidden");
-        showMessage(
-          $("adminMessage"),
-          "Umefungua " + heading +
-          ". Data na vitendo vya sehemu hii vinahitaji kuunganishwa na API yake.",
-          "info"
-        );
-        return;
-      }
+  // DASHBOARD YA MSIMAMIZI
+  if (selectedService === "ALL" && isOwner()) {
+    if (item.page === "adminDashboard") {
+      showAdminDashboard();
+      return;
+    }
+    $("welcomePanel").classList.add("hidden");
+    $("adminDashboard").classList.remove("hidden");
+    $("serviceDashboard").classList.add("hidden");
 
-      if (selectedService) {
-        if (item.label === "DASHBOARD") {
-          selectedModule = "";
-          $("moduleSelect").value = "";
-          showServiceDashboard();
-          return;
-        }
+    const headings = {
+      accounts: "TAASISI / ACCOUNTS",
+      users: "WATUMIAJI",
+      teams: "TIMU ZA USIMAMIZI",
+      systemServices: "HUDUMA ZA MFUMO",
+      subscriptions: "USAJILI NA MALIPO",
+      settings: "MIPANGILIO YA MFUMO",
+      audit: "UKAGUZI WA MFUMO"
+    };
+
+    const heading = headings[item.page] || item.label;
+
+    $("adminDashboard")
+      .querySelector(".page-heading h2")
+      .textContent = heading;
+
+    $("adminDashboard")
+      .querySelector(".page-heading p")
+      .textContent = "Sehemu ya usimamizi wa mfumo mzima.";
+
+    $("adminDashboard")
+      .querySelector(".stats-grid")
+      .classList.add("hidden");
+
+    showMessage(
+      $("adminMessage"),
+      "Umefungua " + heading +
+      ". Data na vitendo vya sehemu hii vinahitaji kuunganishwa na API yake.",
+      "info"
+    );
+    return;
+  }
+
+  // MENYU ZA HUDUMA ZA KAWAIDA
+  if (!selectedService || selectedService === "ALL") {
+    return;
+  }
+
+  if (item.label === "DASHBOARD") {
+    selectedMenu = "MUHTASARI";
+  } else {
+    selectedMenu = item.label;
+  }
+
+  // Muhimu: selectedModule haibadilishwi hapa.
+  showServiceDashboard();
+}
+
 
         selectedModule = item.label;
         const available = Array.from($("moduleSelect").options)
