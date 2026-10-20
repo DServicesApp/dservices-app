@@ -343,18 +343,18 @@
        MSTARI WA JUU WA DSERVICES
     ========================= */
     .topbar {
-      min-height: 64px;
-      width: 100%;
-      background: var(--green);
-      color: white;
-      border-bottom: 4px solid var(--orange);
-      padding: 8px 14px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: nowrap;
-    }
-
+  min-height: 64px;
+  width: 100%;
+  background: #E5E7EB;
+  color: #333333;
+  border-bottom: 4px solid var(--orange);
+  box-shadow: 0 2px 0 #4B5320;
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: nowrap;
+}
     .brand-button {
       display: inline-flex;
       align-items: center;
@@ -1681,7 +1681,7 @@ togglePassword.addEventListener("click", () => {
         option.value = service;
         option.textContent =
           service === "ALL"
-            ? "ALL (USIMAMIMIZI)"
+            ? "ALL (USIMAMIZI)"
             : service;
         select.appendChild(option);
       });
@@ -1976,34 +1976,11 @@ function openMenuPage(item) {
   showServiceDashboard();
 }
 
-
-        selectedModule = item.label;
-        const available = Array.from($("moduleSelect").options)
-          .some(option => option.value === selectedModule);
-
-        if (available) {
-          $("moduleSelect").value = selectedModule;
-        } else {
-          const option = document.createElement("option");
-          option.value = selectedModule;
-          option.textContent = selectedModule;
-          $("moduleSelect").appendChild(option);
-          $("moduleSelect").value = selectedModule;
-        }
-        showServiceDashboard();
-      }
-    }
-
-
-
-
     /* NOTIFICATIONS */
     $("notificationButton").addEventListener("click", () => {
       $("profilePanel").classList.add("hidden");
       $("notificationPanel").classList.toggle("hidden");
     });
-
-
 
 
     /* PROFILE */
@@ -2035,7 +2012,6 @@ function openMenuPage(item) {
         now.toLocaleTimeString("en-GB", {
           hour: "2-digit",
           minute: "2-digit",
-          second: "2-digit",
           hour12: false
         });
       const date = now.toLocaleDateString("sw-TZ", {
