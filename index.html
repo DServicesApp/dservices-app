@@ -345,11 +345,13 @@
     .topbar {
   min-height: 64px;
   width: 100%;
+  box-sizing: border-box;
   background: #E5E7EB;
   color: #333333;
   border-bottom: 4px solid var(--orange);
   box-shadow: 0 2px 0 #4B5320;
   padding: 8px 14px;
+
   display: flex;
   align-items: center;
   gap: 12px;
@@ -809,10 +811,11 @@
     ========================= */
     @media (max-width: 650px) {
       .topbar {
-        padding: 10px;
-        gap: 9px;
-        flex-wrap: wrap;
-      }
+  padding: 8px;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
       .brand-button {
         font-size: 19px;
       }
@@ -927,14 +930,14 @@
           </div>
 
           <div class="field">
-  <label for="password">PASSWORD</label>
+  <label for="password">PASWORD</label>
   <div class="password-wrapper">
     <input
       id="password"
       name="password"
       type="password"
    autocomplete="current-password"
-      placeholder="Ingiza password yako"
+      placeholder="Weka password yako"
       required
     >
     <button
@@ -1322,144 +1325,315 @@
     let selectedMenu = "MUHTASARI";
     let adminStatsLoaded = false;
 
-    const allServices = [
-      "ELIMU",
-      "SHAMBA",
-      "BIASHARA",
-      "USAIDIZI",
-      "SALUNI",
-      "MATUKIO",
-      "MIKOPO & AKIBA"
-    ];
-
-    const serviceModules = {
-      "ELIMU": [
-        "TUITION",
-        "DAYCARE",
-        "NURSERY",
-        "COURSES",
-        "EXAMS RESULT"
-      ],
-
-      "SHAMBA": [
-        "MAZAO",
-        "MIFUGO"
-      ],
-
-      "BIASHARA": [
-        "MANUNUZI",
-        "MAUZO",
-        "WATEJA",
-        "ODA",
-        "TAARIFA"
-      ],
-
-      "USAIDIZI": [
-        "HUDUMA",
-        "ODA",
-        "TAARIFA"
-      ],
-
-      "SALUNI": [
-        "USUSI & MAPAMBO",
-        "TAARIFA",
-        "HISTORIA"
-      ],
+    /* HUDUMA ZOTE ZA DSERVICES */
+const allServices = [
+  "ELIMU",
+  "SHAMBA",
+  "BIASHARA",
+  "USAIDIZI",
+  "SALUNI",
+  "MATUKIO",
+  "MIKOPO & AKIBA"
+];
 
 
-      "MATUKIO": [
-        "SHEREHE",
-        "VIKAO",
-        "MIKUTANO",
-        "MISIBA",
-        "TAARIFA"
-      ],
+/* VIPENGELE VYA KILA HUDUMA */
+const serviceModules = {
 
-      "MIKOPO & AKIBA": [
-        "VIKOBA",
-        "HISA",
-        "TAARIFA"
-      ]
-    };
+  "ELIMU": [
+    "TUITION",
+    "DAYCARE",
+    "NURSERY",
+    "COURSES",
+    "EXAMS RESULT"
+  ],
+
+  "SHAMBA": [
+    "MAZAO",
+    "MIFUGO"
+  ],
+
+  "BIASHARA": [
+    "BIASHARA"
+  ],
+
+  "USAIDIZI": [
+    "USAIDIZI"
+  ],
+
+  "SALUNI": [
+    "MAPAMBO"
+  ],
+
+  "MATUKIO": [
+    "SHEREHE",
+    "VIKAO",
+    "MIKUTANO",
+    "MISIBA"
+  ],
+
+  "MIKOPO & AKIBA": [
+    "VIKOBA",
+    "HISA",
+    "KIKUNDI CHA JAMII"
+  ]
+
+};
 
 
-    const adminMenu = [
-      { label: "DASHBOARD", page: "adminDashboard" },
-      { label: "TAASISI / ACCOUNTS", page: "accounts" },
-      { label: "WATUMIAJI", page: "users" },
-      { label: "TIMU ZA USIMAMIZI", page: "teams" },
-      { label: "HUDUMA ZA MFUMO", page: "systemServices" },
-      { label: "USAJILI NA MALIPO", page: "subscriptions" },
-      { label: "MIPANGILIO YA MFUMO", page: "settings" },
-      { label: "UKAGUZI WA MFUMO", page: "audit" }
-    ];
+/* MENYU ZA MSIMAMIZI MKUU */
+const adminMenu = [
+  { label: "DASHBOARD", page: "adminDashboard" },
+  { label: "TAASISI / ACCOUNTS", page: "accounts" },
+  { label: "WATUMIAJI", page: "users" },
+  { label: "TIMU ZA USIMAMIZI", page: "teams" },
+  { label: "HUDUMA ZA MFUMO", page: "systemServices" },
+  { label: "USAJILI NA MALIPO", page: "subscriptions" },
+  { label: "MIPANGILIO YA MFUMO", page: "settings" },
+  { label: "UKAGUZI WA MFUMO", page: "audit" }
+];
 
-    const serviceMenu = {
-      "ELIMU": [
-        "WATUMISHI",
-        "WANAFUNZI",
-        "MAHUDHURIO",
-        "MITIHANI & MATOKEO",
-        "RATIBA",
-        "MALIPO",
-        "MATUMIZI",
-        "HALI YA MICHANGO",
-        "TAARIFA"
-      ],
-      
-      "SHAMBA": [
-        "WATUMISHI",
-        "GHALA /MAVUNO",
-        "MATUMIZI/MANUNUZI",
-        "MAUZO/MALIPO",
-        "HISTORIA"
-      ],
 
-      "BIASHARA": [
-        "MATUMIZI/MANUNUZI",
-        "MAUZO/MALIPO",
-        "WATEJA",
-        "ODA",
-        "TAARIFA"
-      ],
+/*
+  MENYU ZA KILA KIPENGELE
 
-      "USAIDIZI": [
-        "MAJUKUM",
-        "MALIPO/MATUMIZI",
-        "TAARIFA",
-        "HISTORIA"
-      ],
+  Kila kipengele kina menyu yake.
+  Majina ya hapa yanalingana na serviceModules.
+*/
+const moduleMenu = {
 
-      "SALUNI": [
-        "WATUMISHI",
-        "MANUNUZI/MATUMIZI",
-        "MAUZO/MALIPO",
-        "STOO",
-        "ODA",
-        "WATEJA",
-        "TAARIFA",
-        "HISTORIA"
-      ],
+  /* =========================
+     ELIMU
+  ========================= */
 
-      "MATUKIO": [
-        "USAJILI & MAUHUDHURIO",
-        "KAMATI & MAJUKUMU",
-        "RATIBA",
-        "MICHANGO & AHADI",
-        "MATUMIZI & BAJETI",
-        "MAWASILIANO",
-        "TAARIFA"
-      ],
+  "TUITION": [
+    "MUHTASARI",
+    "WATUMISHI",
+    "WANAFUNZI",
+    "MAHUDHURIO",
+    "RATIBA",
+    "MALIPO",
+    "MATUMIZI",
+    "MADENI",
+    "HALI YA MICHANGO",
+    "MITIHANI & MATOKEO",
+    "TAARIFA & TATHIMINI",
+    "MIPANGILIO"
+  ],
 
-      "MIKOPO & AKIBA": [
-        "WANACHAMA & UONGOZI",
-        "AKIBA",
-        "MIKOPO",
-        "HISTORIA",
-        "TAARIFA"
-      ]
-    };
+  "DAYCARE": [
+    "MUHTASARI",
+    "WATUMISHI",
+    "WATOTO",
+    "MAHUDHURIO",
+    "RATIBA",
+    "MALIPO",
+    "MATUMIZI",
+    "MADENI",
+    "TAARIFA & TATHIMINI",
+    "MIPANGILIO"
+  ],
 
+  "NURSERY": [
+    "MUHTASARI",
+    "WATUMISHI",
+    "WANAFUNZI",
+    "MAHUDHURIO",
+    "RATIBA",
+    "MALIPO",
+    "MATUMIZI",
+    "MADENI",
+    "MITIHANI & MATOKEO",
+    "TAARIFA & TATHIMINI",
+    "MIPANGILIO"
+  ],
+
+  "COURSES": [
+    "MUHTASARI",
+    "WATUMISHI",
+    "WANAFUNZI",
+    "KOZI",
+    "MAHUDHURIO",
+    "RATIBA",
+    "MALIPO",
+    "MATUMIZI",
+    "MADENI",
+    "MITIHANI & MATOKEO",
+    "TAARIFA & TATHIMINI",
+    "MIPANGILIO"
+  ],
+
+  "EXAMS RESULT": [
+    "MUHTASARI",
+    "SAJILI WANAFUNZI",
+    "ALAMA & MATOKEO",
+    "TATHIMINI"
+  ],
+
+
+  /* =========================
+     BIASHARA
+  ========================= */
+
+  "BIASHARA": [
+    "MUHTASARI",
+    "WATUMISHI",
+    "MANUNUZI & MATUMIZI",
+    "MAUZO",
+    "ODA",
+    "WATEJA / WAZABUNI",
+    "BIDHAA / STOO",
+    "TATHIMINI",
+    "MIPANGILIO"
+  ],
+
+
+  /* =========================
+     SALUNI
+  ========================= */
+
+  "MAPAMBO": [
+    "MUHTASARI",
+    "WATUMISHI",
+    "WANAFUNZI",
+    "MAHUDHURIO",
+    "MANUNUZI & MATUMIZI",
+    "MAUZO & MALIPO",
+    "ODA & WATEJA",
+    "STOO"
+  ],
+
+
+  /* =========================
+     SHAMBA - MAZAO
+  ========================= */
+
+  "MAZAO": [
+    "MUHTASARI",
+    "WATUMISHI",
+    "MANUNUZI & MATUMIZI",
+    "MAVUNO & MAUZO",
+    "GHALA",
+    "TAARIFA",
+    "TATHIMINI"
+  ],
+
+
+  /* =========================
+     SHAMBA - MIFUGO
+  ========================= */
+
+  "MIFUGO": [
+    "MUHTASARI",
+    "WATUMISHI",
+    "UTAMBULISHO",
+    "UZAZI",
+    "UZALISHAJI",
+    "AFYA & MATIBABU",
+    "CHAKULA / LISHE",
+    "MANUNUZI & MATUMIZI",
+    "MAVUNO & MAUZO",
+    "TAARIFA",
+    "TATHIMINI"
+  ],
+
+
+  /* =========================
+     USAIDIZI
+  ========================= */
+
+  "USAIDIZI": [
+    "MUHTASARI",
+    "MAJUKUMU",
+    "MAOMBI",
+    "MALIPO & MATUMIZI",
+    "TAARIFA & TATHIMINI"
+  ],
+
+
+  /* =========================
+     MATUKIO
+  ========================= */
+
+  "SHEREHE": [
+    "MUHTASARI",
+    "USAJILI & MAHUDHURIO",
+    "KAMATI & MAJUKUMU",
+    "RATIBA",
+    "MICHANGO & AHADI",
+    "MATUMIZI & BAJETI",
+    "MAWASILIANO",
+    "TAARIFA & TATHIMINI"
+  ],
+
+  "VIKAO": [
+    "MUHTASARI",
+    "USAJILI & MAHUDHURIO",
+    "KAMATI & MAJUKUMU",
+    "RATIBA",
+    "MICHANGO & AHADI",
+    "MATUMIZI & BAJETI",
+    "MAWASILIANO",
+    "TAARIFA & TATHIMINI"
+  ],
+
+  "MIKUTANO": [
+    "MUHTASARI",
+    "USAJILI & MAHUDHURIO",
+    "KAMATI & MAJUKUMU",
+    "RATIBA",
+    "MICHANGO & AHADI",
+    "MATUMIZI & BAJETI",
+    "MAWASILIANO",
+    "TAARIFA & TATHIMINI"
+  ],
+
+  "MISIBA": [
+    "MUHTASARI",
+    "USAJILI & MAHUDHURIO",
+    "KAMATI & MAJUKUMU",
+    "MICHANGO & AHADI",
+    "MATUMIZI & BAJETI",
+    "MAWASILIANO",
+    "TAARIFA & TATHIMINI"
+  ],
+
+
+  /* =========================
+     MIKOPO & AKIBA
+  ========================= */
+
+  "VIKOBA": [
+    "MUHTASARI",
+    "WANACHAMA",
+    "UONGOZI",
+    "AKIBA",
+    "MIKOPO",
+    "MAREJESHO",
+    "RATIBA",
+    "TAARIFA & TATHIMINI"
+  ],
+
+  "HISA": [
+    "MUHTASARI",
+    "WANACHAMA",
+    "UONGOZI",
+    "HISA",
+    "MICHANGO",
+    "TAARIFA & TATHIMINI"
+  ],
+
+  "KIKUNDI CHA JAMII": [
+    "MUHTASARI",
+    "WANACHAMA",
+    "UONGOZI",
+    "MICHANGO",
+    "MIRADI",
+    "MATUMIZI",
+    "TAARIFA & TATHIMINI"
+  ]
+
+};
 
     /* API */
     async function callAPI(payload) {
@@ -1561,7 +1735,7 @@ togglePassword.addEventListener("click", () => {
       if (!username || !password) {
         showMessage(
           $("loginMessage"),
-          "Tafadhali jaza username na password.",
+          "Tafadhali jaza username na reg no.",
           "error"
         );
         return;
@@ -1581,7 +1755,7 @@ togglePassword.addEventListener("click", () => {
 
       showMessage(
         $("loginMessage"),
-        "Inathibitisha taarifa zako...",
+        "Inathibitishwa...",
         "info"
       );
 
@@ -1686,70 +1860,109 @@ togglePassword.addEventListener("click", () => {
         select.appendChild(option);
       });
     }
-
-    /* HUDUMA ZINAPOBADILISHWA */
+/* HUDUMA ZINAPOBADILISHWA */
 $("serviceSelect").addEventListener("change", async () => {
+
   selectedService = $("serviceSelect").value;
   selectedModule = "";
+  selectedMenu = "MUHTASARI";
+
   closeDrawer();
   closeFloatingPanels();
-  if (!selectedService) {
-    $("moduleSelect").replaceChildren();
-    const option = document.createElement("option");
-    option.value = "";
-    option.textContent = "Chagua kipengele";
-    $("moduleSelect").appendChild(option);
-    $("moduleSelect").disabled = true;
-    showWelcome();
-    return;
-  }
 
+  const moduleSelect = $("moduleSelect");
 
-  if (selectedService === "ALL" && !isOwner()) {
-    showWelcome();
-    return;
-  }
-  populateModules();
-  if (selectedService === "ALL") {
-    await showAdminDashboard();
-  } else {
-    showServiceDashboard();
-  }
-  buildDrawerMenu();
-});
+  moduleSelect.replaceChildren();
 
-/* KUJAZA VIPENGELE VYA HUDUMA */
-function populateModules() {
-  const select = $("moduleSelect");
-  select.replaceChildren();
   const placeholder = document.createElement("option");
   placeholder.value = "";
   placeholder.textContent = "Chagua kipengele";
-  select.appendChild(placeholder);
-  const modules = serviceModules[selectedService] || [];
-  modules.forEach(module => {
-    const option = document.createElement("option");
-    option.value = module;
-    option.textContent = module;
-    select.appendChild(option);
-  });
-  select.disabled = false;
-  select.value = "";
-  selectedModule = "";
-}
-/* KIPENGELE KINAPOCHAGULIWA */
-$("moduleSelect").addEventListener("change", () => {
-  selectedModule = $("moduleSelect").value;
-  closeDrawer();
-  closeFloatingPanels();
-  if (!selectedModule) {
+
+  moduleSelect.appendChild(placeholder);
+
+  if (!selectedService) {
+    moduleSelect.disabled = true;
     showWelcome();
+    buildDrawerMenu();
     return;
   }
+
+  /* USIMAMIZI MKUU */
+  if (selectedService === "ALL") {
+
+    moduleSelect.disabled = true;
+
+    await showAdminDashboard();
+    buildDrawerMenu();
+
+    return;
+  }
+
+  /* HUDUMA ZA KAWAIDA */
+  populateModules();
+
   showServiceDashboard();
   buildDrawerMenu();
+
 });
 
+
+/* KUJAZA VIPENGELE VYA HUDUMA */
+function populateModules() {
+
+  const select = $("moduleSelect");
+
+  select.replaceChildren();
+
+  const placeholder = document.createElement("option");
+  placeholder.value = "";
+  placeholder.textContent = "Chagua kipengele";
+
+  select.appendChild(placeholder);
+
+  const modules = serviceModules[selectedService] || [];
+
+  modules.forEach(module => {
+
+    const option = document.createElement("option");
+
+    option.value = module;
+    option.textContent = module;
+
+    select.appendChild(option);
+
+  });
+
+  select.disabled = modules.length === 0;
+
+  selectedModule = "";
+
+}
+
+
+/* KIPENGELE KINAPOCHAGULIWA */
+$("moduleSelect").addEventListener("change", () => {
+
+  selectedModule = $("moduleSelect").value;
+
+  selectedMenu = "MUHTASARI";
+
+  closeDrawer();
+  closeFloatingPanels();
+
+  if (!selectedModule) {
+
+    showServiceDashboard();
+    buildDrawerMenu();
+
+    return;
+  }
+
+  showServiceDashboard();
+  buildDrawerMenu();
+
+});
+    
     /* DASHBOARD YA MWANZO */
     function showWelcome() {
       $("welcomePanel").classList.remove("hidden");
@@ -1862,58 +2075,107 @@ function showServiceDashboard() {
     $("closeDrawer").addEventListener("click", closeDrawer);
     $("drawerBackdrop").addEventListener("click", closeDrawer);
 
-    function buildDrawerMenu() {
-      const menu = $("drawerMenu");
-      menu.replaceChildren();
-      let items = [];
-      if (selectedService === "ALL" && isOwner()) {
-        $("drawerCaption").textContent =
-          "MENYU USIMAMIZI";
-        items = adminMenu;
-      } else if (
-        selectedService &&
-        selectedService !== "ALL"
-      ) {
-        $("drawerCaption").textContent =
-          "MENYU YA " + selectedService;
+function buildDrawerMenu() {
+  const menu = $("drawerMenu");
 
-        const permittedItems =
-          serviceMenu[selectedService] || ["DASHBOARD"];
+  menu.replaceChildren();
+
+  let items = [];
+
+  /* MENYU ZA MSIMAMIZI MKUU */
+  if (selectedService === "ALL" && isOwner()) {
+    $("drawerCaption").textContent = "MENYU ZA USIMAMIZI";
+    items = adminMenu;
+
+  }
+
+  /* MENYU ZA KIPENGELE */
+  else if (selectedService && selectedModule) {
+
+    $("drawerCaption").textContent =
+      selectedModule + " - MENYU";
+
+    const permittedItems =
+      moduleMenu[selectedModule] || [];
+
+    items = permittedItems.map(label => ({
+      label: label,
+      page: label
+    }));
+
+  }
+
+  /* HUDUMA IMECHAGULIWA LAKINI KIPENGELE HAKIJACHAGULIWA */
+  else if (selectedService) {
+
+    $("drawerCaption").textContent =
+      "CHAGUA KIPENGELE";
+    const note = document.createElement("p");
+
+    note.textContent =
+      "Chagua kipengele kwenye sehemu ya juu ili kuona menyu zake.";
+
+    note.style.cssText =
+      "padding:10px 8px;color:#687078;font-size:13px;line-height:1.6";
+
+    menu.appendChild(note);
+
+    return;
+
+  }
+
+  /* HAKUNA HUDUMA ILIYOCHAGULIWA */
+  else {
+
+    $("drawerCaption").textContent =
+      "CHAGUA HUDUMA KWANZA";
+
+    const note = document.createElement("p");
+
+    note.textContent =
+      "Chagua huduma ili kuendelea.";
+
+    note.style.cssText =
+      "padding:10px 8px;color:#687078;font-size:13px;line-height:1.6";
+
+    menu.appendChild(note);
+
+    return;
+
+  }
 
 
-        items = permittedItems.map(label => ({
-          label,
-          page: label
-        }));
-      } else {
-        $("drawerCaption").textContent =
-          "CHAGUA HUDUMA KWANZA";
-        const note = document.createElement("p");
-        note.textContent = "Chagua huduma ili kuendelea.";
-        note.style.cssText =
-          "padding:10px 8px;color:#687078;font-size:13px;line-height:1.6";
+  /* KUJENGA VITufe VYA MENYU */
+  items.forEach(item => {
 
-        menu.appendChild(note);
-        return;
-      }
+    const button = document.createElement("button");
 
+    button.type = "button";
+    button.className = "drawer-item";
+    button.textContent = item.label;
 
-      items.forEach(item => {
-        const button = document.createElement("button");
-
-        button.type = "button";
-        button.className = "drawer-item";
-        button.textContent = item.label;
-
-        button.addEventListener("click", () => {
-          closeDrawer();
-          openMenuPage(item);
-        });
-
-        menu.appendChild(button);
-      });
+    if (
+      item.label === selectedMenu ||
+      (item.label === "DASHBOARD" &&
+       selectedMenu === "MUHTASARI")
+    ) {
+      button.classList.add("active");
     }
 
+  button.addEventListener("click", () => {
+
+      closeDrawer();
+
+      openMenuPage(item);
+
+    });
+
+    menu.appendChild(button);
+
+  });
+
+}
+    
    /* KUFUNGUA MENYU ILIYOCHAGULIWA */
 function openMenuPage(item) {
   closeFloatingPanels();
@@ -1957,27 +2219,21 @@ function openMenuPage(item) {
       "Umefungua " + heading +
       ". Data na vitendo vya sehemu hii vinahitaji kuunganishwa na API yake.",
       "info"
+
     );
     return;
   }
 
   // MENYU ZA HUDUMA ZA KAWAIDA
-  if (!selectedService || selectedService === "ALL") {
-    return;
-  }
-
-  if (item.label === "DASHBOARD") {
-    selectedMenu = "MUHTASARI";
-  } else {
-    selectedMenu = item.label;
-  }
-
-  // Muhimu: selectedModule haibadilishwi hapa.
-  showServiceDashboard();
+if (!selectedService || !selectedModule) {
+  return;
 }
+selectedMenu = item.label;
+buildDrawerMenu();
+showServiceDashboard();}
 
     /* NOTIFICATIONS */
-    $("notificationButton").addEventListener("click", () => {
+ $("notificationButton").addEventListener("click", () => {
       $("profilePanel").classList.add("hidden");
       $("notificationPanel").classList.toggle("hidden");
     });
@@ -2117,7 +2373,7 @@ function getFeedbackData(method) {
 // Kutengeneza ujumbe wa WhatsApp au SMS
 function buildFeedbackMessage(data) {
   return (
-    "MAONI YA DSERVICES\n\n" +
+    "MAONI YA MTUMIAJI DS\n\n" +
     "Jina Kamili: " + data.name + "\n" +
     "Simu: " + data.phone + "\n" +
     "Aina ya Maoni: " + data.type + "\n" +
@@ -2223,13 +2479,14 @@ $("sendSMS").addEventListener("click", () => {
       $("username").value = "";
       $("password").value = "";
 
-      $("serviceSelect").replaceChildren();
-      $("moduleSelect").replaceChildren();
+$("serviceSelect").replaceChildren();
 
+$("moduleSelect").disabled = true;
+selectedMenu = "MUHTASARI";
+      $("moduleSelect").replaceChildren();
       $("welcomePanel").classList.remove("hidden");
       $("adminDashboard").classList.add("hidden");
       $("serviceDashboard").classList.add("hidden");
-
       $("adminDashboard").querySelector(".stats-grid")
         .classList.remove("hidden");
       showMessage(
