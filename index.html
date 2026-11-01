@@ -1627,26 +1627,47 @@ const moduleMenu = {
     "TATHIMINI",
     "MPANGILIO"
   ]
-
 };
 
-    /* API */
-    async function callAPI(payload) {
-      const response = await fetch(API_URL, {
-        method: "POST",
-        redirect: "follow",
-        headers: {
-          "Content-Type": "text/plain;charset=UTF-8"
-        },
-        body: JSON.stringify(payload)
-      });
+  
+    /* API + OFFLINE SUPPORT */
+async function callAPI(payload) {
 
+  // Kama hakuna intaneti, hifadhi ombi kwenye IndexedDB
+  if (!navigator.onLine) {
 
-      if (!response.ok) {
-        throw new Error("Server imeshindwa kupokea ombi.");
-      }
-      return await response.json();
-    }
+    const record = await saveOfflineRecord({
+      accountId: currentUser?.accountId || "",
+      serviceId: selectedService || "",
+      moduleId: selectedModule || "",
+      action: payload.action || "",
+      payload: payload
+    });
+
+    return {
+      success: true,
+      offline: true,
+      localId: record.localId,
+      message: "Taarifa imehifadhiwa kwenye simu. Itatumwa mtandao utakaporudi."
+    };
+  }
+
+  // Kama kuna intaneti, tumia Google Apps Script
+  const response = await fetch(API_URL, {
+    method: "POST",
+    redirect: "follow",
+    headers: {
+      "Content-Type": "text/plain;charset=UTF-8"
+    },
+    body: JSON.stringify(payload)
+  });
+
+  if (!response.ok) {
+    throw new Error("Server imeshindwa kupokea ombi.");
+  }
+
+  return await response.json();
+}
 
     function showMessage(element, message, type = "info") {
       element.textContent = message;
