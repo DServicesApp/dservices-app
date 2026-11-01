@@ -1,12 +1,11 @@
-const CACHE_NAME = "dservices-cache-v2";
-
+const CACHE_NAME = "dservices-cache-v3";
 
 const APP_FILES = [
   "./",
   "./index.html",
-  "./manifest.json"
+  "./manifest.json",
+  "./js/offline-db.js"
 ];
-
 
 // HIFADHI MAFAYLI MUHIMU
 self.addEventListener("install", event => {
