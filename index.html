@@ -2179,33 +2179,38 @@ function showServiceDashboard() {
    UWANJA WA KAZI WA KILA MENYU
 ================================= */
 function renderModulePage() {
-switch (selectedMenu) {
-  case "WATUMISHI":
-    renderWatumishiPage(
- document.getElementById("moduleWorkspace")
-    );
-    return;
-  case "WANAFUNZI":
-  case "MAHUDHURIO":
-  case "MASOMO & RATIBA":
-  case "MALIPO":
-  case "MATUMIZI":
-  case "HALI YA MICHANGO":
-  case "MITIHANI & MATOKEO":
-  case "TAARIFA & TATHIMINI":
-  case "MPANGILIO": document.getElementById("moduleWorkspace").innerHTML = `
-      <section>
-        <h3>${selectedMenu}</h3>
-        <p>Ukurasa wa ${selectedMenu} utaandaliwa hapa.</p>
-      </section>
-    `;
-    return;
-}
   const workspace = $("moduleWorkspace");
-  workspace.replaceChildren();
-  const page = document.createElement("section");
-  page.className = "section-panel";
-  workspace.appendChild(page);
+  switch (selectedMenu) {
+    case "WATUMISHI":
+      renderWatumishiPage(workspace);
+      return;
+    case "WANAFUNZI":
+      renderWanafunziPage(workspace);
+      return;
+    case "MAHUDHURIO":
+    case "MASOMO & RATIBA":
+    case "MALIPO":
+    case "MATUMIZI":
+    case "HALI YA MICHANGO":
+    case "MITIHANI & MATOKEO":
+    case "TAARIFA & TATHIMINI":
+    case "MPANGILIO":
+
+      workspace.innerHTML = `
+        <section>
+          <h3>${selectedMenu}</h3>
+          <p>Ukurasa wa ${selectedMenu} utaandaliwa hapa.</p>
+        </section>
+      `;
+      return;
+
+    default:
+      workspace.replaceChildren();
+
+      const page = document.createElement("section");
+      page.className = "section-panel";
+      workspace.appendChild(page);
+  }
 }
 
     /* PAZIA LA MENYU */
@@ -2453,9 +2458,9 @@ showServiceDashboard();}
 
 
     /* FEEDBACK */
-   /* =====================================================
+   /* ==================================
    DSERVICES - MAONI
-===================================================== */
+   ================================== */
 const WHATSAPP_NUMBER = "255716328888";
 const SMS_NUMBER = "0762524614";
 const feedbackModal = $("feedbackModal");
@@ -2669,6 +2674,7 @@ selectedMenu = "MUHTASARI";
     });
 </script>
 <script src="./js/watumishi.js"></script>
+<script src="./js/wanfunzit.js"></script>
 <script src="./js/offline-db.js"></script>
   <script>
   // KUSAJILI SERVICE WORKER
