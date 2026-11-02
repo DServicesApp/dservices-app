@@ -2179,6 +2179,28 @@ function showServiceDashboard() {
    UWANJA WA KAZI WA KILA MENYU
 ================================= */
 function renderModulePage() {
+switch (selectedMenu) {
+  case "WATUMISHI":
+    renderWatumishiPage(
+ document.getElementById("moduleWorkspace")
+    );
+    return;
+  case "WANAFUNZI":
+  case "MAHUDHURIO":
+  case "MASOMO & RATIBA":
+  case "MALIPO":
+  case "MATUMIZI":
+  case "HALI YA MICHANGO":
+  case "MITIHANI & MATOKEO":
+  case "TAARIFA & TATHIMINI":
+  case "MPANGILIO": document.getElementById("moduleWorkspace").innerHTML = `
+      <section>
+        <h3>${selectedMenu}</h3>
+        <p>Ukurasa wa ${selectedMenu} utaandaliwa hapa.</p>
+      </section>
+    `;
+    return;
+}
   const workspace = $("moduleWorkspace");
   workspace.replaceChildren();
   const page = document.createElement("section");
@@ -2646,6 +2668,7 @@ selectedMenu = "MUHTASARI";
       }
     });
 </script>
+<script src="./js/watumishi.js"></script>
 <script src="./js/offline-db.js"></script>
   <script>
   // KUSAJILI SERVICE WORKER
