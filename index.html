@@ -1103,6 +1103,8 @@
           <div id="serviceNotice" class="message" role="status"></div>
         </div>
 
+<!-- ENEO LA KAZI ZA KILA MENYU -->
+<div id="moduleWorkspace"></div>
       </section>
 
     </main>
@@ -1412,7 +1414,8 @@ const moduleMenu = {
     "WANAFUNZI",
     "MAHUDHURIO",
     "MASOMO & RATIBA",
-    "USIMAMIZI FEDHA",
+    "MALIPO",
+    "MATUMIZI",
     "HALI YA MICHANGO",
     "MITIHANI & MATOKEO",
     "TAARIFA & TATHIMINI",
@@ -1425,7 +1428,8 @@ const moduleMenu = {
     "WATOTO",
     "MAHUDHURIO",
     "MASOMO & RATIBA",
-    "USIMAMIZI FEDHA",
+    "MALIPO",
+    "MATUMIZI",
     "TAARIFA & TATHIMINI",
     "MPANGILIO"
   ],
@@ -1436,7 +1440,8 @@ const moduleMenu = {
     "WANAFUNZI",
     "MAHUDHURIO",
     "MASOMO & RATIBA",
-    "USIMAMIZI FEDHA",
+    "MALIPO",
+    "MATUMIZI",
     "MITIHANI & MATOKEO",
     "TAARIFA & TATHIMINI",
     "MPANGILIO"
@@ -1447,7 +1452,8 @@ const moduleMenu = {
     "WATUMISHI",
     "WANAFUNZI",
     "MAHUDHURIO",
-    "USIMAMIZI FEDHA",
+    "MALIPO",
+    "MATUMIZI",
     "KOZI & RATIBA",
     "MITIHANI & MATOKEO",
     "TAARIFA & TATHIMINI",
@@ -1488,7 +1494,8 @@ const moduleMenu = {
     "WATUMISHI",
     "WATEJA",
     "ODA",
-    "USIMAMIZI FEDHA",
+    "MALIPO",
+    "MATUMIZI",
     "STOO",
     "TAARIFA",
     "TATHIMINI",
@@ -1503,7 +1510,9 @@ const moduleMenu = {
   "MAZAO": [
     "MUHTASARI",
     "WATUMISHI",
-    "USIMAMIZI FEDHA",
+    "MANUNUZI",
+    "MATUMIZI",
+    "MAUZO",
     "MAVUNO",
     "GHALA",
     "TAARIFA",
@@ -1771,7 +1780,7 @@ togglePassword.addEventListener("click", () => {
 
       showMessage(
         $("loginMessage"),
-        "Inathibitishwa...",
+        "Mfumo unafunguka...",
         "info"
       );
 
@@ -2043,35 +2052,76 @@ $("moduleSelect").addEventListener("change", () => {
 
 /* DASHBOARD YA HUDUMA */
 function showServiceDashboard() {
+
   $("welcomePanel").classList.add("hidden");
   $("adminDashboard").classList.add("hidden");
   $("serviceDashboard").classList.remove("hidden");
 
-  // Jina la huduma
   $("serviceHeading").textContent = selectedService;
 
-  // Maelezo ya kipengele kilichochaguliwa
   $("serviceDescription").textContent =
     selectedModule
-      ? "Kipengele kilichochaguliwa: " + selectedModule
+      ? selectedModule
       : "Chagua kipengele cha huduma unayotaka kutumia.";
 
-  // Kichwa kikuu: KIPENGELE - MENYU
   $("moduleHeading").textContent =
     selectedModule
-      ? selectedModule + " - " + (selectedMenu || "MUHTASARI")
+      ? selectedMenu
       : selectedService;
 
-  // Ujumbe wa sasa
-  $("serviceMessage").textContent =
-    selectedModule
-      ? "Umechagua kipengele " + selectedModule +
-        " ndani ya huduma ya " + selectedService +
-        ". Menyu: " + (selectedMenu || "MUHTASARI") + "."
-      : "Chagua kipengele kwenye sehemu ya KIPENGELE iliyo juu.";
+  $("serviceMessage").textContent = "";
+
+  $("moduleWorkspace").replaceChildren();
+
   hideMessage($("serviceNotice"));
+
+  // Hakuna kipengele kilichochaguliwa
+  if (!selectedModule) {
+    $("moduleHeading").textContent = selectedService;
+    $("serviceMessage").textContent =
+      "Chagua kipengele kwenye sehemu ya KIPENGELE iliyo juu.";
+    return;
+  }
+
+  // Fungua dashboard ya kipengele
+  if (selectedMenu === "MUHTASARI") {
+    renderModulePage("MUHTASARI");
+    return;
+  }
+
+  // Fungua ukurasa wa menyu iliyochaguliwa
+  renderModulePage(selectedMenu);
 }
 
+/* =================================
+   KUFUNGUA KURASA ZA KILA MENYU
+================================= */
+
+function renderModulePage(menuName) {
+
+  const workspace = $("moduleWorkspace");
+
+  workspace.replaceChildren();
+
+  const page = document.createElement("div");
+
+  page.className = "section-panel";
+
+  const heading = document.createElement("h3");
+
+  heading.textContent = menuName;
+
+  const description = document.createElement("p");
+
+  description.textContent =
+    "Eneo la kazi la " + menuName +
+    " ndani ya " + selectedModule + ".";
+
+  page.appendChild(heading);
+  page.appendChild(description);
+
+  workspace.appendChild(page);
+}
 
     /* PAZIA LA MENYU */
     function openDrawer() {
@@ -2235,7 +2285,6 @@ function openMenuPage(item) {
       "Umefungua " + heading +
       ". Data na vitendo vya sehemu hii vinahitaji kuunganishwa na API yake.",
       "info"
-
     );
     return;
   }
