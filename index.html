@@ -786,105 +786,130 @@
     }
 
 
-    /* =========================
-       TABLETI NA LAPTOP NDOGO
-    ========================= */
-    @media (max-width: 1050px) {
-      .topbar {
-        gap: 10px;
-      }
+   /* =========================
+       TOPBAR - KOMPYUTA NA LAPTOP
+      ========================= */
+ @media (min-width: 651px) {
+  .date-time {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .brand-button {
+    color: var(--green);
+  }
+  .top-divider {
+    color: var(--green);
+  }
+  .icon-button {
+    color: var(--green);
+    border-color: var(--green);
+  }
+}
 
-
-      .stats-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-
-      .top-spacer {
-        flex-basis: 10px;
-      }
-    }
-
-
-    /* =========================
+ /* =========================
        SIMU
     ========================= */
-    @media (max-width: 650px) {
-      .topbar {
-  padding: 8px;
-  gap: 8px;
-  flex-wrap: wrap;
-  align-items: center;
+@media (max-width: 650px) {
+  .topbar {
+    display: grid;
+    grid-template-columns:
+      auto minmax(0, 1fr) minmax(0, 1fr) 32px 32px;
+    grid-template-areas:
+      "brand service module bell profile"
+      "connection connection datetime datetime datetime";
+    align-items: center;
+    gap: 7px;
+    padding: 9px 8px;
+  }
+
+  .brand-button {
+    grid-area: brand;
+    font-size: 17px;
+    gap: 5px;
+  }
+
+  .top-service {
+    grid-area: service;
+    min-width: 0;
+  }
+
+  .top-module {
+    grid-area: module;
+    min-width: 0;
+  }
+
+  .top-select {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    padding: 8px 3px;
+    font-size: 10px;
+  }
+
+  .top-divider,
+  .top-spacer {
+    display: none;
+  }
+
+  #notificationButton {
+    grid-area: bell;
+  }
+
+  #avatarButton {
+    grid-area: profile;
+  }
+
+  .connection {
+    grid-area: connection;
+    justify-content: flex-start;
+    font-size: 11px;
+  }
+
+  .date-time {
+    grid-area: datetime;
+    display: flex;
+    justify-content: flex-end;
+    gap: 7px;
+    font-size: 10px;
+    text-align: right;
+  }
+
+  .icon-button {
+    width: 32px;
+    height: 32px;
+  }
+
+  .main-content {
+    padding: 15px;
+  }
+
+  .welcome-panel {
+    min-height: 230px;
+    padding: 25px 15px;
+  }
+
+  .welcome-panel h2 {
+    font-size: 20px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .stat-card {
+    padding: 15px;
+  }
+
+  .stat-number {
+    font-size: 25px;
+  }
+
+  .floating-panel {
+    top: 12px;
+  }
 }
-      .brand-button {
-        font-size: 19px;
-      }
-      .top-control {
-        flex: 1 1 42%;
-        display: block;
-      }
-      .top-control label {
-        display: block;
-        margin-bottom: 4px;
-      }
-      .top-select {
-        width: 100%;
-        min-width: 0;
-        max-width: none;
-      }
-      .top-divider {
-        display: none;
-      }
-      .top-spacer {
-        display: none;
-      }
-      .connection {
-        flex: 1 1 auto;
-      }
-      .date-time {
-        flex: 1 1 auto;
-        text-align: left;
-      }
-      .icon-button {
-        width: 32px;
-        height: 32px;
-      }
-      .main-content {
-        padding: 15px;
-      }
-
-
-      .welcome-panel {
-        min-height: 230px;
-        padding: 25px 15px;
-      }
-
-
-      .welcome-panel h2 {
-        font-size: 20px;
-      }
-
-
-      .stats-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
-      }
-
-
-      .stat-card {
-        padding: 15px;
-      }
-
-
-      .stat-number {
-        font-size: 25px;
-      }
-
-
-      .floating-panel {
-        top: 12px;
-      }
-    }
 
     /* =========================
        SIMU NDOGO SANA
@@ -897,6 +922,14 @@
         font-size: 17px;
       }
     }
+
+/* VICHWA VYA HUDUMA NA KIPENGELE */
+#serviceDashboard .page-heading {
+  text-align: center;
+}
+#serviceDashboard #moduleHeading {
+  text-align: center;
+}
   </style>
 </head>
 <body>
@@ -973,13 +1006,15 @@
 
 
     <footer class="login-footer">
-      Huduma bora, Ustawi wetu
+      Huduma bora huleta Ustawi
     </footer>
   </section>
 
   <!-- MFUMO BAADA YA LOGIN -->
   <section id="appScreen" class="hidden">
     <header class="topbar">
+
+  <!-- DSERVICES -->
   <button
     type="button"
     class="brand-button"
@@ -991,29 +1026,38 @@
     <span>DServices</span>
   </button>
 
-
-  <div class="top-control">
+  <!-- HUDUMA -->
+  <div class="top-control top-service">
     <select id="serviceSelect" class="top-select"
             aria-label="Huduma">
       <option value="">HUDUMA</option>
     </select>
   </div>
+
   <span class="top-divider">|</span>
-  <div class="top-control">
+
+  <!-- KIPELELE -->
+  <div class="top-control top-module">
     <select id="moduleSelect" class="top-select"
             aria-label="Kipengele" disabled>
       <option value="">KIPENGELE</option>
     </select>
   </div>
   <div class="top-spacer"></div>
+
+  <!-- ONLINE / OFFLINE -->
   <div class="connection">
     <span id="statusDot" class="status-dot"></span>
     <span id="networkLabel">Online</span>
   </div>
+
+  <!-- MUDA NA TAREHE -->
   <div class="date-time">
     <div id="clock">00:00</div>
     <div id="dateLabel">Siku, tarehe</div>
   </div>
+
+  <!-- NOTIFICATION -->
   <button
     type="button"
     class="icon-button"
@@ -1024,6 +1068,8 @@
     🔔
     <span class="notification-dot"></span>
   </button>
+
+  <!-- PROFILE -->
   <button
     type="button"
     class="icon-button avatar"
@@ -1407,7 +1453,6 @@ const moduleMenu = {
   /* =========================
      ELIMU
   ========================= */
-
   "TUITION": [
     "MUHTASARI",
     "WATUMISHI",
@@ -1472,11 +1517,12 @@ const moduleMenu = {
   /* =========================
      BIASHARA
   ========================= */
-
   "BIASHARA": [
     "MUHTASARI",
     "WATUMISHI",
-    "USIMAMIZI FEDHA",
+    "MANUNUZI",
+    "MATUMIZI",
+    "MAUZO",
     "ODA",
     "WATEJA/ WAZABUNI",
     "BIDHAA/ STOO",
@@ -1810,7 +1856,6 @@ togglePassword.addEventListener("click", () => {
 
         openApplication();
 
-
       } catch (error) {
         console.error("DServices login error:", error);
 
@@ -1841,9 +1886,8 @@ togglePassword.addEventListener("click", () => {
         currentUser.username ||
         $("username").value.trim();
 
-
       $("avatarButton").textContent =
-        String(fullName).trim().charAt(0).toUpperCase() || "?";
+       String(fullName).trim().charAt(0).toUpperCase() || "?";
 
       $("profileName").textContent = fullName;
       $("profileUsername").textContent = username;
@@ -1879,9 +1923,9 @@ togglePassword.addEventListener("click", () => {
         select.appendChild(option);
       });
     }
+
 /* HUDUMA ZINAPOBADILISHWA */
 $("serviceSelect").addEventListener("change", async () => {
-
   selectedService = $("serviceSelect").value;
   selectedModule = "";
   selectedMenu = "MUHTASARI";
@@ -1928,17 +1972,12 @@ $("serviceSelect").addEventListener("change", async () => {
 
 /* KUJAZA VIPENGELE VYA HUDUMA */
 function populateModules() {
-
   const select = $("moduleSelect");
-
   select.replaceChildren();
-
   const placeholder = document.createElement("option");
   placeholder.value = "";
   placeholder.textContent = "Chagua kipengele";
-
   select.appendChild(placeholder);
-
   const modules = serviceModules[selectedService] || [];
 
   modules.forEach(module => {
@@ -1961,7 +2000,6 @@ function populateModules() {
 
 /* KIPENGELE KINAPOCHAGULIWA */
 $("moduleSelect").addEventListener("change", () => {
-
   selectedModule = $("moduleSelect").value;
 
   selectedMenu = "MUHTASARI";
@@ -2047,37 +2085,29 @@ $("moduleSelect").addEventListener("change", () => {
 /* =================================
    DASHBOARD YA HUDUMA NA MENYU
 ================================= */
-
 function showServiceDashboard() {
-
   $("welcomePanel").classList.add("hidden");
   $("adminDashboard").classList.add("hidden");
   $("serviceDashboard").classList.remove("hidden");
 
-  // Jina la huduma na kipengele
-  $("serviceHeading").textContent = selectedService;
+  $("serviceHeading").textContent = selectedModule
+    ? selectedService + " – " + selectedModule
+    : selectedService;
 
-  $("serviceDescription").textContent =
-    selectedModule || "";
+  $("serviceDescription").textContent = "";
 
-  // Ondoa maelezo ya zamani
   $("serviceMessage").textContent = "";
   hideMessage($("serviceNotice"));
-
-  // Safisha ukurasa wa awali
   $("moduleWorkspace").replaceChildren();
 
-  // Kama kipengele hakijachaguliwa
   if (!selectedModule) {
     $("moduleHeading").textContent = selectedService;
     return;
   }
 
-  // Jina la ukurasa unaofunguliwa
   $("moduleHeading").textContent =
-    selectedModule + " - " + selectedMenu;
+    selectedModule + " – " + selectedMenu;
 
-  // Fungua ukurasa husika
   renderModulePage();
 }
 
@@ -2104,30 +2134,11 @@ function renderModulePage() {
 /* =================================
    KUFUNGUA KURASA ZA KILA MENYU
 ================================= */
-
-function renderModulePage(menuName) {
-
+function renderModulePage() {
   const workspace = $("moduleWorkspace");
-
   workspace.replaceChildren();
-
-  const page = document.createElement("div");
-
+  const page = document.createElement("section");
   page.className = "section-panel";
-
-  const heading = document.createElement("h3");
-
-  heading.textContent = menuName;
-
-  const description = document.createElement("p");
-
-  description.textContent =
-    "Eneo la kazi la " + menuName +
-    " ndani ya " + selectedModule + ".";
-
-  page.appendChild(heading);
-  page.appendChild(description);
-
   workspace.appendChild(page);
 }
 
