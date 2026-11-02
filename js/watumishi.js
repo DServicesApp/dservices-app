@@ -1,8 +1,3 @@
-/* =====================================
-   DSERVICES - WATUMISHI
-===================================== */
-
-let watumishiData = [];
 
 /* =====================================
    DSERVICES - WATUMISHI
@@ -223,11 +218,6 @@ function showWatumishiHistory() {
 /* =====================================
    USAJILI
 ===================================== */
-
-/* =========================================
-   DSERVICES - FOMU YA USAJILI WA WATUMISHI
-========================================= */
-
 function showWatumishiForm() {
 
   const content = document.getElementById("watumishiContent");
@@ -484,25 +474,25 @@ function showWatumishiForm() {
               <input name="ELIMU">
             </div>
 
+           <div class="staff-field">
+  <label>Nafasi / Wadhifa *</label>
 
-            <div class="staff-field">
+  <select
+    name="NAFASI/ WADHIFA"
+    id="nafasiWatumishi"
+    onchange="toggleNafasiMpya()"
+    required
+  >
 
-              <label>Nafasi / Wadhifa *</label>
+    <option value="">Chagua nafasi</option>
 
-              <select
-                name="NAFASI/ WADHIFA"
-                id="nafasiWatumishi"
-                onchange="toggleNafasiMpya()"
-                required
-              >
+    <option value="NYINGINE">
+      + Ongeza nafasi mpya
+    </option>
 
-                <option value="">
-                  Inasubiri nafasi kutoka kwenye mfumo...
-                </option>
+  </select>
 
-              </select>
-
-            </div>
+</div>
 
 
             <div
