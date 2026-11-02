@@ -1,17 +1,25 @@
-/* ==================================
+/* =====================================
    DSERVICES - WATUMISHI
-================================== */
+===================================== */
+
+let watumishiData = [];
 
 function renderWatumishiPage(workspace) {
+
   workspace.innerHTML = `
-    <section class="watumishi-page">
+    <section class="section-panel">
 
       <h3 style="text-align:center;">
         WATUMISHI
       </h3>
 
-      <div class="watumishi-actions"
-           style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:15px 0;">
+      <div style="
+        display:flex;
+        justify-content:center;
+        gap:8px;
+        flex-wrap:wrap;
+        margin:15px 0;
+      ">
 
         <button onclick="showWatumishiHistory()">
           HISTORIA
@@ -27,11 +35,7 @@ function renderWatumishiPage(workspace) {
 
       </div>
 
-      <div id="watumishiContent">
-        <p style="text-align:center;">
-          Inapakia taarifa za watumishi...
-        </p>
-      </div>
+      <div id="watumishiContent"></div>
 
     </section>
   `;
@@ -40,25 +44,80 @@ function renderWatumishiPage(workspace) {
 }
 
 
-/* HISTORIA */
+/* =====================================
+   HISTORIA
+===================================== */
 
 function showWatumishiHistory() {
-  const content = document.getElementById("watumishiContent");
+
+  const content = document.getElementById(
+    "watumishiContent"
+  );
 
   if (!content) return;
+
+  const list = [...watumishiData].sort(
+    (a, b) =>
+      new Date(b.TAREHE_YA_USAJILI) -
+      new Date(a.TAREHE_YA_USAJILI)
+  );
 
   content.innerHTML = `
     <h4>HISTORIA YA WATUMISHI</h4>
 
-    <p>Orodha ya watumishi itaonekana hapa.</p>
+    <p>JUMLA YA WATUMISHI: ${list.length}</p>
+
+    <div id="watumishiList"></div>
   `;
+
+  const container = document.getElementById(
+    "watumishiList"
+  );
+
+  if (list.length === 0) {
+    container.innerHTML = `
+      <p>Hakuna mtumishi aliyesajiliwa bado.</p>
+    `;
+    return;
+  }
+
+  list.forEach(mt => {
+
+    const item = document.createElement("div");
+
+    item.style.cssText =
+      "padding:12px;border-bottom:1px solid #ddd;cursor:pointer;";
+
+    item.innerHTML = `
+      <strong>
+        ${mt.NA_MFANYAKAZI || "-"}
+      </strong>
+      <br>
+      ${[
+        mt.JINA_LA_KWANZA,
+        mt.JINA_LA_KATI,
+        mt.JINA_LA_MWISHO
+      ].filter(Boolean).join(" ")}
+      <br>
+      <small>${mt.HALI || ""}</small>
+    `;
+
+    container.appendChild(item);
+
+  });
+
 }
 
 
-/* USAJILI */
+/* =====================================
+   USAJILI
+===================================== */
 
 function showWatumishiForm() {
-  const content = document.getElementById("watumishiContent");
+
+  const content = document.getElementById(
+    "watumishiContent"
+  );
 
   if (!content) return;
 
@@ -70,7 +129,7 @@ function showWatumishiForm() {
     <form id="watumishiForm">
 
       <label>Namba ya Usajili</label>
-      <input name="NA_MFANYAKAZI" type="text">
+      <input name="NA_MFANYAKAZI">
 
       <label>Jina la Kwanza</label>
       <input name="JINA_LA_KWANZA" required>
@@ -104,7 +163,11 @@ function showWatumishiForm() {
       <input name="USERNAME" readonly>
 
       <label>Tarehe ya Usajili</label>
-      <input name="TAREHE_YA_USAJILI" type="date">
+      <input
+        name="TAREHE_YA_USAJILI"
+        type="date"
+        required
+      >
 
       <label>Hali</label>
       <select name="HALI">
@@ -115,34 +178,35 @@ function showWatumishiForm() {
       <label>Maelezo</label>
       <textarea name="MAELEZO"></textarea>
 
-      <div style="display:flex;justify-content:center;gap:10px;margin-top:15px;">
+      <div style="
+        display:flex;
+        justify-content:center;
+        gap:10px;
+        margin-top:15px;
+      ">
+
         <button type="submit">HIFADHI</button>
-        <button type="button" onclick="renderWatumishiPage(document.getElementById('moduleWorkspace'))">
+
+        <button
+          type="button"
+          onclick="showWatumishiHistory()"
+        >
           FUNGA
         </button>
+
       </div>
 
     </form>
   `;
-}
 
+  const form = document.getElementById(
+    "watumishiForm"
+  );
 
-/* TAFUTA */
+  const date = form.elements[
+    "TAREHE_YA_USAJILI"
+  ];
 
-function showWatumishiSearch() {
-  const content = document.getElementById("watumishiContent");
+  date.value = new Date().toISOString().slice(0, 10);
 
-  if (!content) return;
-
-  content.innerHTML = `
-    <h4>TAFUTA MTUMISHI</h4>
-
-    <input
-      type="search"
-      id="watumishiSearchInput"
-      placeholder="Jina, namba ya usajili, simu au username..."
-    >
-
-    <div id="watumishiSearchResults"></div>
-  `;
 }
