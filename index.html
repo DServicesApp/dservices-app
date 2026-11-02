@@ -144,8 +144,6 @@
   margin: 8px 0;
 }
 
-
-
     /* =========================
        LOGIN
     ========================= */
@@ -318,21 +316,17 @@
       overflow-wrap: anywhere;
     }
 
-
     .message.show {
       display: block;
     }
-
     .message.info {
       color: #244765;
       background: #eaf2f9;
     }
-
     .message.success {
       color: #205b2b;
       background: #e7f5e9;
     }
-
     .message.error {
       color: #922b21;
       background: #fdebea;
@@ -379,7 +373,6 @@
       font-size: 22px;
       line-height: 1;
     }
-
     .top-control {
       display: flex;
       align-items: center;
@@ -438,8 +431,6 @@
       flex-shrink: 0;
       font-size: 11px;
     }
-
-
     .icon-button {
       position: relative;
       width: 35px;
@@ -579,8 +570,6 @@
       font-weight: bold;
       color: var(--green);
     }
-
-
     .section-panel {
       margin-top: 20px;
       background: white;
@@ -588,14 +577,10 @@
       border: 1px solid var(--border);
       border-radius: 10px;
     }
-
-
     .section-panel h3 {
       margin-top: 0;
       color: var(--green);
     }
-
-
     .section-panel p {
       color: var(--muted);
       line-height: 1.6;
@@ -615,14 +600,10 @@
       visibility: hidden;
       transition: opacity 0.2s ease, visibility 0.2s ease;
     }
-
-
     .drawer-backdrop.open {
       opacity: 1;
       visibility: visible;
     }
-
-
     .drawer {
       position: fixed;
       z-index: 1001;
@@ -637,13 +618,9 @@
       display: flex;
       flex-direction: column;
     }
-
-
     .drawer.open {
       transform: translateX(0);
     }
-
-
     .drawer-header {
       padding: 19px;
       background: var(--green);
@@ -654,14 +631,10 @@
       justify-content: space-between;
       gap: 10px;
     }
-
-
     .drawer-header h2 {
       margin: 0;
       font-size: 21px;
     }
-
-
     .drawer-close {
       background: transparent;
       color: white;
@@ -669,8 +642,6 @@
       font-size: 27px;
       padding: 0 5px;
     }
-
-
     .drawer-caption {
       padding: 16px 17px 8px;
       font-size: 11px;
@@ -741,8 +712,6 @@
       margin: 0 0 15px;
       color: var(--green);
     }
-
-
     .panel-close {
       float: right;
       border: 0;
@@ -750,8 +719,6 @@
       color: var(--muted);
       font-size: 21px;
     }
-
-
     .profile-row {
       margin: 12px 0;
       font-size: 13px;
@@ -759,11 +726,9 @@
       overflow-wrap: anywhere;
     }
 
-
     .profile-row strong {
       color: var(--green);
     }
-
 
     .panel-note {
       color: var(--muted);
@@ -929,6 +894,58 @@
 }
 #serviceDashboard #moduleHeading {
   text-align: center;
+}
+/* =========================
+   TAARIFA ZA TAASISI
+========================= */
+.account-header {
+  width: 100%;
+  text-align: center;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-bottom: 3px solid var(--orange);
+  border-radius: 10px;
+  padding: 22px 15px 15px;
+  margin-bottom: 18px;
+}
+.account-logo {
+  display: block;
+  width: 75px;
+  height: 75px;
+  object-fit: contain;
+  margin: 0 auto 10px;
+}
+.account-header h2 {
+  margin: 5px 0;
+  color: var(--green);
+  font-size: 22px;
+}
+.account-header p {
+  margin: 5px 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+.account-header h3 {
+  margin: 18px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  color: var(--green);
+  font-size: 18px;
+}
+@media (max-width: 650px) {
+  .account-header {
+    padding: 18px 10px 13px;
+  }
+  .account-logo {
+    width: 60px;
+    height: 60px;
+  }
+  .account-header h2 {
+    font-size: 18px;
+  }
+  .account-header h3 {
+    font-size: 16px;
+  }
 }
   </style>
 </head>
@@ -1133,28 +1150,33 @@
         </div>
       </section>
 
-      <!-- DASHBOARD YA HUDUMA YA KAWAIDA -->
-      <section id="serviceDashboard" class="hidden">
-        <div class="page-heading">
-          <h2 id="serviceHeading">HUDUMA</h2>
-          <p id="serviceDescription">
-            Chagua kipengele ili kuendelea.
-          </p>
-        </div>
-        <div class="section-panel">
-          <h3 id="moduleHeading">Karibu</h3>
-          <p id="serviceMessage">
-            Chagua kipengele kwenye sehemu ya KIPENGELE iliyo juu.
-          </p>
-          <div id="serviceNotice" class="message" role="status"></div>
-        </div>
+<!-- DASHBOARD YA HUDUMA YA KAWAIDA -->
+<section id="serviceDashboard" class="hidden">
 
-<!-- ENEO LA KAZI ZA KILA MENYU -->
-<div id="moduleWorkspace"></div>
-      </section>
+  <!-- TAARIFA ZA TAASISI -->
+  <div class="account-header">
+
+    <img
+      id="accountLogo"
+      class="account-logo hidden"
+      alt="Logo ya taasisi"
+    >
+    <h2 id="accountName">JINA LA TAASISI</h2>
+    <p id="accountMotto"></p>
+    <p id="accountReg"></p>
+    <!-- KICHWA CHA MENYU -->
+    <h3 id="moduleHeading">TUITION - MUHTASARI</h3>
+  </div>
+
+  <!-- UJUMBE WA HUDUMA -->
+  <div id="serviceNotice" class="message" role="status"></div>
+
+  <!-- UWANJA WA KAZI -->
+  <div id="moduleWorkspace"></div>
+
+</section>
 
     </main>
-
     <footer class="app-footer">
       DServices
     </footer>
@@ -2085,54 +2107,76 @@ $("moduleSelect").addEventListener("change", () => {
 /* =================================
    DASHBOARD YA HUDUMA NA MENYU
 ================================= */
+
 function showServiceDashboard() {
+
   $("welcomePanel").classList.add("hidden");
   $("adminDashboard").classList.add("hidden");
   $("serviceDashboard").classList.remove("hidden");
 
-  $("serviceHeading").textContent = selectedModule
-    ? selectedService + " – " + selectedModule
-    : selectedService;
-
-  $("serviceDescription").textContent = "";
-
-  $("serviceMessage").textContent = "";
+  $("serviceNotice").textContent = "";
   hideMessage($("serviceNotice"));
+
   $("moduleWorkspace").replaceChildren();
 
-  if (!selectedModule) {
-    $("moduleHeading").textContent = selectedService;
-    return;
+  // TAARIFA ZA ACCOUNT
+  const account =
+    currentUser?.account ||
+    currentUser?.taasisi ||
+    currentUser || {};
+
+  const accountName =
+    account.JINA_LA_ACCOUNT ||
+    account.jinaLaAccount ||
+    account.accountName ||
+    "";
+
+  const motto =
+    account.MOTTO ||
+    account.motto ||
+    "";
+
+  const reg =
+    account.REG ||
+    account.reg ||
+    account.registrationNumber ||
+    "";
+
+  const logo =
+    account.LOGO ||
+    account.logo ||
+    "";
+
+  $("accountName").textContent =
+    accountName || "JINA LA TAASISI";
+
+  $("accountMotto").textContent = motto;
+
+  $("accountReg").textContent =
+    reg ? "Reg No. " + reg : "";
+
+  // LOGO
+  const logoElement = $("accountLogo");
+  if (logo) {
+    logoElement.src = logo;
+  logoElement.classList.remove("hidden");
+  } else {
+    logoElement.removeAttribute("src");
+    logoElement.classList.add("hidden");
   }
 
-  $("moduleHeading").textContent =
-    selectedModule + " – " + selectedMenu;
-
-  renderModulePage();
+  // KICHWA CHA MENYU
+  $("moduleHeading").textContent = selectedModule
+    ? selectedModule + " - " + selectedMenu
+    : selectedService;
+  if (selectedModule) {
+    renderModulePage();
+  }
 }
 
 
 /* =================================
-   UKURASA WA KILA MENYU
-================================= */
-function renderModulePage() {
-  const workspace = $("moduleWorkspace");
-  workspace.replaceChildren();
-  const page = document.createElement("section");
-  page.className = "section-panel";
-
-  const heading = document.createElement("h3");
-
-  heading.textContent =
-    selectedModule + " - " + selectedMenu;
-
-  page.appendChild(heading);
-
-  workspace.appendChild(page);
-}
-
-/* =================================
-   KUFUNGUA KURASA ZA KILA MENYU
+   UWANJA WA KAZI WA KILA MENYU
 ================================= */
 function renderModulePage() {
   const workspace = $("moduleWorkspace");
