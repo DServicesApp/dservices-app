@@ -1,12 +1,8 @@
-
 /* =====================================
    DSERVICES - WATUMISHI
 ===================================== */
-
 let watumishiData = [];
-
 function renderWatumishiPage(workspace) {
-
   workspace.innerHTML = `
     <section class="section-panel">
 
@@ -34,23 +30,26 @@ function renderWatumishiPage(workspace) {
     </section>
 
     <style>
-      .watumishi-toolbar {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 8px;
-        flex-wrap: wrap;
-        margin: 12px 0 18px;
-      }
-      .watumishi-toolbar button {
-        padding: 10px 18px;
-        border: 1px solid #4b5320;
-        border-radius: 6px;
-        background: #4b5320;
-        color: white;
-        cursor: pointer;
-      }
-
+     .watumishi-toolbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: nowrap;
+  margin: 4px 0 12px;
+}
+.watumishi-toolbar button {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 8px;
+  white-space: nowrap;
+  border: 1px solid #4b5320;
+  border-radius: 6px;
+  background: #4b5320;
+  color: white;
+  cursor: pointer;
+}
       .watumishi-toolbar button:active {
         opacity: .8;
       }
@@ -64,9 +63,7 @@ function renderWatumishiPage(workspace) {
 /* =====================================
    TAFUTA MTUMISHI
 ===================================== */
-
 function showWatumishiSearch() {
-
   const content = document.getElementById(
     "watumishiContent"
   );
@@ -80,12 +77,10 @@ function showWatumishiSearch() {
 
       <div class="staff-field">
 
-        <label>Jina, namba ya usajili, simu au username</label>
-
         <input
           type="search"
           id="tafutaMtumishi"
-          placeholder="Andika hapa kutafuta..."
+          placeholder="Andika kutafuta..."
           oninput="tafutaMtumishi()"
         >
 
@@ -352,52 +347,42 @@ function showWatumishiForm() {
       <form id="watumishiForm">
 
 
-        <!-- 1. TAARIFA ZA USAJILI -->
+       <!-- 1. TAARIFA ZA USAJILI -->
 
-        <div class="staff-group">
+<div class="staff-group">
 
-          <h4>1. TAARIFA ZA USAJILI</h4>
+  <h4>1. TAARIFA ZA USAJILI</h4>
 
-          <div class="staff-grid">
+  <div class="staff-grid">
 
-            <div class="staff-field">
-              <label>Namba ya Usajili</label>
-              <input
-                name="NA_MFANYAKAZI"
-                readonly
-                placeholder="Itazalishwa na mfumo"
-              >
-            </div>
+    <div class="staff-field">
 
-            <div class="staff-field">
-              <label>Tarehe ya Usajili *</label>
-              <input
-                name="TAREHE_YA_USAJILI"
-                type="date"
-                value="${tarehe}"
-                required
-              >
-            </div>
+      <label>Namba ya Usajili</label>
 
-            <div class="staff-field">
-              <label>Huduma</label>
-              <input
-                value="${selectedService || ""}"
-                readonly
-              >
-            </div>
+      <input
+        name="NA_MFANYAKAZI"
+        readonly
+        placeholder="Itazalishwa na mfumo"
+      >
 
-            <div class="staff-field">
-              <label>Kipengele</label>
-              <input
-                value="${selectedModule || ""}"
-                readonly
-              >
-            </div>
+    </div>
 
-          </div>
+    <div class="staff-field">
 
-        </div>
+      <label>Tarehe ya Usajili *</label>
+
+      <input
+        name="TAREHE_YA_USAJILI"
+        type="date"
+        value="${tarehe}"
+        required
+      >
+
+    </div>
+
+  </div>
+
+</div>
 
 
         <!-- 2. TAARIFA BINAFSI -->
@@ -603,8 +588,7 @@ function showWatumishiForm() {
 
 
   /* KUZUIA SUBMIT YA MUDA */
-
-  document.getElementById("watumishiForm")
+ document.getElementById("watumishiForm")
     .addEventListener("submit", function(e) {
 
       e.preventDefault();
@@ -650,7 +634,6 @@ function updateWatumishiUsername() {
 /* =========================================
    NAFASI MPYA
 ========================================= */
-
 function toggleNafasiMpya() {
 
   const select = document.getElementById("nafasiWatumishi");
