@@ -1488,7 +1488,6 @@ const moduleMenu = {
   /* =========================
      SALUNI
   ========================= */
-
   "MAPAMBO": [
     "MUHTASARI",
     "WATUMISHI",
@@ -1506,7 +1505,6 @@ const moduleMenu = {
   /* =========================
      SHAMBA - MAZAO
   ========================= */
-
   "MAZAO": [
     "MUHTASARI",
     "WATUMISHI",
@@ -1524,7 +1522,6 @@ const moduleMenu = {
   /* =========================
      SHAMBA - MIFUGO
   ========================= */
-
   "MIFUGO": [
     "MUHTASARI",
     "WATUMISHI",
@@ -1544,7 +1541,6 @@ const moduleMenu = {
   /* =========================
      USAIDIZI
   ========================= */
-
   "USAIDIZI": [
     "MUHTASARI",
     "MAJUKUMU",
@@ -1559,7 +1555,6 @@ const moduleMenu = {
   /* =========================
      MATUKIO
   ========================= */
-
   "SHEREHE": [
     "MUHTASARI",
     "USIMAMIZI SHEREHE",
@@ -1600,7 +1595,6 @@ const moduleMenu = {
   /* =========================
      MIKOPO & AKIBA
   ========================= */
-
   "VIKOBA": [
     "MUHTASARI",
     "WANACHAMA",
@@ -2050,47 +2044,61 @@ $("moduleSelect").addEventListener("change", () => {
       }
     }
 
-/* DASHBOARD YA HUDUMA */
+/* =================================
+   DASHBOARD YA HUDUMA NA MENYU
+================================= */
+
 function showServiceDashboard() {
 
   $("welcomePanel").classList.add("hidden");
   $("adminDashboard").classList.add("hidden");
   $("serviceDashboard").classList.remove("hidden");
 
+  // Jina la huduma na kipengele
   $("serviceHeading").textContent = selectedService;
 
   $("serviceDescription").textContent =
-    selectedModule
-      ? selectedModule
-      : "Chagua kipengele cha huduma unayotaka kutumia.";
+    selectedModule || "";
 
-  $("moduleHeading").textContent =
-    selectedModule
-      ? selectedMenu
-      : selectedService;
-
+  // Ondoa maelezo ya zamani
   $("serviceMessage").textContent = "";
-
-  $("moduleWorkspace").replaceChildren();
-
   hideMessage($("serviceNotice"));
 
-  // Hakuna kipengele kilichochaguliwa
+  // Safisha ukurasa wa awali
+  $("moduleWorkspace").replaceChildren();
+
+  // Kama kipengele hakijachaguliwa
   if (!selectedModule) {
     $("moduleHeading").textContent = selectedService;
-    $("serviceMessage").textContent =
-      "Chagua kipengele kwenye sehemu ya KIPENGELE iliyo juu.";
     return;
   }
 
-  // Fungua dashboard ya kipengele
-  if (selectedMenu === "MUHTASARI") {
-    renderModulePage("MUHTASARI");
-    return;
-  }
+  // Jina la ukurasa unaofunguliwa
+  $("moduleHeading").textContent =
+    selectedModule + " - " + selectedMenu;
 
-  // Fungua ukurasa wa menyu iliyochaguliwa
-  renderModulePage(selectedMenu);
+  // Fungua ukurasa husika
+  renderModulePage();
+}
+
+
+/* =================================
+   UKURASA WA KILA MENYU
+================================= */
+function renderModulePage() {
+  const workspace = $("moduleWorkspace");
+  workspace.replaceChildren();
+  const page = document.createElement("section");
+  page.className = "section-panel";
+
+  const heading = document.createElement("h3");
+
+  heading.textContent =
+    selectedModule + " - " + selectedMenu;
+
+  page.appendChild(heading);
+
+  workspace.appendChild(page);
 }
 
 /* =================================
@@ -2294,6 +2302,7 @@ if (!selectedService || !selectedModule) {
   return;
 }
 selectedMenu = item.label;
+closeDrawer();
 buildDrawerMenu();
 showServiceDashboard();}
 
