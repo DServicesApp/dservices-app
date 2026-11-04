@@ -1530,7 +1530,7 @@ const moduleMenu = {
   ],
 
   "EXAM RMS": [
-  "UTAWALA",
+  "WATUMISHI",
   "MASOMO",
   "MITIHANI",
   "ALAMA_RAW",
@@ -2187,8 +2187,15 @@ function renderModulePage() {
   const workspace = $("moduleWorkspace");
   switch (selectedMenu) {
     case "MUHTASARI":
-      renderMuhtasariPage(workspace);
-      return;
+  if (
+    selectedService === "BIASHARA" &&
+    selectedModule === "BIASHARA"
+  ) {
+    renderBiasharaDashboard(workspace);
+  } else {
+    renderMuhtasariPage(workspace);
+  }
+  return;
     case "WATUMISHI":
       renderWatumishiPage(workspace);
       return;
@@ -2205,7 +2212,6 @@ function renderModulePage() {
     case "USIMAMIZI":
     case "TAARIFA & TATHIMINI":
     case "MPANGILIO":
-
       workspace.innerHTML = `
         <section>
           <h3>${selectedMenu}</h3>
@@ -2688,6 +2694,7 @@ selectedMenu = "MUHTASARI";
 <script src="./js/wanafunzit.js"></script>
 <script src="./js/mahudhurio.js"></script>
 <script src="./js/offline-db.js"></script>
+<script src="./js/biashara.js"></scr
   <script>
   // KUSAJILI SERVICE WORKER
   if ("serviceWorker" in navigator) {
