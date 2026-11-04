@@ -2,7 +2,7 @@
    DSERVICES - SHARED DASHBOARD
    TUITION | DAYCARE | NURSERY
 ====================================== */
-function renderDashboardPage(workspace, data = {}) {
+function renderMuhtasariPage(workspace, data = {}) {
   if (!workspace) return;
 
   // MODULE ID ZA MENU
