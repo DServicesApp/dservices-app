@@ -6,8 +6,11 @@ function renderMuhtasariPage(workspace, data = {}) {
   if (!workspace) return;
 
 // TAREHE YA SASA
-const now = new Date();
-
+const now = new Date(
+  new Date().toLocaleString("en-US", {
+    timeZone: "Africa/Dar_es_Salaam"
+  })
+);
 const dateLabel = new Intl.DateTimeFormat("en-GB", {
   day: "2-digit",
   month: "short",
