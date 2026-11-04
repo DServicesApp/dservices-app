@@ -5,6 +5,25 @@
 function renderMuhtasariPage(workspace, data = {}) {
   if (!workspace) return;
 
+// TAREHE YA SASA
+const now = new Date();
+
+const dateLabel = new Intl.DateTimeFormat("en-GB", {
+  day: "2-digit",
+  month: "short",
+  year: "numeric"
+}).format(now);
+
+const months = [
+  "JANUARI", "FEBRUARI", "MACHI", "APRILI",
+  "MEI", "JUNI", "JULAI", "AGOSTI",
+  "SEPTEMBA", "OKTOBA", "NOVEMBA", "DESEMBA"
+];
+const currentMonth = months[now.getMonth()];
+const currentYear = now.getFullYear();
+
+const financialPeriod =
+  `JANUARI - ${currentMonth} ${currentYear}`;
   // MODULE ID ZA MENU
   const MENU_IDS = {
     WATUMISHI: "MOD006",
@@ -187,7 +206,9 @@ const card = (title, value) => `
     html += `
       <section class="tuition-dashboard-section">
 
-        <h3 class="tuition-section-heading">LEO</h3>
+        <h3 class="tuition-section-heading">
+  LEO TAREHE ${dateLabel}
+</h3>
 
         <div class="tuition-today-grid">
           ${todayCards.join("")}
@@ -200,13 +221,12 @@ const card = (title, value) => `
   /* =====================================
      MAHUDHURIO
   ===================================== */
-
   if (access.attendance) {
     html += `
       <section class="tuition-dashboard-section">
 
         <h3 class="tuition-section-heading">
-          MAHUDHURIO
+  MAHUDHURIO LEO TAREHE ${dateLabel}
         </h3>
 
         <div class="tuition-attendance-grid">
@@ -340,7 +360,7 @@ const card = (title, value) => `
         </h3>
 
         <div class="tuition-month-label">
-          ${data.monthLabel || "JANUARI – MWEZI WA SASA"}
+          ${financialPeriod}
         </div>
 
         <div class="tuition-month-grid">
