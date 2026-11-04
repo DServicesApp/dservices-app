@@ -362,9 +362,7 @@ const card = (title, value) => `
 /* =========================================
    DASHBOARD CSS
 ========================================= */
-
 function addTuitionDashboardStyles() {
-
   if (document.getElementById("tuitionDashboardStyles")) {
     return;
   }
@@ -522,26 +520,22 @@ function addTuitionDashboardStyles() {
         border-color: var(--orange, #f28c28);
         box-shadow: 0 3px 10px rgba(0,0,0,.07);
       }
-
     }
 
     @media (max-width: 600px) {
-
       .tuition-today-grid,
       .tuition-month-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 8px;
       }
-
       .tuition-attendance-grid,
       .tuition-people-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 8px;
       }
       .tuition-summary-card {
-        padding: 10px;
+       padding: 6px 8px;
       }
-
       .tuition-card-value {
         font-size: 17px;
       }
@@ -550,8 +544,6 @@ function addTuitionDashboardStyles() {
         padding: 10px;
       }
     }
-
   `;
-
   document.head.appendChild(style);
 }
