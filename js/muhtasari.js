@@ -111,13 +111,16 @@ function renderMuhtasariPage(workspace, data = {}) {
   };
 
   // KADI ZA FEDHA
-  const card = (title, value) => `
-    <div class="tuition-summary-card">
-      <div class="tuition-card-title">${title}</div>
-      <div class="tuition-card-value">${value}</div>
-      <div class="tuition-card-unit">TSH</div>
+const card = (title, value) => `
+  <div class="tuition-summary-card">
+    <div class="tuition-card-title">
+      ${title} <span>TSH</span>
     </div>
-  `;
+    <div class="tuition-card-value">
+      ${value}
+    </div>
+  </div>
+`;
 
   // KADI ZA MAHUDHURIO
   const attendance = (
@@ -397,37 +400,38 @@ function addTuitionDashboardStyles() {
     }
 
     .tuition-summary-card {
-      min-width: 0;
-      padding: 12px;
-      border-radius: 9px;
-      background: #fff;
-      border: 1px solid #e5e7eb;
-      box-sizing: border-box;
-      transition: transform .2s ease,
-                  box-shadow .2s ease,
-                  border-color .2s ease;
-    }
+  min-width: 0;
+  padding: 6px 8px;
+  border-radius: 9px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  box-sizing: border-box;
+  text-align: center;
 
-    .tuition-card-title {
-      font-size: 11px;
-      font-weight: 700;
-      color: #666;
-      margin-bottom: 8px;
-    }
+  transition: transform .2s ease,
+              box-shadow .2s ease,
+              border-color .2s ease;
+}
+.tuition-card-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: #666;
+  margin-bottom: 8px;
+  text-align: center;
+}
 
-    .tuition-card-value {
-      font-size: 19px;
-      font-weight: 700;
-      color: var(--green, #4b5320);
-      overflow-wrap: anywhere;
-    }
-
-    .tuition-card-unit {
-      font-size: 10px;
-      color: #888;
-      margin-top: 3px;
-    }
-
+.tuition-card-title span {
+  font-size: 10px;
+  font-weight: 600;
+  color: #888;
+}
+.tuition-card-value {
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--green, #4b5320);
+  overflow-wrap: anywhere;
+  text-align: center;
+}
     .tuition-attendance-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
