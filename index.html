@@ -1479,7 +1479,7 @@ const moduleMenu = {
     "MUHTASARI",
     "WANAFUNZI",
     "WATUMISHI",
-    "MADARASA & MASOMO",
+    "TAALUMA",
     "MAHUDHURIO",
     "MAPATO",
     "MATUMIZI",
@@ -2113,7 +2113,6 @@ $("moduleSelect").addEventListener("change", () => {
 /* =================================
    DASHBOARD YA HUDUMA NA MENYU
 ================================= */
-
 function showServiceDashboard() {
 
   $("welcomePanel").classList.add("hidden");
@@ -2187,6 +2186,9 @@ function showServiceDashboard() {
 function renderModulePage() {
   const workspace = $("moduleWorkspace");
   switch (selectedMenu) {
+    case "MUHTASARI":
+      renderMuhtasariPage(workspace);
+      return;
     case "WATUMISHI":
       renderWatumishiPage(workspace);
       return;
@@ -2194,11 +2196,13 @@ function renderModulePage() {
       renderWanafunziPage(workspace);
       return;
     case "MAHUDHURIO":
-    case "MASOMO & RATIBA":
+      renderMahudhurioPage(workspace);
+      return;
+    case "TAALUMA":
     case "MALIPO":
     case "MATUMIZI":
     case "HALI YA MICHANGO":
-    case "MITIHANI & MATOKEO":
+    case "USIMAMIZI":
     case "TAARIFA & TATHIMINI":
     case "MPANGILIO":
 
@@ -2679,8 +2683,10 @@ selectedMenu = "MUHTASARI";
       }
     });
 </script>
+<script src="./js/muhtasari.js"></script>
 <script src="./js/watumishi.js"></script>
 <script src="./js/wanafunzit.js"></script>
+<script src="./js/mahudhurio.js"></script>
 <script src="./js/offline-db.js"></script>
   <script>
   // KUSAJILI SERVICE WORKER
