@@ -1481,10 +1481,10 @@ const moduleMenu = {
     "WATUMISHI",
     "TAALUMA",
     "MAHUDHURIO",
-    "MAPATO",
+    "MALIPO",
     "MATUMIZI",
     "HALI YA MICHANGO",
-    "MITIHANI",
+    "MITIHANI/ MATOKEO",
     "MAWASILIANO",
     "RASILIMALI",
     "RIPOTI",
@@ -2207,8 +2207,14 @@ function renderModulePage() {
       return;
     case "TAALUMA":
     case "MALIPO":
+      renderMalipoPage(workspace);
+      return;
     case "MATUMIZI":
+      renderMatumiziPage(workspace);
+      return;
     case "HALI YA MICHANGO":
+      renderHali ya MichangoPage(workspace);
+      return;
     case "USIMAMIZI":
     case "TAARIFA & TATHIMINI":
     case "MPANGILIO":
@@ -2695,6 +2701,8 @@ selectedMenu = "MUHTASARI";
 <script src="./js/mahudhurio.js"></script>
 <script src="./js/offline-db.js"></script>
 <script src="./js/biashara.js"></scr
+  <script>
+<script src="./js/fedha1.js"></scr
   <script>
   // KUSAJILI SERVICE WORKER
   if ("serviceWorker" in navigator) {
