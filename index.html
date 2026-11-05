@@ -2671,14 +2671,35 @@ selectedMenu = "MUHTASARI";
     $("profileLogoutButton").addEventListener("click", logout);
 
 
-    /* KUFUNGA PANELI KWA ESCAPE */
-    document.addEventListener("keydown", event => {
-      if (event.key === "Escape") {
-        closeDrawer();
-        closeFloatingPanels();
-      }
-    });
+   /* KUFUNGA PANELI KWA ESCAPE */
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") {
+    closeDrawer();
+    closeFloatingPanels();
+  }
+});
+
+/* KUSAJILI SERVICE WORKER */
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("./service-worker.js")
+      .then(registration => {
+        console.log(
+ "DServices Service Worker imesajiliwa:",
+          registration.scope
+        );
+      })
+      .catch(error => {
+        console.error(
+ "Service Worker imeshindwa kusajiliwa:",
+          error
+        );
+      });
+  });
+}
 </script>
+
 <script src="./js/muhtasari.js"></script>
 <script src="./js/watumishi.js"></script>
 <script src="./js/wanafunzit.js"></script>
@@ -2687,25 +2708,5 @@ selectedMenu = "MUHTASARI";
 <script src="./js/fedha1.js"></script>
 <script src="./js/biashara.js"></script>
 
-  // KUSAJILI SERVICE WORKER
-  if ("serviceWorker" in navigator) {
-   window.addEventListener("load", () => {
-      navigator.serviceWorker
-        .register("./service-worker.js")
-        .then(registration => {
-          console.log(
-            "DServices Service Worker imesajiliwa:",
-            registration.scope
-          );
-        })
-        .catch(error => {
-          console.error(
-            "Service Worker imeshindwa kusajiliwa:",
-            error
-          );
-        });
-    });
-  }
-</script>
 </body>
 </html>
