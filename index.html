@@ -979,8 +979,8 @@
   <div class="language-selection">
 <label for="languageSelect">LUGHA / LANGUAGE</label>
    <select id="languageSelect">
-  <option value="SW" selected>SW</option>
-      <option value="ENG">ENG</option>
+  <option value="KISWAHILI" selected>KISWAHILI</option>
+      <option value="ENGLISH">ENGLISH</option>
     </select>
   </div>
 
@@ -1124,7 +1124,7 @@
         <div class="welcome-icon">☰</div>
         <h2>Chagua huduma ili kuendelea</h2>
         <p>
-          Chagua huduma kwenye sehemu ya HUDUMA.
+          Chagua huduma ili kuendelea.
         </p>
       </section>
 
@@ -1133,7 +1133,7 @@
       <section id="adminDashboard" class="hidden">
         <div class="page-heading">
           <h2>DASHBOARD YA DS APP</h2>
-          <p>Muhtasari wa usimamizi wa mfumo mzima.</p>
+         <p>Muhtasari wa mfumo mzima.</p>
         </div>
         <div class="stats-grid">
           <article class="stat-card">
@@ -1160,7 +1160,7 @@
         <div class="section-panel">
           <h3>Usimamizi wa mfumo</h3>
           <p>
-            Tumia menyu ya DServices kusimamia taasisi,
+           Tumia menyu kusimamia taasisi,
             watumiaji, timu, huduma, usajili na mipangilio
             inayopatikana kwa ruhusa zako.
           </p>
@@ -1232,7 +1232,7 @@
     </button>
     <h3>Notifications</h3>
     <p class="panel-note">
-      Hakuna taarifa mpya za kuonyesha kwa sasa.
+      Hakuna taarifa mpya kwa sasa.
     </p>
   </section>
 
@@ -1325,7 +1325,7 @@
 <div id="feedbackModal" class="feedback-overlay hidden">  
   <section class="feedback-modal">
     <header class="feedback-header">
-      <h2>MAONI YA DSERVICES</h2>
+      <h2>MAONI KUTOKA MFUMO</h2>
       <button type="button" id="feedbackClose"
         class="feedback-close">×</button>
     </header>
@@ -1346,7 +1346,6 @@
         placeholder="Namba yako ya simu"
         required
       >
-
 
       <label for="feedbackType">AINA YA MAONI</label>
       <select id="feedbackType" required>
@@ -1462,7 +1461,7 @@ const serviceModules = {
   "MIKOPO & AKIBA": [
     "VIKOBA",
     "HISA",
-    "KIKUNDI CHA JAMII"
+    "KIKUNDI JAMII"
   ]
 
 };
@@ -1496,24 +1495,23 @@ const moduleMenu = {
     "MUHTASARI",
     "WANAFUNZI",
     "WATUMISHI",
-    "TAALUMA",
     "MAHUDHURIO",
     "MALIPO",
     "MATUMIZI",
     "HALI YA MICHANGO",
-    "MITIHANI/ MATOKEO",
+    "TAALUMA",
     "MAWASILIANO",
     "RASILIMALI",
-    "RIPOTI",
+    "TAARIFA & TATHIMINI",
     "MPANGILIO"
   ],
 
   "DAYCARE": [
     "MUHTASARI",
-    "WATUMISHI",
     "WATOTO",
+    "WATUMISHI",
     "MAHUDHURIO",
-    "MASOMO & RATIBA",
+    "TAALUMA",
     "MALIPO",
     "MATUMIZI",
     "TAARIFA & TATHIMINI",
@@ -1522,13 +1520,12 @@ const moduleMenu = {
 
   "NURSERY": [
     "MUHTASARI",
-    "WATUMISHI",
     "WANAFUNZI",
+    "WATUMISHI",
     "MAHUDHURIO",
-    "MASOMO & RATIBA",
+    "TAALUMA",
     "MALIPO",
     "MATUMIZI",
-    "MITIHANI & MATOKEO",
     "TAARIFA & TATHIMINI",
     "MPANGILIO"
   ],
@@ -1541,8 +1538,8 @@ const moduleMenu = {
   "UCHAKATAJI",
   "MATOKEO",
   "RIPOTI_NA_UCHAMBUZI",
+  "LOGS_NA_USALAMA",
   "MPANGILIO",
-  "LOGS_NA_USALAMA"
  ],
 
 
@@ -1558,7 +1555,7 @@ const moduleMenu = {
     "ODA",
     "WATEJA/ WAZABUNI",
     "BIDHAA/ STOO",
-    "TATHIMINI",
+    "TAARIFA & TATHIMINI",
     "MPANGILIO"
   ],
 
@@ -1571,9 +1568,11 @@ const moduleMenu = {
     "WATUMISHI",
     "WATEJA",
     "ODA",
-    "MALIPO",
+    "MANUNUZI",
     "MATUMIZI",
-    "STOO",
+    "MAUZO",
+    "MALIPO",
+    "VIFAA",
     "TAARIFA",
     "TATHIMINI",
     "MPANGILIO"
@@ -1607,9 +1606,10 @@ const moduleMenu = {
     "UZAZI",
     "UZALISHAJI",
     "AFYA & MATIBABU",
-    "CHAKULA / LISHE",
-    "USIMAMIZI FEDHA",
+    "CHAKULA/ LISHE",
     "MAVUNO",
+    "MAPATO",
+    "MATUMIZI",
     "TAARIFA",
     "TATHIMINI",
     "MPANGILIO"
@@ -1622,8 +1622,8 @@ const moduleMenu = {
   "USAIDIZI": [
     "MUHTASARI",
     "MAJUKUMU",
-    "MAOMBI",
-    "USIMAMIZI FEDHA",
+    "ODA",
+    "FEDHA",
     "TAARIFA",
     "TATHIMINI",
     "MPANGILIO"
@@ -1746,7 +1746,6 @@ async function callAPI(payload) {
   if (!response.ok) {
     throw new Error("Server imeshindwa kupokea ombi.");
   }
-
   return await response.json();
 }
 
@@ -1832,7 +1831,7 @@ togglePassword.addEventListener("click", () => {
       if (!username || !password) {
         showMessage(
           $("loginMessage"),
-          "Tafadhali jaza username na reg no.",
+          "Tafadhali jaza username na pasword.",
           "error"
         );
         return;
@@ -1848,7 +1847,7 @@ togglePassword.addEventListener("click", () => {
       }
 
       $("loginButton").disabled = true;
-      $("loginButton").textContent = "INAINGIA...";
+      $("loginButton").textContent = "INGIA...";
 
       showMessage(
         $("loginMessage"),
@@ -2196,11 +2195,11 @@ function renderModulePage() {
     renderMuhtasariPage(workspace);
   }
   return;
-    case "WATUMISHI":
-      renderWatumishiPage(workspace);
-      return;
     case "WANAFUNZI":
       renderWanafunziPage(workspace);
+      return;
+    case "Watumishi":
+      renderWatumishiPage(workspace);
       return;
     case "MAHUDHURIO":
       renderMahudhurioPage(workspace);
@@ -2293,7 +2292,7 @@ function buildDrawerMenu() {
     const note = document.createElement("p");
 
     note.textContent =
-      "Chagua kipengele kwenye sehemu ya juu ili kuona menyu zake.";
+      "Chagua kipengele kuendelea.";
 
     note.style.cssText =
       "padding:10px 8px;color:#687078;font-size:13px;line-height:1.6";
