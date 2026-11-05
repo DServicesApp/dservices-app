@@ -1,9 +1,8 @@
-/* =====================================================
+/* =========================================
    DSERVICES - USIMAMIZI FEDHA
-   FILE: fedha1.js
+   FILE: Fedha.js
    MALIPO | MATUMIZI | HALI YA MICHANGO
-===================================================== */
-
+====================================== */
 (function () {
   "use strict";
 
@@ -33,7 +32,6 @@
     }[ch]));
   }
 
-
   function getAccountId() {
     return String(
       window.currentUser?.accountId ||
@@ -42,7 +40,6 @@
       ""
     );
   }
-
 
   function getServiceId() {
     return String(
@@ -53,7 +50,6 @@
     );
   }
 
-
   function getModuleId() {
     return String(
       window.selectedModule?.id ||
@@ -62,7 +58,6 @@
       ""
     );
   }
-
 
   function today() {
     const d = new Date();
@@ -73,14 +68,12 @@
     ].join("-");
   }
 
-
   function makeId(prefix) {
     return prefix + "-" +
       Date.now() + "-" +
       Math.random().toString(36)
         .slice(2, 7).toUpperCase();
   }
-
 
   function showFinanceMessage(message, isError = false) {
     if (typeof window.showMessage === "function") {
@@ -99,7 +92,6 @@
   =============================== */
   function injectFinanceStyles() {
     if ($f("dservicesFinanceStyles")) return;
-
     const style = document.createElement("style");
 
     style.id = "dservicesFinanceStyles";
@@ -1167,7 +1159,6 @@
   /* ===============================
      KUHIFADHI TAARIFA
   =============================== */
-
   async function saveFinanceForm(
     event,
     workspace,
@@ -1245,8 +1236,6 @@
         payload: payload
 
       });
-
-
       showFinanceMessage(
 
         isPayment
@@ -1269,7 +1258,7 @@
         error
       );
       showFinanceMessage(
-        "Imeshindikana kuhifadhi taarifa: " +
+   "Imeshindikana kuhifadhi taarifa: " +
         (error.message || error),
         true
       );
@@ -1336,9 +1325,7 @@
 
           return new Date(b.createdAt) -
             new Date(a.createdAt);
-
         });
-
 
       if (!relevant.length) {
 
@@ -1415,7 +1402,6 @@
                 </tr>
 
               </thead>
-
 
               <tbody>
 
@@ -1506,9 +1492,3 @@
 })();
 window.renderFedhaPage = renderFinancePage;
 
-alert(
-  "FEDHA1 IMEPOKIWA: " +
-  typeof window.renderFedhaPage
-);
-
-})();
