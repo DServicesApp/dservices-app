@@ -296,118 +296,67 @@
 
   function renderFinancePage(workspace) {
 
-    if (!workspace) return;
+  if (!workspace) return;
 
-    injectFinanceStyles();
+  injectFinanceStyles();
 
-    const menu =
-      FINANCE_MENUS.includes(
-        String(window.selectedMenu || "").toUpperCase()
-      )
-        ? String(window.selectedMenu).toUpperCase()
-        : currentFinanceMenu;
+  const selected = String(
+    window.selectedMenu || ""
+  ).toUpperCase();
 
-    currentFinanceMenu = menu;
+  const menu = FINANCE_MENUS.includes(selected)
+    ? selected
+    : currentFinanceMenu;
 
-    workspace.innerHTML = `
+  currentFinanceMenu = menu;
 
-      <section class="dsf-wrap">
+  workspace.innerHTML = `
 
-        <div class="dsf-head">
+    <section class="dsf-wrap">
 
-          <h2 class="dsf-title">
-            USIMAMIZI FEDHA
-          </h2>
+      <div class="dsf-head">
 
-          <div class="dsf-actions">
+        <div class="dsf-actions">
 
-            <button
-              class="dsf-btn dsf-primary"
-              id="dsfAddBtn">
-              ＋ Ongeza
-            </button>
+          <button
+            class="dsf-btn dsf-primary"
+            id="dsfAddBtn">
+            ＋ Ongeza
+          </button>
 
-            <button
-              class="dsf-btn dsf-light"
-              id="dsfHistoryBtn">
-              Historia
-            </button>
-
-          </div>
+          <button
+            class="dsf-btn dsf-light"
+            id="dsfHistoryBtn">
+            Historia
+          </button>
 
         </div>
 
+      </div>
 
-        <div class="dsf-tabs">
+      <div id="dsfContent"></div>
 
-          ${FINANCE_MENUS.map(item => `
+    </section>
 
-            <button
-              class="dsf-tab ${item === menu ? "active" : ""}"
-              data-finance-menu="${item}">
+  `;
 
-              ${item}
+  $f("dsfAddBtn", workspace)
+    .addEventListener("click", () => {
+      showChooser(workspace);
+    });
 
-            </button>
+  $f("dsfHistoryBtn", workspace)
+    .addEventListener("click", () => {
+      showHistory(workspace);
+    });
 
-          `).join("")}
-
-        </div>
-
-
-        <div id="dsfContent"></div>
-
-      </section>
-
-    `;
-
-
-    workspace
-      .querySelectorAll("[data-finance-menu]")
-      .forEach(button => {
-
-        button.addEventListener("click", () => {
-
-          currentFinanceMenu =
-            button.dataset.financeMenu;
-
-          window.selectedMenu =
-            currentFinanceMenu;
-
-          renderFinancePage(workspace);
-
-        });
-
-      });
-
-
-    $f("dsfAddBtn", workspace)
-      .addEventListener("click", () => {
-
-        showChooser(workspace);
-
-      });
-
-
-    $f("dsfHistoryBtn", workspace)
-      .addEventListener("click", () => {
-
-        showHistory(workspace);
-
-      });
-
-
-    renderFinanceContent(workspace);
-
-  }
-
+  renderFinanceContent(workspace);
+}
 
   /* ===============================
      MAUDHUI YA KILA MENYU
   =============================== */
-
   function renderFinanceContent(workspace) {
-
     const content = $f("dsfContent", workspace);
 
     if (!content) return;
@@ -1490,5 +1439,4 @@
   =============================== */
   window.renderFedhaPage = renderFinancePage;
 })();
-window.renderFedhaPage = renderFinancePage;
 
