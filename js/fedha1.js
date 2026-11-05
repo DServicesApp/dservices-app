@@ -1251,9 +1251,10 @@
 
         isPayment
 
-          ? "Malipo yamehifadhiwa kwenye simu; yatasawazishwa mtandao utakaporudi."
+  ? "Malipo yamehifadhiwa kwenye simu; yatasawazishwa mtandao utakaporudi."
 
-          : "Matumizi yamehifadhiwa kwenye simu; yatasawazishwa mtandao utakaporudi."
+ 
+ : "Matumizi yamehifadhiwa kwenye simu; yatasawazishwa mtandao utakaporudi."
 
       );
 
@@ -1278,13 +1279,9 @@
   /* ===============================
      HISTORIA YA MALIPO NA MATUMIZI
   =============================== */
-
   async function showHistory(workspace) {
-
     const content = $f("dsfContent", workspace);
-
     content.innerHTML = `
-
       <div class="dsf-card">
 
         <h3>HISTORIA - ${currentFinanceMenu}</h3>
@@ -1405,11 +1402,8 @@
           <div class="dsf-table-wrap">
 
             <table class="dsf-table">
-
               <thead>
-
                 <tr>
-
                   <th>TAREHE</th>
 
                   <th>AINA</th>
@@ -1460,7 +1454,6 @@
                     </tr>
 
                   `;
-
                 }).join("")}
 
               </tbody>
@@ -1473,12 +1466,9 @@
 
       `;
 
-
       $f("dsfHistoryBack", workspace)
         .addEventListener("click", () => {
-
-          renderFinanceContent(workspace);
-
+    renderFinanceContent(workspace);
         });
 
 
@@ -1498,16 +1488,12 @@
             Rudi
           </button>
         </div>
-
       `;
 
       $f("dsfHistoryBack", workspace)
         .addEventListener("click", () => {
-
-          renderFinanceContent(workspace);
-
+ renderFinanceContent(workspace);
         });
-
     }
 
   }
@@ -1516,6 +1502,13 @@
   /* ===============================
      KUUNGANISHA NA INDEX.HTML
   =============================== */
-  window.renderFedha1Page = renderFinancePage;
+  window.renderFedhaPage = renderFinancePage;
+})();
+window.renderFedhaPage = renderFinancePage;
+
+alert(
+  "FEDHA1 IMEPOKIWA: " +
+  typeof window.renderFedhaPage
+);
 
 })();
