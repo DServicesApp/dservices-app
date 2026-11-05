@@ -1414,7 +1414,6 @@ const serviceModules = {
     "TUITION",
     "DAYCARE",
     "NURSERY",
-    "SCHOOL DATA",
     "EXAM RMS"
   ],
 
@@ -1511,19 +1510,6 @@ const moduleMenu = {
     "MASOMO & RATIBA",
     "MALIPO",
     "MATUMIZI",
-    "MITIHANI & MATOKEO",
-    "TAARIFA & TATHIMINI",
-    "MPANGILIO"
-  ],
-
-  "SCHOOL DATA": [
-    "MUHTASARI",
-    "WATUMISHI",
-    "WANAFUNZI",
-    "MAHUDHURIO",
-    "MALIPO",
-    "MATUMIZI",
-    "KOZI & RATIBA",
     "MITIHANI & MATOKEO",
     "TAARIFA & TATHIMINI",
     "MPANGILIO"
@@ -1693,7 +1679,7 @@ const moduleMenu = {
     "MPANGILIO"
   ],
 
-  "KIKUNDI CHA JAMII": [
+  "KIKUNDI JAMII": [
     "MUHTASARI",
     "WANACHAMA",
     "UONGOZI",
@@ -1980,18 +1966,14 @@ $("serviceSelect").addEventListener("change", async () => {
 
   /* USIMAMIZI MKUU */
   if (selectedService === "ALL") {
-
     moduleSelect.disabled = true;
-
     await showAdminDashboard();
     buildDrawerMenu();
-
     return;
   }
 
   /* HUDUMA ZA KAWAIDA */
   populateModules();
-
   showServiceDashboard();
   buildDrawerMenu();
 
@@ -2205,16 +2187,18 @@ function renderModulePage() {
     case "MAHUDHURIO":
       renderMahudhurioPage(workspace);
       return;
-    case "TAALUMA":
     case "MALIPO":
-      renderMalipoPage(workspace);
-      return;
     case "MATUMIZI":
-      renderMatumiziPage(workspace);
-      return;
     case "HALI YA MICHANGO":
-      renderHali ya MichangoPage(workspace);
-      return;
+  if (typeof window.renderfedha1Page === "function") {
+    window.renderFedhaPage(workspace);
+  } else {
+    workspace.innerHTML = `
+   <p>fedha1.js haijapakiwa vizuri.</p>
+    `;
+  }
+  return;
+    case "TAALUMA":
     case "USIMAMIZI":
     case "TAARIFA & TATHIMINI":
     case "MPANGILIO":
@@ -2700,10 +2684,9 @@ selectedMenu = "MUHTASARI";
 <script src="./js/wanafunzit.js"></script>
 <script src="./js/mahudhurio.js"></script>
 <script src="./js/offline-db.js"></script>
-<script src="./js/biashara.js"></scr
-  <script>
-<script src="./js/fedha1.js"></scr
-  <script>
+<script src="./js/fedha1.js"></script>
+<script src="./js/biashara.js"></script>
+
   // KUSAJILI SERVICE WORKER
   if ("serviceWorker" in navigator) {
    window.addEventListener("load", () => {
