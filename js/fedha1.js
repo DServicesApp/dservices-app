@@ -1516,6 +1516,6 @@
   /* ===============================
      KUUNGANISHA NA INDEX.HTML
   =============================== */
-  window.renderFedhaPage = renderFinancePage;
+  window.renderFedha1Page = renderFinancePage;
 
 })();
