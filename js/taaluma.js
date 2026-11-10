@@ -318,13 +318,10 @@
   /* =====================================
      CSS
   ===================================== */
-
   function injectTaalumaStyles() {
-
     if (document.getElementById("taalumaStyles")) {
       return;
     }
-
     const style = document.createElement("style");
 
     style.id = "taalumaStyles";
@@ -457,13 +454,58 @@
         padding: 25px 10px;
         color: #777;
       }
+.taaluma-form-section {
+  margin-top: 18px;
+  padding: 12px;
+  border-top: 2px solid #F28C28;
+}
+
+.taaluma-form-section h3 {
+  color: #4B5320;
+  font-size: 16px;
+}
+
+.taaluma-form-section label {
+  display: block;
+  margin-top: 12px;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.taaluma-form-section input,
+.taaluma-form-section select,
+.taaluma-form-section textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 7px;
+}
+
+.taaluma-form-section button {
+  width: 100%;
+  margin-top: 15px;
+  padding: 12px;
+  border: 0;
+  border-radius: 7px;
+  background: #4B5320;
+  color: white;
+  font-weight: bold;
+}
+
+.taaluma-form-card {
+  padding: 12px;
+  margin-top: 15px;
+  border: 1px solid #ddd;
+  border-radius: 9px;
+}
 
       @media(max-width:600px) {
         .taaluma-filters {
           grid-template-columns: repeat(2, minmax(0, 1fr));
         }
       }
-
     `;
 
     document.head.appendChild(style);
@@ -473,63 +515,216 @@
      FUNCTIONS ZITAKAZOKAMILISHWA
      KWENYE SEHEMU ZINAZOFUATA
   ===================================== */
-
   function showTaalumaForm(type) {
-
   const area = document.getElementById("taalumaFormArea");
-
   if (!area) return;
-
-  let title = "";
-
+  let form = "";
   switch (type) {
-
     case "DARASA":
-      title = "SAJILI DARASA NA MASOMO";
+      form = `
+        <h3>SAJILI DARASA NA MASOMO</h3>
+
+        <div class="taaluma-form-card">
+
+          <h4>1. SAJILI DARASA</h4>
+
+          <label>JINA LA DARASA</label>
+          <input type="text" id="jinaDarasa"
+                 placeholder="Mfano: DARASA LA KWANZA">
+
+          <label>MAELEZO</label>
+          <textarea id="maelezoDarasa"></textarea>
+
+          <button onclick="saveTaalumaDarasa()">
+            HIFADHI DARASA
+          </button>
+
+        </div>
+
+        <div class="taaluma-form-card">
+
+          <h4>2. SAJILI SOMO</h4>
+
+          <label>JINA LA SOMO</label>
+          <input type="text" id="jinaSomo"
+                 placeholder="Mfano: HISABATI">
+
+          <label>MAELEZO</label>
+          <textarea id="maelezoSomo"></textarea>
+
+          <button onclick="saveTaalumaSomo()">
+            HIFADHI SOMO
+          </button>
+
+        </div>
+
+        <div class="taaluma-form-card">
+
+          <h4>3. UNGANISHA MASOMO NA DARASA</h4>
+
+          <label>CHAGUA DARASA</label>
+          <select id="unganishaDarasa">
+            <option value="">CHAGUA DARASA</option>
+          </select>
+
+          <label>CHAGUA MASOMO</label>
+          <select id="unganishaMasomo" multiple>
+          </select>
+
+          <button onclick="saveTaalumaMasomoDarasa()">
+            UNGANISHA
+          </button>
+
+        </div>
+      `;
+
       break;
+
 
     case "MAJUKUMU":
-      title = "SAJILI MAJUKUMU";
+
+      form = `
+        <h3>SAJILI MAJUKUMU</h3>
+
+        <label>MTUMISHI / MWALIMU</label>
+        <select id="jukumuMtumishi">
+          <option value="">CHAGUA MTUMISHI</option>
+        </select>
+
+        <label>DARASA</label>
+        <select id="jukumuDarasa">
+          <option value="">CHAGUA DARASA</option>
+        </select>
+
+        <label>SOMO</label>
+        <select id="jukumuSomo">
+          <option value="">CHAGUA SOMO</option>
+        </select>
+
+        <label>AINA YA JUKUMU</label>
+        <select id="ainaJukumu">
+          <option value="">CHAGUA</option>
+          <option>MWALIMU WA SOMO</option>
+          <option MWALIMU WA DARASA</option>
+          <option>MSIMAMIZI WA MTIHANI</option>
+          <option>JUKUMU JINGINE</option>
+        </select>
+
+        <button onclick="saveTaalumaJukumu()">
+          HIFADHI
+        </button>
+      `;
+
       break;
+
 
     case "RATIBA_MASOMO":
-      title = "INGIZA RATIBA ZA MASOMO";
+
+      form = `
+        <h3>INGIZA RATIBA ZA MASOMO</h3>
+
+        <label>DARASA</label>
+        <select id="ratibaDarasa"></select>
+
+        <label>SIKU</label>
+        <select id="ratibaSiku">
+          <option>JUMATATU</option>
+          <option>JUMANNE</option>
+          <option JUMATANO</option>
+          <option>ALHAMISI</option>
+          <option>IJUMAA</option>
+          <option>JUMAMOSI</option>
+        </select>
+
+        <label>SOMO</label>
+        <select id="ratibaSomo"></select>
+
+        <label>MWALIMU</label>
+        <select id="ratibaMwalimu"></select>
+
+        <label>MUDA WA KUANZA</label>
+        <input type="time" id="ratibaMwanzo">
+
+        <label>MUDA WA KUMALIZA</label>
+        <input type="time" id="ratibaMwisho">
+
+        <button onclick="saveRatibaMasomo()">
+          HIFADHI RATIBA
+        </button>
+      `;
+
       break;
+
 
     case "RATIBA_MITIHANI":
-      title = "INGIZA RATIBA ZA MITIHANI";
+
+      form = `
+        <h3>INGIZA RATIBA ZA MITIHANI</h3>
+
+        <label>JINA LA MTIHANI</label>
+        <input type="text" id="jinaMtihani">
+
+        <label>DARASA</label>
+        <select id="mtihaniDarasa"></select>
+
+        <label>SOMO</label>
+        <select id="mtihaniSomo"></select>
+
+        <label>TAREHE</label>
+        <input type="date" id="tareheMtihani">
+
+        <label>MUDA WA KUANZA</label>
+        <input type="time" id="mtihaniMwanzo">
+
+        <label>MUDA WA KUMALIZA</label>
+        <input type="time" id="mtihaniMwisho">
+
+        <button onclick="saveRatibaMitihani()">
+          HIFADHI RATIBA
+        </button>
+      `;
+
       break;
+
 
     case "ALAMA":
-      title = "INGIZA ALAMA";
-      break;
 
+      form = `
+        <h3>INGIZA ALAMA</h3>
+
+        <label>MWAKA WA MASOMO</label>
+        <input type="number" id="alamaMwaka"
+               value="${new Date().getFullYear()}">
+
+        <label>MTIHANI</label>
+        <select id="alamaMtihani"></select>
+
+        <label>DARASA</label>
+        <select id="alamaDarasa"></select>
+
+        <label>SOMO</label>
+        <select id="alamaSomo"></select>
+
+        <label>MWANAFUNZI</label>
+        <select id="alamaMwanafunzi"></select>
+
+        <label>ALAMA</label>
+        <input type="number" id="alama"
+               min="0" max="100">
+        <button onclick="saveTaalumaAlama()">
+          HIFADHI ALAMA
+        </button>
+      `;
+      break;
     default:
       return;
   }
-
   area.innerHTML = `
     <div class="taaluma-form-section">
-
-      <h3>${title}</h3>
-
-      <p>
-        Fomu ya ${title} itaonekana hapa.
-      </p>
-
+      ${form}
     </div>
   `;
 }
-
-  function showRatiba(type) {
-    console.log("Ratiba:", type);
-  }
-
-  function loadMatokeoYears() {}
-  function filterMatokeoMwaka() {}
-  function filterMatokeoDarasa() {}
-  function filterMatokeoMtihani() {}
-  function filterMatokeoSomo() {}
 
   /* =====================================
      PUBLIC FUNCTIONS
