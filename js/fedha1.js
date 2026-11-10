@@ -13,7 +13,6 @@
   ];
 
   let currentFinanceMenu = "MALIPO";
-  let currentFormType = "";
  
 const $f = (id, root = document) => {
   if (root === document) {
@@ -437,7 +436,7 @@ function renderFinancePage(workspace) {
   /* ===============================
      MAUDHUI YA KILA MENYU
   =============================== */
-  function renderFinanceContent(workspace) {
+function renderFinanceContent(workspace) {
   const content = $f("dsfContent", workspace);
   if (!content) return;
 
@@ -653,12 +652,9 @@ function renderFinancePage(workspace) {
   =============================== */
   function showFinanceForm(workspace, formType) {
 
-    currentFormType = formType;
-
     const isPayment =
       formType === "student-payment" ||
       formType === "other-payment";
-
     const isStudent =
       formType === "student-payment";
 
@@ -777,7 +773,7 @@ function renderFinancePage(workspace) {
 
         field(
           "ID MWANAFUNZI",
-          "ID_MWANAFUNZI/MTUMISHI",
+          "ID_MWANAFUNZI",
           "text",
           { readonly: true }
         ),
