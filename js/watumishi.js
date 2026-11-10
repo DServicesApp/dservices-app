@@ -626,16 +626,20 @@ function showWatumishiForm() {
   // Kwa sasa kuhifadhi hakujabadilishwa
   document.getElementById("watumishiForm")
     .addEventListener("submit", function(e) {
-
       e.preventDefault();
-
       const message = document.getElementById(
         "watumishiFormMessage"
       );
-
       message.textContent =
         "Muunganiko wa kuhifadhi Google Sheets bado haujaunganishwa.";
-
     });
-
 }
+
+/* =====================================
+   DSERVICES - WATUMISHI EXPORT
+===================================== */
+window.renderWatumishiPage = renderWatumishiPage;
+window.showWatumishiHistory = showWatumishiHistory;
+window.showWatumishiForm = showWatumishiForm;
+window.showWatumishiSearch = showWatumishiSearch;
+window.tafutaMtumishi = tafutaMtumishi;
