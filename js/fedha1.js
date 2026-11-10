@@ -322,6 +322,25 @@ const $f = (id, root = document) => {
   cursor:pointer;
 }
 
+.dsf-form-modal {
+  background:#fff;
+  width:100%;
+  max-width:650px;
+  max-height:90vh;
+  overflow-y:auto;
+  border-radius:12px;
+  padding:18px;
+  box-shadow:0 8px 30px rgba(0,0,0,.2);
+}
+
+.dsf-form-modal .dsf-modal-header {
+  position:sticky;
+  top:-18px;
+  background:#fff;
+  padding:5px 0 12px;
+  z-index:2;
+}
+
       @media(max-width:600px) {
         .dsf-grid {
           grid-template-columns:1fr;
@@ -812,39 +831,34 @@ function renderFinancePage(workspace) {
 
     /* MALIPO NA MATUMIZI MENGINE */
 
-    else {
+else {
 
-      fields.push(
+  if (isPayment) {
 
-        field(
-          "JINA LA MLIPAJI",
-          isPayment
-            ? "JINA_LA_MLIPAJI"
-            : "MLIPAJI"
-        )
+    fields.push(
+      field(
+        "JINA LA MLIPAJI",
+        "JINA_LA_MLIPAJI"
+      )
+    );
 
-      );
+  } else {
 
-      if (isExpense) {
+    fields.push(
+      field(
+        "JINA LA MPOKEAJI",
+        "JINA_LA_MPOKEAJI"
+      )
+    );
 
-        fields.push(
+  }
 
-          field(
-            "JINA LA MPOKEAJI",
-            "JINA_LA_MPOKEAJI"
-          )
-
-        );
-
-      }
-
-    }
+}
 
 
     /* TAARIFA ZA FEDHA */
 
     fields.push(
-
       field(
         "KIASI (TSH)",
         "KIASI",
@@ -916,7 +930,6 @@ function renderFinancePage(workspace) {
           readonly: true
         }
       )
-
     );
 
 
@@ -970,16 +983,21 @@ content.innerHTML = `
 
  const formModal = $f("dsfFormModal", workspace);
 
+// KUFUNGA KWA ALAMA ×
 $f("dsfCloseForm", workspace)
   .addEventListener("click", () => {
     formModal.remove();
+    renderFinanceContent(workspace);
   });
 
+// KUFUNGA KWA KUBONYEZA NJE YA FOMU
 formModal.addEventListener("click", event => {
   if (event.target === formModal) {
     formModal.remove();
+    renderFinanceContent(workspace);
   }
 });
+
 
     $f("dsfFinanceForm", workspace)
       .addEventListener("submit", event => {
