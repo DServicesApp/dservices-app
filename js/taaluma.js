@@ -731,7 +731,7 @@
 `;
 const actions = document.getElementById("taalumaActions");
 if (actions) {
-  actions.style.display = "none";
+  actions.style.display = "none";}
 }
 
 /* =================================
@@ -947,23 +947,29 @@ function filterAlamaSomo() {
   `;
 }
 
-  /* ==================================
-     PUBLIC FUNCTIONS
-  =================================== */
-  window.renderTaalumaPage = renderTaalumaPage;
-  window.openTaalumaModal = openTaalumaModal;
-  window.closeTaalumaModal = closeTaalumaModal;
-  window.showTaalumaForm = showTaalumaForm;
-  window.openRatibaModal = openRatibaModal;
-  window.showRatiba = showRatiba;
-  window.showTaalumaResults = showTaalumaResults;
-  window.filterMatokeoMwaka = filterMatokeoMwaka;
-  window.filterMatokeoDarasa = filterMatokeoDarasa;
-  window.filterMatokeoMtihani = filterMatokeoMtihani;
-  window.filterMatokeoSomo = filterMatokeoSomo;
-})();
+  /* ================================
+   PUBLIC FUNCTIONS
+================================ */
+window.renderTaalumaPage = renderTaalumaPage;
+window.openTaalumaModal = openTaalumaModal;
+window.closeTaalumaModal = closeTaalumaModal;
+
+window.showTaalumaForm = showTaalumaForm;
 window.rudiTaalumaMenu = rudiTaalumaMenu;
+
+window.openRatibaModal = openRatibaModal;
+window.showRatiba = showRatiba;
+window.pakuaRatiba = pakuaRatiba;
+
+window.showTaalumaResults = showTaalumaResults;
+
 window.filterAlamaMwaka = filterAlamaMwaka;
 window.filterAlamaDarasa = filterAlamaDarasa;
 window.filterAlamaMtihani = filterAlamaMtihani;
 window.filterAlamaSomo = filterAlamaSomo;
+
+window.filterMatokeoMwaka = filterMatokeoMwaka;
+window.filterMatokeoDarasa = filterMatokeoDarasa;
+window.filterMatokeoMtihani = filterMatokeoMtihani;
+window.filterMatokeoSomo = filterMatokeoSomo;
+})();
