@@ -1,8 +1,8 @@
-/* =========================================
+/* =====================================
    DSERVICES - TAALUMA
    FILE: taaluma.js
    UTENDAJI | RATIBA | MATOKEO
-========================================= */
+===================================== */
 
 (function () {
   "use strict";
@@ -19,9 +19,9 @@
     majukumu: []
   };
 
-  /* =====================================
+  /* =================================
      ACCOUNT ID
-  ===================================== */
+  ================================== */
 
   function getTaalumaAccountId() {
     const user = window.currentUser || {};
@@ -34,12 +34,10 @@
     );
   }
 
-  /* =====================================
+  /* =================================
      HIFADHI TAARIFA
-  ===================================== */
-
+  ================================== */
   async function saveTaalumaData(action, data) {
-
     if (typeof window.saveOfflineRecord !== "function") {
       alert("Mfumo wa IndexedDB haujapatikana.");
       return false;
@@ -67,12 +65,10 @@
     }
   }
 
-  /* =====================================
+  /* =================================
      MUONEKANO MKUU
-  ===================================== */
-
+  ================================== */
   function renderTaalumaPage(workspace) {
-
     taalumaWorkspace = workspace;
 
     workspace.innerHTML = `
@@ -123,10 +119,9 @@
     injectTaalumaStyles();
   }
 
-  /* =====================================
+  /* ==================================
      KIPAZIA CHA UTENDAJI
-  ===================================== */
-
+  =================================== */
   function openTaalumaModal() {
 
     const root = document.getElementById(
@@ -154,7 +149,7 @@
 
           </div>
 
-          <div class="taaluma-actions">
+ <div class="taaluma-actions" id="taalumaActions">
 
             <button onclick="showTaalumaForm('DARASA')">
               SAJILI DARASA NA MASOMO
@@ -177,20 +172,16 @@
             </button>
 
           </div>
-
-          <div id="taalumaFormArea"></div>
-
+     <div id="taalumaFormArea"></div>
         </div>
       </div>
     `;
   }
 
-  /* =====================================
+  /* ================================
      FUNGA KIPAZIA
-  ===================================== */
-
+  ================================ */
   function closeTaalumaModal(event) {
-
     if (
       event &&
       event.target &&
@@ -206,12 +197,10 @@
     if (root) root.innerHTML = "";
   }
 
-  /* =====================================
+  /* ================================
      KIPAZIA CHA RATIBA
-  ===================================== */
-
+  ================================ */
   function openRatibaModal() {
-
     const root = document.getElementById(
       "taalumaModalRoot"
     );
@@ -256,12 +245,10 @@
     `;
   }
 
-  /* =====================================
+  /* ===============================
      MATOKEO
-  ===================================== */
-
+  ================================= */
   function showTaalumaResults() {
-
     const content = document.getElementById(
       "taalumaContent"
     );
@@ -315,9 +302,9 @@
     loadMatokeoYears();
   }
 
-  /* =====================================
+  /* ================================
      CSS
-  ===================================== */
+  ================================= */
   function injectTaalumaStyles() {
     if (document.getElementById("taalumaStyles")) {
       return;
@@ -511,10 +498,10 @@
     document.head.appendChild(style);
   }
 
-  /* =====================================
+  /* =================================
      FUNCTIONS ZITAKAZOKAMILISHWA
      KWENYE SEHEMU ZINAZOFUATA
-  ===================================== */
+  ================================= */
   function showTaalumaForm(type) {
   const area = document.getElementById("taalumaFormArea");
   if (!area) return;
@@ -530,7 +517,7 @@
 
           <label>JINA LA DARASA</label>
           <input type="text" id="jinaDarasa"
-                 placeholder="Mfano: DARASA LA KWANZA">
+                 placeholder="Mfano: I">
 
           <label>MAELEZO</label>
           <textarea id="maelezoDarasa"></textarea>
@@ -582,7 +569,6 @@
 
 
     case "MAJUKUMU":
-
       form = `
         <h3>SAJILI MAJUKUMU</h3>
 
@@ -603,11 +589,11 @@
 
         <label>AINA YA JUKUMU</label>
         <select id="ainaJukumu">
-          <option value="">CHAGUA</option>
-          <option>MWALIMU WA SOMO</option>
-          <option>MWALIMU WA DARASA</option>
-          <option>MSIMAMIZI WA MTIHANI</option>
-          <option>JUKUMU JINGINE</option>
+        <option value="">CHAGUA</option>
+        <option>MWALIMU WA SOMO</option>
+       <option>MWALIMU WA DARASA</option>
+    <option>MSIMAMIZI WA MTIHANI</option>
+       <option>JUKUMU JINGINE</option>
         </select>
 
         <button onclick="saveTaalumaJukumu()">
@@ -652,24 +638,17 @@
           HIFADHI RATIBA
         </button>
       `;
-
       break;
 
-
     case "RATIBA_MITIHANI":
-
       form = `
         <h3>INGIZA RATIBA ZA MITIHANI</h3>
-
         <label>JINA LA MTIHANI</label>
         <input type="text" id="jinaMtihani">
-
         <label>DARASA</label>
         <select id="mtihaniDarasa"></select>
-
         <label>SOMO</label>
         <select id="mtihaniSomo"></select>
-
         <label>TAREHE</label>
         <input type="date" id="tareheMtihani">
 
@@ -689,45 +668,75 @@
 
     case "ALAMA":
 
-      form = `
-        <h3>INGIZA ALAMA</h3>
+  form = `
+    <h3>INGIZA ALAMA</h3>
 
-        <label>MWAKA WA MASOMO</label>
-        <input type="number" id="alamaMwaka"
-               value="${new Date().getFullYear()}">
+    <div class="taaluma-filters">
 
-        <label>MTIHANI</label>
-        <select id="alamaMtihani"></select>
+      <select id="alamaMwaka"
+        onchange="filterAlamaMwaka()">
 
-        <label>DARASA</label>
-        <select id="alamaDarasa"></select>
+        <option value="">MWAKA</option>
 
-        <label>SOMO</label>
-        <select id="alamaSomo"></select>
+      </select>
 
-        <label>MWANAFUNZI</label>
-        <select id="alamaMwanafunzi"></select>
+      <select id="alamaDarasa"
+        disabled
+        onchange="filterAlamaDarasa()">
 
-        <label>ALAMA</label>
-        <input type="number" id="alama"
-               min="0" max="100">
-        <button onclick="saveTaalumaAlama()">
-          HIFADHI ALAMA
-        </button>
-      `;
+        <option value="">DRS</option>
+
+      </select>
+
+      <select id="alamaMtihani"
+        disabled
+        onchange="filterAlamaMtihani()">
+
+        <option value="">MTIHANI</option>
+
+      </select>
+
+      <select id="alamaSomo"
+        disabled
+        onchange="filterAlamaSomo()">
+
+        <option value="">SOMO</option>
+
+      </select>
+
+    </div>
+
+    <div id="alamaWanafunziArea">
+
+      <p class="taaluma-empty">
+        Chagua mwaka, darasa, mtihani na somo
+        ili kuona wanafunzi.
+      </p>
+
+    </div>
+  `;
       break;
     default:
       return;
   }
   area.innerHTML = `
-    <div class="taaluma-form-section">
-      ${form}
-    </div>
-  `;
+  <div class="taaluma-form-section">
+    <button type="button"
+      onclick="rudiTaalumaMenu()">
+      ← RUDI KWENYE VIPENGELE
+    </button>
+    ${form}
+
+  </div>
+`;
+const actions = document.getElementById("taalumaActions");
+if (actions) {
+  actions.style.display = "none";
 }
-/* =====================================
+
+/* =================================
    ONESHA RATIBA
-===================================== */
+================================== */
 function showRatiba(type) {
   const area = document.getElementById("ratibaContent");
 
@@ -807,7 +816,6 @@ function showRatiba(type) {
 }
 
 function pakuaRatiba(type) {
-
   const tableId = type === "MASOMO"
     ? "ratibaMasomoTable"
     : "ratibaMitihaniTable";
@@ -839,10 +847,109 @@ function pakuaRatiba(type) {
   printWindow.print();
 }
 
-  /* =====================================
-     PUBLIC FUNCTIONS
-  ===================================== */
+/* =====================================
+   RUDI KWENYE VIPENGELE
+===================================== */
+function rudiTaalumaMenu() {
+  const actions = document.getElementById("taalumaActions");
+  const area = document.getElementById("taalumaFormArea");
+  if (actions) {
+    actions.style.display = "grid";
+  }
+  if (area) {
+    area.innerHTML = "";
+  }
+}
 
+/* =====================================
+   FILTER ZA ALAMA
+===================================== */
+function filterAlamaMwaka() {
+  const mwaka = document.getElementById("alamaMwaka").value;
+  const darasa = document.getElementById("alamaDarasa");
+  const mtihani = document.getElementById("alamaMtihani");
+  const somo = document.getElementById("alamaSomo");
+  darasa.disabled = !mwaka;
+  mtihani.disabled = true;
+  somo.disabled = true;
+  darasa.value = "";
+  mtihani.value = "";
+  somo.value = ""; document.getElementById("alamaWanafunziArea").innerHTML = "";
+
+}
+
+function filterAlamaDarasa() {
+  const darasa = document.getElementById("alamaDarasa").value;
+  const mtihani = document.getElementById("alamaMtihani");
+  const somo = document.getElementById("alamaSomo");
+  mtihani.disabled = !darasa;
+  somo.disabled = true;
+  mtihani.value = "";
+  somo.value = "";
+
+  document.getElementById("alamaWanafunziArea").innerHTML = "";
+
+}
+
+function filterAlamaMtihani() {
+  const mtihani = document.getElementById("alamaMtihani").value;
+  const somo = document.getElementById("alamaSomo");
+  somo.disabled = !mtihani;
+
+  somo.value = "";
+
+  document.getElementById("alamaWanafunziArea").innerHTML = "";
+
+}
+
+function filterAlamaSomo() {
+
+  const mwaka = document.getElementById("alamaMwaka").value;
+  const darasa = document.getElementById("alamaDarasa").value;
+  const mtihani = document.getElementById("alamaMtihani").value;
+  const somo = document.getElementById("alamaSomo").value;
+
+  if (!mwaka || !darasa || !mtihani || !somo) return;
+
+  const area = document.getElementById("alamaWanafunziArea");
+
+  area.innerHTML = `
+    <h3>MATOKEO YA ${somo}</h3>
+
+    <div style="overflow-x:auto">
+
+      <table style="width:100%; border-collapse:collapse">
+
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>JINA</th>
+            <th>JINSI</th>
+            <th>SOMO</th>
+            <th>DARAJA</th>
+            <th>NAFASI</th>
+          </tr>
+        </thead>
+
+        <tbody id="alamaWanafunziRows">
+
+          <tr>
+            <td colspan="6" style="text-align:center;padding:15px">
+              Orodha ya wanafunzi itaonekana hapa.
+            </td>
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+  `;
+}
+
+  /* ==================================
+     PUBLIC FUNCTIONS
+  =================================== */
   window.renderTaalumaPage = renderTaalumaPage;
   window.openTaalumaModal = openTaalumaModal;
   window.closeTaalumaModal = closeTaalumaModal;
@@ -850,10 +957,13 @@ function pakuaRatiba(type) {
   window.openRatibaModal = openRatibaModal;
   window.showRatiba = showRatiba;
   window.showTaalumaResults = showTaalumaResults;
-
   window.filterMatokeoMwaka = filterMatokeoMwaka;
   window.filterMatokeoDarasa = filterMatokeoDarasa;
   window.filterMatokeoMtihani = filterMatokeoMtihani;
   window.filterMatokeoSomo = filterMatokeoSomo;
-
 })();
+window.rudiTaalumaMenu = rudiTaalumaMenu;
+window.filterAlamaMwaka = filterAlamaMwaka;
+window.filterAlamaDarasa = filterAlamaDarasa;
+window.filterAlamaMtihani = filterAlamaMtihani;
+window.filterAlamaSomo = filterAlamaSomo;
