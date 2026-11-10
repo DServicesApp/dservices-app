@@ -72,11 +72,20 @@ const $f = (id, root = document) => {
   }
 
   function makeId(prefix) {
-    return prefix + "-" +
-      Date.now() + "-" +
-      Math.random().toString(36)
-        .slice(2, 7).toUpperCase();
-  }
+  const now = new Date();
+  const pad = n => String(n).padStart(2, "0");
+  const timestamp =
+    pad(now.getHours()) +
+    pad(now.getMinutes()) +
+    pad(now.getSeconds()) +
+    pad(now.getDate()) +
+    pad(now.getMonth() + 1) +
+    now.getFullYear();
+
+  const random = Math.floor(1000 + Math.random() * 9000);
+
+  return `${prefix}-${timestamp}-V${random}`.toUpperCase();
+}
 
   function showFinanceMessage(message, isError = false) {
     if (typeof window.showMessage === "function") {
