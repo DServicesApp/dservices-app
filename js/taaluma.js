@@ -475,8 +475,51 @@
   ===================================== */
 
   function showTaalumaForm(type) {
-    console.log("Taaluma form:", type);
+
+  const area = document.getElementById("taalumaFormArea");
+
+  if (!area) return;
+
+  let title = "";
+
+  switch (type) {
+
+    case "DARASA":
+      title = "SAJILI DARASA NA MASOMO";
+      break;
+
+    case "MAJUKUMU":
+      title = "SAJILI MAJUKUMU";
+      break;
+
+    case "RATIBA_MASOMO":
+      title = "INGIZA RATIBA ZA MASOMO";
+      break;
+
+    case "RATIBA_MITIHANI":
+      title = "INGIZA RATIBA ZA MITIHANI";
+      break;
+
+    case "ALAMA":
+      title = "INGIZA ALAMA";
+      break;
+
+    default:
+      return;
   }
+
+  area.innerHTML = `
+    <div class="taaluma-form-section">
+
+      <h3>${title}</h3>
+
+      <p>
+        Fomu ya ${title} itaonekana hapa.
+      </p>
+
+    </div>
+  `;
+}
 
   function showRatiba(type) {
     console.log("Ratiba:", type);
