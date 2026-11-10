@@ -605,7 +605,7 @@
         <select id="ainaJukumu">
           <option value="">CHAGUA</option>
           <option>MWALIMU WA SOMO</option>
-          <option MWALIMU WA DARASA</option>
+          <option>MWALIMU WA DARASA</option>
           <option>MSIMAMIZI WA MTIHANI</option>
           <option>JUKUMU JINGINE</option>
         </select>
@@ -630,7 +630,7 @@
         <select id="ratibaSiku">
           <option>JUMATATU</option>
           <option>JUMANNE</option>
-          <option JUMATANO</option>
+          <option>JUMATANO</option>
           <option>ALHAMISI</option>
           <option>IJUMAA</option>
           <option>JUMAMOSI</option>
@@ -724,6 +724,119 @@
       ${form}
     </div>
   `;
+}
+/* =====================================
+   ONESHA RATIBA
+===================================== */
+function showRatiba(type) {
+  const area = document.getElementById("ratibaContent");
+
+  if (!area) return;
+
+  let content = "";
+
+  if (type === "MASOMO") {
+
+    content = `
+      <h3>RATIBA ZA MASOMO</h3>
+
+      <label>DARASA</label>
+      <select id="viewRatibaDarasa">
+        <option value="">MADARASA YOTE</option>
+      </select>
+
+      <label>SIKU</label>
+      <select id="viewRatibaSiku">
+        <option value="">SIKU ZOTE</option>
+        <option>JUMATATU</option>
+        <option>JUMANNE</option>
+        <option>JUMATANO</option>
+        <option>ALHAMISI</option>
+        <option>IJUMAA</option>
+        <option>JUMAMOSI</option>
+      </select>
+
+      <div id="ratibaMasomoTable">
+        <p class="taaluma-empty">
+          Hakuna ratiba iliyoonyeshwa bado.
+        </p>
+      </div>
+
+      <button type="button"
+        onclick="pakuaRatiba('MASOMO')">
+        PAKUA RATIBA
+      </button>
+    `;
+
+  } else if (type === "MITIHANI") {
+
+    content = `
+      <h3>RATIBA ZA MITIHANI</h3>
+
+      <label>DARASA</label>
+      <select id="viewMtihaniDarasa">
+        <option value="">MADARASA YOTE</option>
+      </select>
+
+      <label>MWAKA</label>
+      <select id="viewMtihaniMwaka">
+        <option value="">CHAGUA MWAKA</option>
+      </select>
+
+      <div id="ratibaMitihaniTable">
+        <p class="taaluma-empty">
+          Hakuna ratiba iliyoonyeshwa bado.
+        </p>
+      </div>
+
+      <button type="button"
+        onclick="pakuaRatiba('MITIHANI')">
+        PAKUA RATIBA
+      </button>
+    `;
+
+  } else {
+    return;
+  }
+
+  area.innerHTML = `
+    <div class="taaluma-form-section">
+      ${content}
+    </div>
+  `;
+}
+
+function pakuaRatiba(type) {
+
+  const tableId = type === "MASOMO"
+    ? "ratibaMasomoTable"
+    : "ratibaMitihaniTable";
+
+  const area = document.getElementById(tableId);
+
+  if (!area) return;
+
+  const printWindow = window.open("", "_blank");
+
+  if (!printWindow) {
+    alert("Ruhusu mfumo kufungua ukurasa wa kupakua.");
+    return;
+  }
+
+  printWindow.document.write(`
+    <html>
+      <head>
+        <title>RATIBA ZA ${type}</title>
+      </head>
+      <body>
+        <h2>RATIBA ZA ${type}</h2>
+        ${area.innerHTML}
+      </body>
+    </html>
+  `);
+
+  printWindow.document.close();
+  printWindow.print();
 }
 
   /* =====================================
