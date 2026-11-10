@@ -14,9 +14,13 @@
 
   let currentFinanceMenu = "MALIPO";
   let currentFormType = "";
-
-  const $f = (id, root = document) =>
-    root.getElementById(id);
+ 
+const $f = (id, root = document) => {
+  if (root === document) {
+    return document.getElementById(id);
+  }
+  return root.querySelector("#" + id);
+};
 
 
   /* ===============================
@@ -290,19 +294,17 @@
 
     document.head.appendChild(style);
   }
-  /* ===============================
-     KUONYESHA UKURASA WA FEDHA
-  =============================== */
 
-  function renderFinancePage(workspace) {
-
+/* ===============================
+   KUONYESHA UKURASA WA FEDHA
+=============================== */
+function renderFinancePage(workspace) {
   if (!workspace) return;
-
   injectFinanceStyles();
 
   const selected = String(
     window.selectedMenu || ""
-  ).toUpperCase();
+  ).trim().toUpperCase();
 
   const menu = FINANCE_MENUS.includes(selected)
     ? selected
@@ -310,29 +312,39 @@
 
   currentFinanceMenu = menu;
 
+  const showActions =
+    menu === "MALIPO" ||
+    menu === "MATUMIZI";
+
   workspace.innerHTML = `
 
     <section class="dsf-wrap">
 
-      <div class="dsf-head">
+      ${
+        showActions
+          ? `
+            <div class="dsf-head">
 
-        <div class="dsf-actions">
+              <div class="dsf-actions">
 
-          <button
-            class="dsf-btn dsf-primary"
-            id="dsfAddBtn">
-            ＋ Ongeza
-          </button>
+                <button
+                  class="dsf-btn dsf-primary"
+                  id="dsfAddBtn">
+                  ＋ Ongeza
+                </button>
 
-          <button
-            class="dsf-btn dsf-light"
-            id="dsfHistoryBtn">
-            Historia
-          </button>
+                <button
+                  class="dsf-btn dsf-light"
+                  id="dsfHistoryBtn">
+                  Historia
+                </button>
 
-        </div>
+              </div>
 
-      </div>
+            </div>
+          `
+          : ""
+      }
 
       <div id="dsfContent"></div>
 
@@ -340,17 +352,25 @@
 
   `;
 
-  $f("dsfAddBtn", workspace)
-    .addEventListener("click", () => {
-      showChooser(workspace);
-    });
+  if (showActions) {
 
-  $f("dsfHistoryBtn", workspace)
-    .addEventListener("click", () => {
-      showHistory(workspace);
-    });
+    $f("dsfAddBtn", workspace)
+      .addEventListener("click", () => {
 
+        showChooser(workspace);
+
+      });
+
+    $f("dsfHistoryBtn", workspace)
+      .addEventListener("click", () => {
+
+        showHistory(workspace);
+
+      });
+
+  }
   renderFinanceContent(workspace);
+
 }
 
   /* ===============================
@@ -814,7 +834,7 @@
 
             : [
                 "MSHAHARA",
-                "POSHO",
+                "MOTISHA",
                 "NAULI",
                 "CHAKULA",
                 "VIFAA",
