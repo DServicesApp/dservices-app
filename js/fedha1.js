@@ -279,6 +279,49 @@ const $f = (id, root = document) => {
         border-color:#f28c28;
       }
 
+.dsf-modal-overlay {
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:15px;
+  z-index:9999;
+}
+
+.dsf-modal {
+  background:#fff;
+  width:100%;
+  max-width:430px;
+  border-radius:12px;
+  padding:18px;
+  box-shadow:0 8px 30px rgba(0,0,0,.2);
+}
+
+.dsf-modal-header {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:18px;
+}
+
+.dsf-modal-header h3 {
+  margin:0;
+  color:#4b5320;
+}
+
+.dsf-modal-close {
+  border:0;
+  background:#f2f2f2;
+  color:#333;
+  border-radius:50%;
+  width:35px;
+  height:35px;
+  font-size:20px;
+  cursor:pointer;
+}
+
       @media(max-width:600px) {
         .dsf-grid {
           grid-template-columns:1fr;
@@ -377,187 +420,66 @@ function renderFinancePage(workspace) {
      MAUDHUI YA KILA MENYU
   =============================== */
   function renderFinanceContent(workspace) {
-    const content = $f("dsfContent", workspace);
-
-    if (!content) return;
-
-
-    if (currentFinanceMenu === "MALIPO") {
-
-      content.innerHTML = `
-
-        <div class="dsf-card">
-
-          <h3>MALIPO</h3>
-
-          <p class="dsf-muted">
-            Sajili malipo ya mwanafunzi
-            au malipo mengine.
-          </p>
-
-          <div class="dsf-chooser">
-
-            <button
-              class="dsf-choice"
-              data-form="student-payment">
-
-              ＋ Malipo Mwanafunzi
-
-            </button>
-
-            <button
-              class="dsf-choice"
-              data-form="other-payment">
-
-              ＋ Malipo Mengine
-
-            </button>
-
-          </div>
-
-        </div>
-
-      `;
-
-    }
-
-
-    else if (currentFinanceMenu === "MATUMIZI") {
-
-      content.innerHTML = `
-
-        <div class="dsf-card">
-
-          <h3>MATUMIZI</h3>
-
-          <p class="dsf-muted">
-            Sajili matumizi ya mtumishi
-            au matumizi mengine.
-          </p>
-
-          <div class="dsf-chooser">
-
-            <button
-              class="dsf-choice"
-              data-form="staff-expense">
-
-              ＋ Matumizi Mtumishi
-
-            </button>
-
-            <button
-              class="dsf-choice"
-              data-form="other-expense">
-
-              ＋ Matumizi Mengine
-
-            </button>
-
-          </div>
-
-        </div>
-
-      `;
-
-    }
-
-
-    else {
-
-      content.innerHTML = `
-
-        <div class="dsf-card">
-
-          <h3>HALI YA MICHANGO</h3>
-
-          <p class="dsf-muted">
-            Chagua mwaka wa masomo na
-            mpango wa malipo.
-          </p>
-
-
-          <div class="dsf-grid">
-
-            <div class="dsf-field">
-
-              <label for="dsfSchoolYear">
-                MWAKA WA MASOMO
-              </label>
-
-              <input
-                id="dsfSchoolYear"
-                type="number"
-                value="${new Date().getFullYear()}">
-
-            </div>
-
-
-            <div class="dsf-field">
-
-              <label for="dsfPlan">
-                MPANGO WA MALIPO
-              </label>
-
-              <select id="dsfPlan">
-
-                <option value="">
-                  Chagua mpango
-                </option>
-
-                <option value="MWEZI">
-                  MWEZI
-                </option>
-
-                <option value="MWAKA">
-                  MWAKA
-                </option>
-
-                <option value="MADA">
-                  MADA
-                </option>
-
-                <option value="MUHULA">
-                  MUHULA
-                </option>
-
-              </select>
-
-            </div>
-
-          </div>
-
-
-          <p class="dsf-muted" style="margin-top:12px">
-
-            Muhtasari wa michango utaunganishwa
-            na mipango ya malipo na taarifa
-            halisi za wanafunzi.
-
-          </p>
-
-        </div>
-
-      `;
-
-    }
-
-
-    content
-      .querySelectorAll("[data-form]")
-      .forEach(button => {
-
-        button.addEventListener("click", () => {
-
-          showFinanceForm(
-            workspace,
-            button.dataset.form
-          );
-
-        });
-
-      });
-
+  const content = $f("dsfContent", workspace);
+  if (!content) return;
+
+  if (
+    currentFinanceMenu === "MALIPO" ||
+    currentFinanceMenu === "MATUMIZI"
+  ) {
+    content.innerHTML = `
+      <div class="dsf-card">
+        <p class="dsf-muted">
+          Tumia kitufe cha ONGEZA kusajili taarifa.
+        </p>
+      </div>
+    `;
   }
+
+  else {
+    content.innerHTML = `
+      <div class="dsf-card">
+
+        <h3>HALI YA MICHANGO</h3>
+
+        <p class="dsf-muted">
+          Chagua mwaka wa masomo na
+          mpango wa malipo.
+        </p>
+
+        <div class="dsf-grid">
+
+          <div class="dsf-field">
+            <label for="dsfSchoolYear">
+              MWAKA WA MASOMO
+            </label>
+
+            <input
+              id="dsfSchoolYear"
+              type="number"
+              value="${new Date().getFullYear()}">
+          </div>
+
+          <div class="dsf-field">
+            <label for="dsfPlan">
+              MPANGO WA MALIPO
+            </label>
+
+            <select id="dsfPlan">
+              <option value="">Chagua mpango</option>
+              <option value="MWEZI">MWEZI</option>
+              <option value="MWAKA">MWAKA</option>
+              <option value="MADA">MADA</option>
+              <option value="MUHULA">MUHULA</option>
+            </select>
+          </div>
+
+        </div>
+
+      </div>
+    `;
+  }
+}
 
 
   /* ===============================
@@ -677,7 +599,6 @@ function renderFinancePage(workspace) {
   /* ===============================
      KUTENGENEZA VIPENGELE VYA FOMU
   =============================== */
-
   function field(label, name, type = "text", options = {}) {
 
     const id = "dsf_" + name;
@@ -739,7 +660,6 @@ function renderFinancePage(workspace) {
   /* ===============================
      FOMU ZA MALIPO NA MATUMIZI
   =============================== */
-
   function showFinanceForm(workspace, formType) {
 
     currentFormType = formType;
