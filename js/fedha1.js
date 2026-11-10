@@ -334,7 +334,6 @@ const $f = (id, root = document) => {
         }
       }
     `;
-
     document.head.appendChild(style);
   }
 
@@ -664,7 +663,7 @@ function renderFinancePage(workspace) {
     const title = ({
       "student-payment": "MALIPO MWANAFUNZI",
       "other-payment": "MALIPO MENGINE",
-      "staff-expense": "MATUMIZI MTUMISHI",
+      "staff-expense": "MATUMIZI  MTUMISHI",
       "other-expense": "MATUMIZI MENGINE"
     })[formType];
 
@@ -873,8 +872,9 @@ function renderFinancePage(workspace) {
           items: [
             "TASLIMU",
             "M-PESA",
-            "TIGO PESA",
+            "MIX BY YAS",
             "AIRTEL MONEY",
+            "Halo-PESA",
             "BENKI",
             "Nyingine"
           ]
@@ -922,86 +922,64 @@ function renderFinancePage(workspace) {
 
     const content = $f("dsfContent", workspace);
 
+content.innerHTML = `
+  <div class="dsf-modal-overlay" id="dsfFormModal">
 
-    content.innerHTML = `
+    <div class="dsf-form-modal">
 
-      <div class="dsf-card">
+      <div class="dsf-modal-header">
 
-        <div class="dsf-head">
+        <h3>${title}</h3>
 
-          <h3>${title}</h3>
+        <button
+          type="button"
+          class="dsf-modal-close"
+          id="dsfCloseForm">
+          ×
+        </button>
+
+      </div>
+
+      <form id="dsfFinanceForm">
+
+        <div class="dsf-grid">
+          ${fields.join("")}
+        </div>
+
+        <div class="dsf-form-actions">
 
           <button
-            class="dsf-btn dsf-light"
-            id="dsfCancelForm">
-
-            Rudi
-
+            type="submit"
+            class="dsf-btn dsf-primary">
+            HIFADHI
           </button>
 
         </div>
 
+        <p class="dsf-muted">
+          Taarifa zitahifadhiwa kwenye simu
+          na zitasawazishwa mtandao utakaporudi.
+        </p>
 
-        <form id="dsfFinanceForm">
+      </form>
 
-          <div class="dsf-grid">
+    </div>
 
-            ${fields.join("")}
+  </div>
+`;
 
-          </div>
+ const formModal = $f("dsfFormModal", workspace);
 
+$f("dsfCloseForm", workspace)
+  .addEventListener("click", () => {
+    formModal.remove();
+  });
 
-          <div class="dsf-form-actions">
-
-            <button
-              type="submit"
-              class="dsf-btn dsf-primary">
-
-              HIFADHI
-
-            </button>
-
-            <button
-              type="button"
-              class="dsf-btn dsf-secondary"
-              id="dsfCloseForm">
-
-              FUNGA
-
-            </button>
-
-          </div>
-
-
-          <p class="dsf-muted">
-
-            Taarifa zitahifadhiwa kwenye simu
-            na zitasawazishwa mtandao utakaporudi.
-
-          </p>
-
-        </form>
-
-      </div>
-
-    `;
-
-
-    $f("dsfCancelForm", workspace)
-      .addEventListener("click", () => {
-
-        renderFinanceContent(workspace);
-
-      });
-
-
-    $f("dsfCloseForm", workspace)
-      .addEventListener("click", () => {
-
-        renderFinanceContent(workspace);
-
-      });
-
+formModal.addEventListener("click", event => {
+  if (event.target === formModal) {
+    formModal.remove();
+  }
+});
 
     $f("dsfFinanceForm", workspace)
       .addEventListener("submit", event => {
