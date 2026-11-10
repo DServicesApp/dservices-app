@@ -268,9 +268,7 @@ function tafutaMwanafunzi() {
 /* =====================================
    USAJILI WA MWANAFUNZI
 ===================================== */
-
 function showWanafunziForm() {
-
   const content = document.getElementById(
     "wanafunziContent"
   );
@@ -285,103 +283,148 @@ function showWanafunziForm() {
     String(leo.getDate()).padStart(2, "0")
   ].join("-");
 
+  const mwaka = leo.getFullYear();
+
   content.innerHTML = `
 
     <style>
 
       .student-form {
-        width:100%;
-        max-width:1000px;
-        margin:auto;
+        width: 100%;
+        max-width: 750px;
+        margin: auto;
+      }
+
+      .student-form-title {
+        text-align: center;
+        color: #4b5320;
+        font-size: 19px;
+        margin: 5px 0 18px;
       }
 
       .student-group {
-        background:#fff;
-        padding:15px;
-        margin-bottom:15px;
-        border:1px solid #ddd;
-        border-radius:8px;
+        background: #fff;
+        padding: 15px;
+        margin-bottom: 13px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
       }
 
       .student-group h4 {
-        margin:0 0 15px;
-        padding-bottom:8px;
-        border-bottom:2px solid #4b5320;
-        color:#4b5320;
+        margin: 0 0 15px;
+        padding-bottom: 9px;
+        border-bottom: 2px solid #4b5320;
+        color: #4b5320;
+        font-size: 15px;
       }
 
       .student-grid {
-        display:grid;
-        grid-template-columns:repeat(3,minmax(0,1fr));
-        gap:14px;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 13px;
       }
 
       .student-field {
-        display:flex;
-        flex-direction:column;
-        gap:6px;
-        min-width:0;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        min-width: 0;
       }
 
       .student-field label {
-        font-weight:600;
-        font-size:14px;
+        font-size: 13px;
+        font-weight: 600;
       }
 
       .student-field input,
       .student-field select,
       .student-field textarea {
-        width:100%;
-        min-width:0;
-        padding:11px;
-        border:1px solid #ccc;
-        border-radius:6px;
-        box-sizing:border-box;
-        font-size:15px;
+        width: 100%;
+        min-width: 0;
+        padding: 11px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        box-sizing: border-box;
+        font-size: 14px;
+        background: #fff;
+      }
+
+      .student-field input[readonly] {
+        background: #f0f1ed;
+        color: #555;
+      }
+
+      .student-field textarea {
+        min-height: 85px;
+        resize: vertical;
       }
 
       .student-full {
-        grid-column:1/-1;
+        grid-column: 1 / -1;
+      }
+
+      .student-inline {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .student-subject-box {
+        display: none;
+        margin-top: 13px;
+        padding: 13px;
+        background: #f8f9f6;
+        border: 1px solid #d9dfce;
+        border-radius: 7px;
+      }
+
+      .student-subject-box h4 {
+        color: #4b5320;
+        margin: 0 0 10px;
       }
 
       .student-actions {
-        display:flex;
-        justify-content:center;
-        gap:12px;
-        flex-wrap:wrap;
-        margin:20px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+        margin: 20px 0;
       }
 
       .student-actions button {
-        padding:11px 25px;
-        border:none;
-        border-radius:6px;
-        cursor:pointer;
+        min-width: 115px;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 6px;
+        font-weight: 600;
+        cursor: pointer;
       }
 
       .student-save {
-        background:#4b5320;
-        color:white;
+        background: #4b5320;
+        color: white;
       }
 
       .student-cancel {
-        background:#e5e7eb;
-        color:#222;
+        background: #e5e7eb;
+        color: #222;
       }
 
       .student-message {
-        text-align:center;
-        margin:10px 0;
+        text-align: center;
+        margin: 10px 0;
       }
 
       @media(max-width:600px) {
+
         .student-grid {
-          grid-template-columns:repeat(2,minmax(0,1fr));
+          grid-template-columns: 1fr;
         }
 
         .student-full {
-          grid-column:1/-1;
+          grid-column: auto;
         }
+
       }
 
     </style>
@@ -389,37 +432,51 @@ function showWanafunziForm() {
 
     <div class="student-form">
 
-      <h3 style="text-align:center;">
-        👤 USAJILI WA MWANAFUNZI
+      <h3 class="student-form-title">
+        ＋ USAJILI WA MWANAFUNZI
       </h3>
 
 
       <form id="wanafunziForm">
 
 
-        <!-- 1. USAJILI -->
+        <!-- 1. TAARIFA ZA USAJILI -->
 
         <div class="student-group">
 
-          <h4>1. TAARIFA ZA USAJILI</h4>
+          <h4>TAARIFA ZA USAJILI</h4>
 
           <div class="student-grid">
 
             <div class="student-field">
-              <label>ACCOUNT</label>
-              <input name="JINA_LA_ACCOUNT" readonly>
+              <label>Tarehe ya Usajili *</label>
+
+              <input
+                type="date"
+                name="TAR USAJILI"
+                value="${tarehe}"
+                required
+              >
             </div>
 
             <div class="student-field">
               <label>ID MWANAFUNZI</label>
-              <input name="ID MWANAFUNZI" readonly
-                placeholder="Itazalishwa na mfumo">
+
+              <input
+                name="ID MWANAFUNZI"
+                readonly
+                placeholder="Itazalishwa na mfumo"
+              >
             </div>
 
-            <div class="student-field">
+            <div class="student-field student-full">
               <label>NA_USAJILI</label>
-              <input name="NA_USAJILI" readonly
-                placeholder="Itazalishwa na mfumo">
+
+              <input
+                name="NA_USAJILI"
+                readonly
+                placeholder="Itazalishwa na mfumo"
+              >
             </div>
 
           </div>
@@ -430,54 +487,59 @@ function showWanafunziForm() {
         <!-- 2. TAARIFA BINAFSI -->
 
         <div class="student-group">
-          <h4>2. TAARIFA BINAFSI</h4>
+
+          <h4>TAARIFA BINAFSI</h4>
 
           <div class="student-grid">
 
             <div class="student-field">
               <label>Jina la Kwanza *</label>
-              <input name="JINA LA KWANZA" required>
+
+              <input
+                name="JINA LA KWANZA"
+                required
+              >
             </div>
 
             <div class="student-field">
               <label>Jina la Pili</label>
-              <input name="JINA LA KATI">
+
+              <input
+                name="JINA LA KATI"
+              >
             </div>
 
             <div class="student-field">
               <label>Jina la Mwisho *</label>
-              <input name="JINA LA MWISHO" required>
-            </div>
-            <div class="student-field">
-              <label>Umri</label>
-              <input name="UMRI" type="number" min="1">
-            </div>
 
-            <div class="student-field">
-              <label>Jinsi</label>
-              <select name="JINSI">
-                <option value="">Chagua jinsi</option>
-                <option value="ME">ME</option>
-                <option value="KE">KE</option>
-              </select>
+              <input
+                name="JINA LA MWISHO"
+                required
+              >
             </div>
 
-            <div class="student-field">
-              <label>Darasa *</label>
-              <select name="DARASA" id="darasaMwanafunzi"
-                onchange="onDarasaMwanafunziChange()" required>
-                <option value="">Chagua darasa</option>
-                <option value="NYINGINE">+ Ongeza darasa</option>
-              </select>
-            </div>
+            <div class="student-inline student-full">
 
-            <div class="student-field student-full"
-              id="darasaMpyaBox" style="display:none;">
+              <div class="student-field">
+                <label>Umri</label>
 
-              <label>Andika Darasa Jipya</label>
+                <input
+                  type="number"
+                  name="UMRI"
+                  min="1"
+                  placeholder="Miaka"
+                >
+              </div>
 
-              <input id="darasaMpya"
-                placeholder="Ingiza jina la darasa">
+              <div class="student-field">
+                <label>Jinsi</label>
+
+                <select name="JINSI">
+                  <option value="">Chagua</option>
+                  <option value="ME">ME</option>
+                  <option value="KE">KE</option>
+                </select>
+              </div>
 
             </div>
 
@@ -486,119 +548,259 @@ function showWanafunziForm() {
         </div>
 
 
-        <!-- 3. TAARIFA ZA MASOMO -->
+        <!-- 3. DARASA NA MASOMO -->
 
         <div class="student-group">
 
-          <h4>3. TAARIFA ZA MASOMO</h4>
-
-          <div class="student-grid">
-
-            <div class="student-field">
-              <label>Masomo</label>
-              <input name="MASOMO">
-            </div>
-
-            <div class="student-field">
-              <label>Anapoishi</label>
-              <input name="ANAPOISHI">
-            </div>
-
-            <div class="student-field">
-              <label>Shule Atokayo</label>
-              <input name="SHULE ATOKAYO">
-            </div>
-
-            <div class="student-field">
-              <label>Simu 1 *</label>
-              <input name="SIMU1" type="tel" required>
-            </div>
-            <div class="student-field">
-              <label>Simu 2</label>
-              <input name="SIMU2" type="tel">
-            </div>
-
-            <div class="student-field">
-              <label>Tarehe ya Usajili *</label>
-              <input name="TAR USAJILI"
-                type="date" value="${tarehe}" required>
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <!-- 4. MPANGO WA MASOMO -->
-
-        <div class="student-group">
-
-          <h4>4. MPANGO WA MASOMO</h4>
-
-          <div class="student-grid">
-
-            <div class="student-field">
-              <label>Mpango wa Malipo</label>
-              <select name="MPANGO MALIPO">
-                <option value="">Chagua mpango</option>
-                <option value="MWEZI">MWEZI</option>
-                <option value="MUHULA">MUHULA</option>
-                <option value="MWAKA">MWAKA</option>
-                <option value="MALIPO KAMILI">MALIPO KAMILI</option>
-              </select>
-            </div>
-
-            <div class="student-field">
-              <label>Eneo la Mafunzo</label>
-              <select name="ENEO LA MAFUNZO(NYUMBANI /KITUONI)">
-                <option value="">Chagua eneo</option>
-                <option value="NYUMBANI">NYUMBANI</option>
-                <option value="KITUONI">KITUONI</option>
-              </select>
-            </div>
-
-            <div class="student-field">
-              <label>Kipindi cha Masomo</label>
-              <select name="KIPINDI(KIPINDI CHA MASOMO, KIPINDI CHA LIKIZO, VIPINDI VYOTE)">
-                <option value="">Chagua kipindi</option>
-                <option value="KIPINDI CHA MASOMO">
-                  KIPINDI CHA MASOMO
-                </option>
-                <option value="KIPINDI CHA LIKIZO">
-                  KIPINDI CHA LIKIZO
-                </option>
-                <option value="VIPINDI VYOTE">
-                  VIPINDI VYOTE
-                </option>
-              </select>
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <!-- 5. TAARIFA ZA ZIADA -->
-
-        <div class="student-group">
-
-          <h4>5. TAARIFA ZA ZIADA</h4>
+          <h4>DARASA NA MASOMO</h4>
 
           <div class="student-grid">
 
             <div class="student-field student-full">
+
+              <label>Darasa *</label>
+
+              <select
+                name="DARASA"
+                id="darasaMwanafunzi"
+                onchange="onDarasaMwanafunziChange()"
+                required
+              >
+
+                <option value="">Chagua darasa</option>
+
+                <option value="NYINGINE">
+                  + Ongeza darasa
+                </option>
+
+              </select>
+
+            </div>
+
+
+            <div
+              class="student-field student-full"
+              id="darasaMpyaBox"
+              style="display:none;"
+            >
+
+              <label>Andika Darasa Jipya</label>
+
+              <input
+                id="darasaMpya"
+                placeholder="Ingiza jina la darasa"
+              >
+
+            </div>
+
+          </div>
+
+
+          <!-- MASOMO YANAFUNGUKA BAADA YA DARASA -->
+
+          <div
+            class="student-subject-box"
+            id="masomoMwanafunziBox"
+          >
+
+            <h4>MASOMO</h4>
+
+            <div class="student-field">
+
+              <label>Chagua Masomo</label>
+
+              <select
+                name="MASOMO"
+                id="masomoMwanafunzi"
+                multiple
+                size="5"
+              >
+
+              </select>
+
+              <small>
+                Chagua somo moja au zaidi.
+              </small>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- 4. TAARIFA ZA MAKAZI -->
+
+        <div class="student-group">
+
+          <h4>TAARIFA ZA MAKAZI</h4>
+
+          <div class="student-grid">
+
+            <div class="student-field">
+              <label>Anapoishi</label>
+
+              <input
+                name="ANAPOISHI"
+                placeholder="Eneo analoishi"
+              >
+            </div>
+
+            <div class="student-field">
+              <label>Shule Atokayo</label>
+
+              <input
+                name="SHULE ATOKAYO"
+                placeholder="Jina la shule"
+              >
+            </div>
+
+            <div class="student-inline student-full">
+
+              <div class="student-field">
+                <label>Simu 1 *</label>
+
+                <input
+                  name="SIMU1"
+                  type="tel"
+                  required
+                  placeholder="07XXXXXXXX"
+                >
+              </div>
+
+              <div class="student-field">
+                <label>Simu 2</label>
+
+                <input
+                  name="SIMU2"
+                  type="tel"
+                  placeholder="07XXXXXXXX"
+                >
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- 5. MPANGO WA MASOMO -->
+
+        <div class="student-group">
+
+          <h4>MPANGO WA MASOMO</h4>
+
+          <div class="student-grid">
+
+            <div class="student-field">
+
+              <label>Mpango wa Malipo</label>
+
+              <select name="MPANGO MALIPO">
+
+                <option value="">Chagua mpango</option>
+
+                <option value="MWEZI">MWEZI</option>
+
+                <option value="MUHULA">MUHULA</option>
+
+                <option value="MWAKA">MWAKA</option>
+
+                <option value="MALIPO KAMILI">
+                  MALIPO KAMILI
+                </option>
+
+              </select>
+
+            </div>
+
+
+            <div class="student-field">
+
+              <label>Eneo la Mafunzo</label>
+
+              <select name="ENEO LA MAFUNZO">
+
+                <option value="">Chagua eneo</option>
+
+                <option value="NYUMBANI">NYUMBANI</option>
+
+                <option value="KITUONI">KITUONI</option>
+
+              </select>
+
+            </div>
+
+
+            <div class="student-field student-full">
+
+              <label>Kipindi cha Masomo</label>
+
+              <select name="KIPINDI">
+
+                <option value="">Chagua kipindi</option>
+
+                <option value="KIPINDI CHA MASOMO">
+                  KIPINDI CHA MASOMO
+                </option>
+
+                <option value="KIPINDI CHA LIKIZO">
+                  KIPINDI CHA LIKIZO
+                </option>
+
+                <option value="VIPINDI VYOTE">
+                  VIPINDI VYOTE
+                </option>
+
+              </select>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- 6. TAARIFA ZA ZIADA -->
+
+        <div class="student-group">
+
+          <h4>TAARIFA ZA ZIADA</h4>
+
+          <div class="student-grid">
+
+            <div class="student-field student-full">
+
               <label>Maelezo</label>
-              <textarea name="MAELEZO"></textarea>
+
+              <textarea
+                name="MAELEZO"
+                placeholder="Andika maelezo..."
+              ></textarea>
+
             </div>
 
             <div class="student-field">
+
               <label>Msajili</label>
-              <input name="MSAJILI" readonly>
+
+              <input
+                name="MSAJILI"
+                readonly
+              >
+
             </div>
 
             <div class="student-field">
+
               <label>Nafasi</label>
-              <input name="NAFASI" readonly>
+
+              <input
+                name="NAFASI"
+                readonly
+              >
+
             </div>
 
           </div>
@@ -607,18 +809,26 @@ function showWanafunziForm() {
 
 
         <div id="wanafunziFormMessage"
-          class="student-message"></div>
+          class="student-message">
+        </div>
 
+
+        <!-- VITUFE -->
 
         <div class="student-actions">
 
-          <button type="submit" class="student-save">
+          <button
+            type="submit"
+            class="student-save"
+          >
             HIFADHI
           </button>
 
-          <button type="button"
+          <button
+            type="button"
             class="student-cancel"
-            onclick="showWanafunziHistory()">
+            onclick="showWanafunziHistory()"
+          >
             GHAIRI
           </button>
 
@@ -631,17 +841,13 @@ function showWanafunziForm() {
   `;
 
 
-  /* KWA SASA HIFADHI NI MAJARIBIO YA UI */
-
+  // HIFADHI: bado hatujabadilisha muunganiko
   document.getElementById("wanafunziForm")
     .addEventListener("submit", function(e) {
-
       e.preventDefault();
-
       const message = document.getElementById(
         "wanafunziFormMessage"
       );
-
       message.textContent =
         "Fomu iko tayari. Muunganiko wa kuhifadhi bado haujaunganishwa.";
 
@@ -651,15 +857,12 @@ function showWanafunziForm() {
 
 
 /* =====================================
-   DARASA JIPYA
+   DARASA NA MASOMO
 ===================================== */
-
 function onDarasaMwanafunziChange() {
-
   const select = document.getElementById(
     "darasaMwanafunzi"
   );
-
   const box = document.getElementById(
     "darasaMpyaBox"
   );
@@ -667,15 +870,51 @@ function onDarasaMwanafunziChange() {
   const input = document.getElementById(
     "darasaMpya"
   );
-  if (!select || !box || !input) return;
+
+  const masomoBox = document.getElementById(
+    "masomoMwanafunziBox"
+  );
+
+  if (!select || !box || !input || !masomoBox) return;
+
+
+  // DARASA JIPYA
 
   if (select.value === "NYINGINE") {
+
     box.style.display = "flex";
+
     input.required = true;
-  } else {
+
+    masomoBox.style.display = "none";
+
+  }
+
+  // DARASA LILILOKWISHAKUWEPO
+
+  else if (select.value !== "") {
+
     box.style.display = "none";
+
     input.required = false;
+
     input.value = "";
+
+    masomoBox.style.display = "block";
+
+  }
+
+  // HAKUNA DARASA LILILOCHAGULIWA
+
+  else {
+
+    box.style.display = "none";
+
+    input.required = false;
+
+    input.value = "";
+
+    masomoBox.style.display = "none";
 
   }
 
