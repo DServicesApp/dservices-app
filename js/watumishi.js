@@ -211,7 +211,7 @@ function showWatumishiHistory() {
 
 
 /* =====================================
-   USAJILI
+   USAJILI WA MTUMISHI
 ===================================== */
 function showWatumishiForm() {
 
@@ -225,35 +225,53 @@ function showWatumishiForm() {
     String(leo.getDate()).padStart(2, "0")
   ].join("-");
 
+  const huduma =
+    window.selectedService ||
+    window.currentService ||
+    "";
+
+  const kipengele =
+    window.selectedMenu ||
+    window.selectedModule ||
+    "";
+
   content.innerHTML = `
 
     <style>
 
       .staff-form {
         width: 100%;
-        max-width: 1000px;
+        max-width: 750px;
         margin: auto;
+      }
+
+      .staff-form-title {
+        text-align: center;
+        color: #4b5320;
+        font-size: 19px;
+        margin: 5px 0 18px;
       }
 
       .staff-group {
         background: #fff;
         padding: 15px;
-        margin-bottom: 15px;
+        margin-bottom: 13px;
         border: 1px solid #ddd;
         border-radius: 8px;
       }
 
       .staff-group h4 {
         margin: 0 0 15px;
-        padding-bottom: 8px;
+        padding-bottom: 9px;
         border-bottom: 2px solid #4b5320;
         color: #4b5320;
+        font-size: 15px;
       }
 
       .staff-grid {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 14px;
+        gap: 13px;
       }
 
       .staff-field {
@@ -264,8 +282,8 @@ function showWatumishiForm() {
       }
 
       .staff-field label {
+        font-size: 13px;
         font-weight: 600;
-        font-size: 14px;
       }
 
       .staff-field input,
@@ -277,11 +295,13 @@ function showWatumishiForm() {
         border: 1px solid #ccc;
         border-radius: 6px;
         box-sizing: border-box;
-        font-size: 15px;
+        font-size: 14px;
+        background: #fff;
       }
 
       .staff-field input[readonly] {
-        background: #f1f2f3;
+        background: #f0f1ed;
+        color: #555;
       }
 
       .staff-field textarea {
@@ -296,15 +316,17 @@ function showWatumishiForm() {
       .staff-actions {
         display: flex;
         justify-content: center;
+        align-items: center;
         gap: 12px;
-        flex-wrap: wrap;
         margin: 20px 0;
       }
 
       .staff-actions button {
-        padding: 11px 25px;
+        min-width: 115px;
+        padding: 12px 20px;
         border: none;
         border-radius: 6px;
+        font-weight: 600;
         cursor: pointer;
       }
 
@@ -325,6 +347,7 @@ function showWatumishiForm() {
       }
 
       @media(max-width:600px) {
+
         .staff-grid {
           grid-template-columns: 1fr;
         }
@@ -332,6 +355,7 @@ function showWatumishiForm() {
         .staff-full {
           grid-column: auto;
         }
+
       }
 
     </style>
@@ -339,62 +363,79 @@ function showWatumishiForm() {
 
     <div class="staff-form">
 
-      <h3 style="text-align:center;">
-        USAJILI WA MTUMISHI
+      <h3 class="staff-form-title">
+        ＋ USAJILI WA MTUMISHI
       </h3>
 
 
       <form id="watumishiForm">
 
 
-       <!-- 1. TAARIFA ZA USAJILI -->
-
-<div class="staff-group">
-
-  <h4>1. TAARIFA ZA USAJILI</h4>
-
-  <div class="staff-grid">
-
-    <div class="staff-field">
-
-      <label>Namba ya Usajili</label>
-
-      <input
-        name="NA_MFANYAKAZI"
-        readonly
-        placeholder="Itazalishwa na mfumo"
-      >
-
-    </div>
-
-    <div class="staff-field">
-
-      <label>Tarehe ya Usajili *</label>
-
-      <input
-        name="TAREHE_YA_USAJILI"
-        type="date"
-        value="${tarehe}"
-        required
-      >
-
-    </div>
-
-  </div>
-
-</div>
-
-
-        <!-- 2. TAARIFA BINAFSI -->
+        <!-- TAARIFA ZA USAJILI -->
 
         <div class="staff-group">
 
-          <h4>2. TAARIFA BINAFSI</h4>
+          <h4>TAARIFA ZA USAJILI</h4>
+
+          <div class="staff-grid">
+
+            <div class="staff-field staff-full">
+              <label>Tarehe ya Usajili</label>
+
+              <input
+                name="TAREHE_YA_USAJILI"
+                type="date"
+                value="${tarehe}"
+                required
+              >
+            </div>
+
+            <div class="staff-field">
+              <label>Jina la Huduma</label>
+
+              <input
+                name="HUDUMA"
+                value="${huduma}"
+                readonly
+              >
+            </div>
+
+            <div class="staff-field">
+              <label>Jina la Kipengele</label>
+
+              <input
+                name="KIPENGELE"
+                value="${kipengele}"
+                readonly
+              >
+            </div>
+
+            <div class="staff-field staff-full">
+              <label>Namba ya Usajili</label>
+
+              <input
+                name="NA_MFANYAKAZI"
+                readonly
+                placeholder="Itazalishwa na mfumo"
+              >
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- TAARIFA BINAFSI -->
+
+        <div class="staff-group">
+
+          <h4>TAARIFA BINAFSI</h4>
 
           <div class="staff-grid">
 
             <div class="staff-field">
-              <label>Jina la Kwanza *</label>
+              <label>Jina la Kwanza</label>
+
               <input
                 name="JINA_LA_KWANZA"
                 required
@@ -404,11 +445,13 @@ function showWatumishiForm() {
 
             <div class="staff-field">
               <label>Jina la Kati</label>
+
               <input name="JINA_LA_KATI">
             </div>
 
             <div class="staff-field">
-              <label>Jina la Mwisho *</label>
+              <label>Jina la Mwisho</label>
+
               <input
                 name="JINA_LA_MWISHO"
                 required
@@ -417,9 +460,10 @@ function showWatumishiForm() {
             </div>
 
             <div class="staff-field">
-              <label>Jinsia</label>
+              <label>Jinsi</label>
+
               <select name="JINSI">
-                <option value="">Chagua jinsia</option>
+                <option value="">Chagua</option>
                 <option value="ME">ME</option>
                 <option value="KE">KE</option>
               </select>
@@ -427,17 +471,21 @@ function showWatumishiForm() {
 
             <div class="staff-field">
               <label>Simu</label>
+
               <input
                 name="SIMU"
                 type="tel"
+                placeholder="07XXXXXXXX"
               >
             </div>
 
             <div class="staff-field">
               <label>Email</label>
+
               <input
                 name="EMAIL"
                 type="email"
+                placeholder="example@email.com"
               >
             </div>
 
@@ -446,47 +494,48 @@ function showWatumishiForm() {
         </div>
 
 
-        <!-- 3. TAARIFA ZA KAZI -->
+        <!-- TAARIFA ZA KAZI -->
 
         <div class="staff-group">
 
-          <h4>3. TAARIFA ZA KAZI</h4>
+          <h4>TAARIFA ZA KAZI</h4>
 
           <div class="staff-grid">
 
             <div class="staff-field">
               <label>Elimu</label>
-              <input name="ELIMU">
+
+              <input
+                name="ELIMU"
+                placeholder="Kiwango cha elimu"
+              >
             </div>
 
-           <div class="staff-field">
-  <label>Nafasi / Wadhifa *</label>
+            <div class="staff-field">
+              <label>Nafasi / Wadhifa</label>
 
-  <select
-    name="NAFASI/ WADHIFA"
-    id="nafasiWatumishi"
-    onchange="toggleNafasiMpya()"
-    required
-  >
+              <select
+                name="NAFASI/ WADHIFA"
+                id="nafasiWatumishi"
+                onchange="toggleNafasiMpya()"
+                required
+              >
 
-    <option value="">Chagua nafasi</option>
+                <option value="">Chagua nafasi</option>
 
-    <option value="NYINGINE">
-      + Ongeza nafasi mpya
-    </option>
+                <option value="NYINGINE">
+                  + Ongeza nafasi mpya
+                </option>
 
-  </select>
-
-</div>
-
+              </select>
+            </div>
 
             <div
               class="staff-field staff-full"
               id="nafasiMpyaBox"
               style="display:none;"
             >
-
-              <label>Andika Nafasi Mpya *</label>
+              <label>Andika Nafasi Mpya</label>
 
               <input
                 id="nafasiMpya"
@@ -495,9 +544,7 @@ function showWatumishiForm() {
 
             </div>
 
-
             <div class="staff-field">
-
               <label>Username</label>
 
               <input
@@ -506,19 +553,15 @@ function showWatumishiForm() {
                 readonly
                 placeholder="Itazalishwa na mfumo"
               >
-
             </div>
 
-
             <div class="staff-field">
-
               <label>Hali</label>
 
               <select name="HALI">
                 <option value="ACTIVE">ACTIVE</option>
                 <option value="INACTIVE">INACTIVE</option>
               </select>
-
             </div>
 
           </div>
@@ -526,21 +569,18 @@ function showWatumishiForm() {
         </div>
 
 
-        <!-- 4. MAELEZO -->
-
+        <!-- MAELEZO -->
         <div class="staff-group">
-
-          <h4>4. MAELEZO</h4>
-
+          <h4>MAELEZO</h4>
           <div class="staff-grid">
 
             <div class="staff-field staff-full">
 
-              <label>Maelezo ya Ziada</label>
+              <label>Maelezo</label>
 
               <textarea
                 name="MAELEZO"
-                placeholder="Andika maelezo ya ziada..."
+                placeholder="Andika maelezo..."
               ></textarea>
 
             </div>
@@ -550,26 +590,23 @@ function showWatumishiForm() {
         </div>
 
 
-        <div id="watumishiFormMessage"
-             class="staff-message"></div>
+        <div
+          id="watumishiFormMessage"
+          class="staff-message">
+        </div>
 
 
         <!-- VITUFE -->
-
         <div class="staff-actions">
-
           <button
             type="submit"
-            class="staff-save"
-          >
+            class="staff-save">
             HIFADHI
           </button>
-
           <button
             type="button"
             class="staff-close"
-            onclick="showWatumishiHistory()"
-          >
+            onclick="showWatumishiHistory()">
             FUNGA
           </button>
 
@@ -582,13 +619,12 @@ function showWatumishiForm() {
   `;
 
 
-  /* KUPAKIA NAFASI KUTOKA KWENYE SHEET */
-
+  // Kupakia nafasi za watumishi
   loadNafasiWatumishi();
 
 
-  /* KUZUIA SUBMIT YA MUDA */
- document.getElementById("watumishiForm")
+  // Kwa sasa kuhifadhi hakujabadilishwa
+  document.getElementById("watumishiForm")
     .addEventListener("submit", function(e) {
 
       e.preventDefault();
@@ -601,58 +637,5 @@ function showWatumishiForm() {
         "Muunganiko wa kuhifadhi Google Sheets bado haujaunganishwa.";
 
     });
-
-}
-
-
-/* =========================================
-   USERNAME AUTOMATIC
-========================================= */
-
-function updateWatumishiUsername() {
-
-  const form = document.getElementById("watumishiForm");
-  if (!form) return;
-
-  const kwanza =
-    form.elements["JINA_LA_KWANZA"].value.trim();
-
-  const mwisho =
-    form.elements["JINA_LA_MWISHO"].value.trim();
-
-  const username = (kwanza + "." + mwisho)
-    .toLowerCase()
-    .replace(/\s+/g, "")
-    .replace(/[^a-z0-9.]/g, "");
-
-  document.getElementById("usernameMtumishi").value =
-    kwanza && mwisho ? username : "";
-
-}
-
-
-/* =========================================
-   NAFASI MPYA
-========================================= */
-function toggleNafasiMpya() {
-
-  const select = document.getElementById("nafasiWatumishi");
-  const box = document.getElementById("nafasiMpyaBox");
-  const input = document.getElementById("nafasiMpya");
-
-  if (!select || !box || !input) return;
-
-  if (select.value === "NYINGINE") {
-
-    box.style.display = "flex";
-    input.required = true;
-
-  } else {
-
-    box.style.display = "none";
-    input.required = false;
-    input.value = "";
-
-  }
 
 }
