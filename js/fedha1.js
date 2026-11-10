@@ -485,115 +485,88 @@ function renderFinancePage(workspace) {
   /* ===============================
      KICHAGUO CHA AINA YA TAARIFA
   =============================== */
-
   function showChooser(workspace) {
+  const content = $f("dsfContent", workspace);
+  if (!content) return;
+  const choices =
+    currentFinanceMenu === "MATUMIZI"
+      ? [
+          ["staff-expense", "Matumizi Mtumishi"],
+          ["other-expense", "Matumizi Mengine"]
+        ]
+      : [
+          ["student-payment", "Malipo Mwanafunzi"],
+          ["other-payment", "Malipo Mengine"]
+        ];
 
-    const content = $f("dsfContent", workspace);
+  content.insertAdjacentHTML("beforeend", `
 
-    if (!content) return;
+    <div class="dsf-modal-overlay" id="dsfChooserModal">
 
+      <div class="dsf-modal">
 
-    const choices =
-      currentFinanceMenu === "MATUMIZI"
-
-        ? [
-
-            ["staff-expense", "Matumizi Mtumishi"],
-
-            ["other-expense", "Matumizi Mengine"]
-
-          ]
-
-        : currentFinanceMenu === "MALIPO"
-
-          ? [
-
-              ["student-payment", "Malipo Mwanafunzi"],
-
-              ["other-payment", "Malipo Mengine"]
-
-            ]
-
-          : [];
-
-
-    if (!choices.length) {
-
-      showFinanceMessage(
-        "Kipengele cha kuongeza michango kitaunganishwa baada ya mipango ya malipo."
-      );
-
-      return;
-
-    }
-
-
-    content.innerHTML = `
-
-      <div class="dsf-card">
-
-        <div class="dsf-head">
+        <div class="dsf-modal-header">
 
           <h3>
-            Chagua aina ya ${currentFinanceMenu.toLowerCase()}
+            CHAGUA AINA YA ${currentFinanceMenu}
           </h3>
 
           <button
-            class="dsf-btn dsf-light"
-            id="dsfBackBtn">
-
-            Rudi
-
+            type="button"
+            class="dsf-modal-close"
+            id="dsfModalClose">
+            ×
           </button>
 
         </div>
 
-
         <div class="dsf-chooser">
 
           ${choices.map(([id, label]) => `
-
             <button
+              type="button"
               class="dsf-choice"
               data-form="${id}">
-
               ＋ ${label}
-
             </button>
-
           `).join("")}
 
         </div>
 
       </div>
 
-    `;
+    </div>
 
+  `);
 
-    $f("dsfBackBtn", workspace)
-      .addEventListener("click", () => {
+  const modal = $f("dsfChooserModal", workspace);
 
-        renderFinanceContent(workspace);
+  $f("dsfModalClose", workspace)
+    .addEventListener("click", () => {
+      modal.remove();
+    });
+
+  modal.addEventListener("click", event => {
+    if (event.target === modal) {
+      modal.remove();
+    }
+  });
+
+  modal.querySelectorAll("[data-form]")
+    .forEach(button => {
+
+      button.addEventListener("click", () => {
+
+        const formType = button.dataset.form;
+
+        modal.remove();
+
+        showFinanceForm(workspace, formType);
 
       });
 
-
-    content
-      .querySelectorAll("[data-form]")
-      .forEach(button => {
-
-        button.addEventListener("click", () => {
-
-          showFinanceForm(
-            workspace,
-            button.dataset.form
-          );
-
-        });
-
-      });
-
-  }
+    });
+}
 
 
   /* ===============================
