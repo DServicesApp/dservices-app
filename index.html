@@ -762,7 +762,7 @@
 
 
    /* =========================
-       TOPBAR - KOMPYUTA NA LAPTOP
+     TOPBAR - KOMPYUTA NA LAPTOP
       ========================= */
  @media (min-width: 651px) {
   .date-time {
@@ -973,7 +973,6 @@
 
     <main class="login-area">
       <section class="login-card">
-        <section class="login-card">
 
   <!-- CHAGUA LUGHA -->
   <div class="language-selection">
@@ -1031,7 +1030,7 @@
             </button>
 
             <button class="btn" id="clearButton" type="button">
-              FUNGA
+              TOKA
             </button>
           </div>
         </form>
@@ -1124,7 +1123,7 @@
         <div class="welcome-icon">☰</div>
         <h2>Chagua huduma ili kuendelea</h2>
         <p>
-          Chagua huduma ili kuendelea.
+ id="welcomeUserName"> Karibu, Mtumiaji.
         </p>
       </section>
 
@@ -1266,7 +1265,7 @@
   <h3>Badilisha Password</h3>
   <form id="changePasswordForm">
     <label for="oldPassword">
-      PASSWORD YA ZAMANI
+      NENOSIRI LA ZAMANI
     </label>
     <input
       type="password"
@@ -1276,7 +1275,7 @@
       required
     >
     <label for="newPassword">
-      PASSWORD MPYA
+      NENOSIRI MPYA
     </label>
     <input
       type="password"
@@ -1287,7 +1286,7 @@
       minlength="6"
     >
     <label for="confirmPassword">
-      RUDIA PASSWORD MPYA
+      RUDIA NENOSIRI MPYA
     </label>
     <input
       type="password"
@@ -1308,7 +1307,7 @@
       class="btn btn-primary panel-button"
       id="changePasswordButton"
     >
-      BADILISHA PASSWORD
+      BADILI NENOSIRI
     </button>
   </form>
   <hr>
@@ -1912,7 +1911,21 @@ togglePassword.addEventListener("click", () => {
         currentUser.jinaKamili ||
         currentUser.username ||
         $("username").value.trim();
+$("appScreen").classList.remove("hidden");
 
+// JINA LA MTUMIAJI KWENYE KARIBU
+const welcomeName = document.getElementById("welcomeUserName");
+
+if (welcomeName && currentUser) {
+  const jina =
+    currentUser.fullName ||
+    currentUser.name ||
+    currentUser.jinaKamili ||
+    currentUser.username ||
+    "Mtumiaji";
+
+  welcomeName.textContent = `Karibu, ${jina}.`;
+}
       const username =
         currentUser.username ||
         $("username").value.trim();
@@ -2329,7 +2342,6 @@ function buildDrawerMenu() {
 
   /* KUJENGA VITufe VYA MENYU */
   items.forEach(item => {
-
     const button = document.createElement("button");
 
     button.type = "button";
