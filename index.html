@@ -1813,52 +1813,91 @@ async function callAPI(payload) {
       element.className = "message";
     }
 
-    function isOwner() {
-      const role = String(currentUser?.role || "")
-        .trim()
-        .toUpperCase();
-      return [
-        "OWNER",
-        "SUPER ADMIN",
-        "SUPER_ADMIN",
-        "MSIMAMIZI MKUU"
-      ].includes(role);
-    }
+  /* ================================
+   UTAMBUZI WA NAFASI ZA WATUMIAJI
+   ============================== */
+function getUserRole() {
+  const user = currentUser || {};
+  return String(
+    user.role ||
+    user.ROLE ||
+    user.userRole ||
+    user.USER_ROLE ||
+    ""
+  )
+  .trim()
+  .toUpperCase()
+  .replace(/[\s-]+/g, "_");
+}
+
+function isOwner() {
+  return getUserRole() === "OWNER";
+}
+
+function isAccountOwner() {
+  return getUserRole() === "ACCOUNT_OWNER";
+}
+
+function isAdmin() {
+  return getUserRole() === "ADMIN";
+}
+
+function isSystemManager() {
+  return isOwner();
+}
+
+function getRoleLabel() {
+  const role = getUserRole();
+
+  const labels = {
+ OWNER: "OWNER - Mmiliki wa DServices",
+ ACCOUNT_OWNER: "ACCOUNT OWNER - Mmiliki wa Akaunti",
+ ADMIN: "ADMIN - Msimamizi Mkuu wa Akaunti",
+  USER: "USER - Mtumiaji"
+  };
+  return labels[role] || role || "Haijabainishwa";
+}
 
 
     /*
-      Huduma za mtumiaji zisibuniwe kama hazijatumwa na API.
-      OWNER anaweza kuona huduma zote pamoja na ALL.
+ Huduma za mtumiaji zisibuniwe kama hazijatumwa na API.
+ OWNER anaweza kuona huduma zote pamoja na ALL.
     */
+
     function getAuthorizedServices() {
-      if (isOwner()) {
-        return ["ALL", ...allServices];
-      }
-      const user = currentUser || {};
+  if (isOwner()) {
+    return ["ALL", ...allServices];
+  }
+  const user = currentUser || {};
+  const supplied =
+    user.services ||
+    user.allowedServices ||
+    user.huduma ||
+    [];
 
-      const supplied =
-        user.services ||
-        user.allowedServices ||
-        user.huduma ||
-        [];
+  if (!Array.isArray(supplied)) {
+    return [];
+  }
 
-      if (!Array.isArray(supplied)) {
-        return [];
-      }
-
-      return supplied
+  return [
+    ...new Set(
+      supplied
         .map(item => {
-          if (typeof item === "string") return item.toUpperCase();
+          if (typeof item === "string") {
+            return item.trim().toUpperCase();
+          }
 
           return String(
             item.service ||
             item.name ||
             item.label ||
             ""
-          ).toUpperCase();
+          ).trim().toUpperCase();
         })
-        .filter(item => allServices.includes(item));
-    }
+        .filter(item => allServices.includes(item))
+    )
+  ];
+}
 
 
     /* LOGIN */
@@ -1995,7 +2034,7 @@ $("clearButton").addEventListener("click", () => {
 
   $("profileName").textContent = fullName;
   $("profileUsername").textContent = username;
-  $("profileRole").textContent = currentUser.role || "—";
+  $("profileRole").textContent = getRoleLabel();
   populateServiceOptions();
 
   showWelcome();
@@ -2251,61 +2290,96 @@ function showServiceDashboard() {
    UWANJA WA KAZI WA KILA MENYU
 ================================= */
 function renderModulePage() {
+
   const workspace = $("moduleWorkspace");
+
   switch (selectedMenu) {
+
     case "MUHTASARI":
-  if (
-    selectedService === "BIASHARA" &&
-    selectedModule === "BIASHARA"
-  ) {
-    renderBiasharaDashboard(workspace);
-  } else {
-    renderMuhtasariPage(workspace);
-  }
-  return;
+
+      if (
+        selectedService === "BIASHARA" &&
+        selectedModule === "BIASHARA"
+      ) {
+        if (typeof renderBiasharaDashboard === "function") {
+          renderBiasharaDashboard(workspace);
+        } else {
+          workspace.textContent =
+            "biashara.js haijapakiwa vizuri.";
+        }
+      } else if (typeof renderMuhtasariPage === "function") {
+        renderMuhtasariPage(workspace);
+      }
+
+      return;
+
     case "WANAFUNZI":
-      renderWanafunziPage(workspace);
+    case "WATOTO":
+      if (typeof renderWanafunziPage === "function") {
+        renderWanafunziPage(workspace);
+      }
       return;
+
     case "WATUMISHI":
-      renderWatumishiPage(workspace);
+      if (typeof renderWatumishiPage === "function") {
+        renderWatumishiPage(workspace);
+      }
       return;
+
     case "MAHUDHURIO":
-      renderMahudhurioPage(workspace);
+      if (typeof renderMahudhurioPage === "function") {
+        renderMahudhurioPage(workspace);
+      }
       return;
+
     case "TAALUMA":
-      renderTaalumaPage(workspace);
+      if (typeof renderTaalumaPage === "function") {
+        renderTaalumaPage(workspace);
+      }
       return;
+
     case "MALIPO":
     case "MATUMIZI":
     case "HALI YA MICHANGO":
-  if (typeof window.renderFedhaPage === "function") {
-    window.renderFedhaPage(workspace);
-  } else {
-    workspace.innerHTML = `
-   <p>fedha1.js haijapakiwa vizuri.</p>
-    `;
-  }
-  return;
-    case "TAALUMA":
-    case "USIMAMIZI":
-    case "TAARIFA & TATHIMINI":
-    case "MAPANGILIO":
-      renderMpangilioPage(workspace);
+
+      if (typeof window.renderFedhaPage === "function") {
+        window.renderFedhaPage(workspace);
+      } else {
+        workspace.textContent =
+          "fedha1.js haijapakiwa vizuri.";
+      }
       return;
+
+    case "MPANGILIO":
+
+      if (typeof renderMpangilioPage === "function") {
+        renderMpangilioPage(workspace);
+      } else {
+        workspace.textContent =
+          "mpangilio.js haijapakiwa vizuri.";
+      }
+      return;
+
+    case "TAARIFA & TATHIMINI":
+    case "TAARIFA":
+    case "TATHIMINI":
+
       workspace.innerHTML = `
-        <section>
+        <section class="section-panel">
           <h3>${selectedMenu}</h3>
-          <p>Ukurasa wa ${selectedMenu} utaandaliwa hapa.</p>
+          <p>Sehemu ya taarifa na tathmini itaandaliwa hapa.</p>
         </section>
       `;
       return;
 
     default:
-      workspace.replaceChildren();
 
-      const page = document.createElement("section");
-      page.className = "section-panel";
-      workspace.appendChild(page);
+      workspace.innerHTML = `
+        <section class="section-panel">
+          <h3>${selectedMenu}</h3>
+          <p>Ukurasa huu bado haujaunganishwa.</p>
+        </section>
+      `;
   }
 }
 
