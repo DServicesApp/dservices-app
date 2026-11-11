@@ -2012,13 +2012,13 @@ $("clearButton").addEventListener("click", () => {
   const fullName =
     currentUser.fullName ||
     currentUser.full_name ||
-    currentUser.name ||
+    currentUser.fullname ||
     currentUser.jinaKamili ||
+    currentUser.JINA_KAMILI ||
+    currentUser.jina_kamili ||
     currentUser.jina ||
-    currentUser.username ||
-    $("username").value.trim() ||
+    currentUser.JINA ||
     "Mtumiaji";
-
   const welcomeName = $("welcomeUserName");
 
   if (welcomeName) {
