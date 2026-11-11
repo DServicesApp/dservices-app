@@ -215,14 +215,12 @@
 
     // BADILI UKURASA
     function openSettingsPage(page) {
-
         currentSettingsPage = page;
-
         renderSettings();
     }
 
     // WEKA FUNCTIONS GLOBAL
-    window.openSettingsPage = openSettingsPage;
-    window.renderSettings = renderSettings;
+window.openSettingsPage = openSettingsPage;
+window.renderSettings = renderSettings;
 
-})();
+window.renderMpangilioPage = renderSettings;
