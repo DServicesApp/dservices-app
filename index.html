@@ -1900,7 +1900,17 @@ togglePassword.addEventListener("click", () => {
       }
     });
 
-    function openApplication() {
+/* =========================
+   KUFUTA TAARIFA ZA LOGIN
+========================= */
+$("clearButton").addEventListener("click", () => {
+  $("username").value = "";
+  $("password").value = "";
+  hideMessage($("loginMessage"));
+  $("username").focus();
+});
+
+  function openApplication() {
   $("loginScreen").classList.add("hidden");
   $("appScreen").classList.remove("hidden");
 
@@ -1914,12 +1924,12 @@ togglePassword.addEventListener("click", () => {
     $("username").value.trim() ||
     "Mtumiaji";
 
-  // JINA LA MTUMIAJI KWENYE KARIBU
   const welcomeName = $("welcomeUserName");
 
   if (welcomeName) {
     welcomeName.textContent = "Ndugu, " + fullName + ".";
   }
+
   const username =
     currentUser.username ||
     $("username").value.trim();
@@ -1931,6 +1941,11 @@ togglePassword.addEventListener("click", () => {
   $("profileUsername").textContent = username;
   $("profileRole").textContent = currentUser.role || "—";
   populateServiceOptions();
+
+  showWelcome();
+  updateNetwork();
+  updateClock();
+  setInterval(updateClock, 1000);
 }
 
 
