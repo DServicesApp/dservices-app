@@ -2009,41 +2009,61 @@ $("clearButton").addEventListener("click", () => {
 });
 
   function openApplication() {
-  $("loginScreen").classList.add("hidden");
-  $("appScreen").classList.remove("hidden");
+    $("loginScreen").classList.add("hidden");
+    $("appScreen").classList.remove("hidden");
 
-  const fullName =
-    currentUser.fullName ||
-    currentUser.full_name ||
-    currentUser.fullname ||
-    currentUser.jinaKamili ||
-    currentUser.JINA_KAMILI ||
-    currentUser.jina_kamili ||
-    currentUser.jina ||
-    currentUser.JINA ||
-    "Mtumiaji";
-  const welcomeName = $("welcomeUserName");
+    // JINA LA KWANZA
+    const firstName =
+        currentUser.firstName ||
+        currentUser.FIRST_NAME ||
+        currentUser.jinaLaKwanza ||
+        currentUser.JINA_LA_KWANZA ||
+        "";
 
-  if (welcomeName) {
-    welcomeName.textContent = "Ndugu, " + fullName + ".";
-  }
+    // JINA LA MWISHO
+    const lastName =
+        currentUser.lastName ||
+        currentUser.LAST_NAME ||
+        currentUser.jinaLaMwisho ||
+        currentUser.JINA_LA_MWISHO ||
+        "";
 
-  const username =
-    currentUser.username ||
-    $("username").value.trim();
+    // JINA KAMILI (JINA LA KWANZA + LA MWISHO)
+    const fullName = [
+        firstName,
+        lastName
+    ].filter(Boolean).join(" ") || "Mtumiaji";
 
-  $("avatarButton").textContent =
-    String(fullName).trim().charAt(0).toUpperCase() || "?";
+    // USERNAME
+    const username =
+        currentUser.username ||
+        currentUser.USERNAME ||
+        $("username").value.trim();
 
-  $("profileName").textContent = fullName;
-  $("profileUsername").textContent = username;
-  $("profileRole").textContent = getRoleLabel();
-  populateServiceOptions();
+    // KARIBU
+    const welcomeName = $("welcomeUserName");
 
-  showWelcome();
-  updateNetwork();
-  updateClock();
-  setInterval(updateClock, 1000);
+    if (welcomeName) {
+        welcomeName.textContent = "Ndugu, " + fullName + ".";
+    }
+
+    // WASIFU
+    $("avatarButton").textContent =
+        fullName.trim().charAt(0).toUpperCase() || "?";
+
+    $("profileName").textContent = fullName;
+    $("profileUsername").textContent = username;
+    $("profileRole").textContent = getRoleLabel();
+
+    // HUDUMA
+    populateServiceOptions();
+
+    // TAARIFA ZA MFUMO
+    showWelcome();
+    updateNetwork();
+    updateClock();
+
+    setInterval(updateClock, 1000);
 }
 
     /* HUDUMA */
