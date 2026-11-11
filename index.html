@@ -957,6 +957,67 @@
     font-size: 16px;
   }
 }
+.ds-settings {
+    padding: 15px;
+    color: #333;
+}
+
+.ds-settings-menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 15px 0;
+}
+
+.ds-settings-btn {
+    padding: 12px 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+}
+
+.ds-settings-btn.active {
+    background: #4B5320;
+    color: white;
+}
+
+.ds-account {
+    background: white;
+    padding: 18px;
+    border-radius: 10px;
+}
+
+.ds-account-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+}
+
+.ds-account-grid label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-weight: 600;
+}
+
+.ds-account-grid input,
+.ds-account-grid select {
+    padding: 11px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    width: 100%;
+    box-sizing: border-box;
+}
+.ds-settings-note {
+    color: #666;
+    font-size: 13px;
+}
+@media(max-width:600px) {
+    .ds-account-grid {
+        grid-template-columns: 1fr;
+    }
+}
   </style>
 </head>
 <body>
@@ -2228,7 +2289,9 @@ function renderModulePage() {
     case "TAALUMA":
     case "USIMAMIZI":
     case "TAARIFA & TATHIMINI":
-    case "MPANGILIO":
+    case "MAPANGILIO":
+      renderMpangilioPage(workspace);
+      return;
       workspace.innerHTML = `
         <section>
           <h3>${selectedMenu}</h3>
@@ -2734,6 +2797,6 @@ if ("serviceWorker" in navigator) {
 <script src="./js/fedha1.js"></script>
 <script src="./js/biashara.js"></script>
 <script src="./js/taaluma.js"></script>
-
+<script src="./js/mpangilio.js"></script>
 </body>
 </html>
