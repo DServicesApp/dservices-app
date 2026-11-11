@@ -2290,19 +2290,16 @@ function showServiceDashboard() {
    UWANJA WA KAZI WA KILA MENYU
 ================================= */
 function renderModulePage() {
-
   const workspace = $("moduleWorkspace");
-
   switch (selectedMenu) {
 
     case "MUHTASARI":
-
       if (
         selectedService === "BIASHARA" &&
         selectedModule === "BIASHARA"
       ) {
         if (typeof renderBiasharaDashboard === "function") {
-          renderBiasharaDashboard(workspace);
+        renderBiasharaDashboard(workspace);
         } else {
           workspace.textContent =
             "biashara.js haijapakiwa vizuri.";
@@ -2310,7 +2307,6 @@ function renderModulePage() {
       } else if (typeof renderMuhtasariPage === "function") {
         renderMuhtasariPage(workspace);
       }
-
       return;
 
     case "WANAFUNZI":
@@ -2322,7 +2318,7 @@ function renderModulePage() {
 
     case "WATUMISHI":
       if (typeof renderWatumishiPage === "function") {
-        renderWatumishiPage(workspace);
+    renderWatumishiPage(workspace);
       }
       return;
 
@@ -2341,7 +2337,6 @@ function renderModulePage() {
     case "MALIPO":
     case "MATUMIZI":
     case "HALI YA MICHANGO":
-
       if (typeof window.renderFedhaPage === "function") {
         window.renderFedhaPage(workspace);
       } else {
@@ -2351,7 +2346,6 @@ function renderModulePage() {
       return;
 
     case "MPANGILIO":
-
       if (typeof renderMpangilioPage === "function") {
         renderMpangilioPage(workspace);
       } else {
