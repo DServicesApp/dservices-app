@@ -1122,8 +1122,8 @@
       <section id="welcomePanel" class="welcome-panel">
         <div class="welcome-icon">☰</div>
         <h2>Chagua huduma ili kuendelea</h2>
-        <p>
- id="welcomeUserName"> Karibu, Mtumiaji.
+        <p id="welcomeUserName">
+       Ndugu, Mtumiaji.
         </p>
       </section>
 
@@ -1154,7 +1154,6 @@
             <div class="stat-number" id="statTeams">—</div>
           </article>
         </div>
-
 
         <div class="section-panel">
           <h3>Usimamizi wa mfumo</h3>
@@ -1902,41 +1901,38 @@ togglePassword.addEventListener("click", () => {
     });
 
     function openApplication() {
-      $("loginScreen").classList.add("hidden");
-      $("appScreen").classList.remove("hidden");
+  $("loginScreen").classList.add("hidden");
+  $("appScreen").classList.remove("hidden");
 
-      const fullName =
-        currentUser.fullName ||
-        currentUser.name ||
-        currentUser.jinaKamili ||
-        currentUser.username ||
-        $("username").value.trim();
-$("appScreen").classList.remove("hidden");
-
-// JINA LA MTUMIAJI KWENYE KARIBU
-const welcomeName = document.getElementById("welcomeUserName");
-
-if (welcomeName && currentUser) {
-  const jina =
+  const fullName =
     currentUser.fullName ||
+    currentUser.full_name ||
     currentUser.name ||
     currentUser.jinaKamili ||
+    currentUser.jina ||
     currentUser.username ||
+    $("username").value.trim() ||
     "Mtumiaji";
 
-  welcomeName.textContent = `Karibu, ${jina}.`;
+  // JINA LA MTUMIAJI KWENYE KARIBU
+  const welcomeName = $("welcomeUserName");
+
+  if (welcomeName) {
+    welcomeName.textContent = "Ngugu, " + fullName + ".";
+  }
+
+  const username =
+    currentUser.username ||
+    $("username").value.trim();
+
+  $("avatarButton").textContent =
+    String(fullName).trim().charAt(0).toUpperCase() || "?";
+
+  $("profileName").textContent = fullName;
+  $("profileUsername").textContent = username;
+  $("profileRole").textContent = currentUser.role || "—";
+  populateServiceOptions();
 }
-      const username =
-        currentUser.username ||
-        $("username").value.trim();
-
-      $("avatarButton").textContent =
-       String(fullName).trim().charAt(0).toUpperCase() || "?";
-
-      $("profileName").textContent = fullName;
-      $("profileUsername").textContent = username;
-      $("profileRole").textContent = currentUser.role || "—";
-      populateServiceOptions();
 
 
       /*
