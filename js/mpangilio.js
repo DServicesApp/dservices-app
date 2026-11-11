@@ -63,55 +63,56 @@
     }
 
     // MUUNDO MKUU
-    function renderSettings() {
+function renderSettings(targetContainer) {
 
-        const container =
-            document.getElementById("mainContent") ||
-            document.getElementById("content");
+    const container =
+        targetContainer ||
+        document.getElementById("moduleWorkspace") ||
+        document.getElementById("mainContent") ||
+        document.getElementById("content");
 
-        if (!container) {
-            console.error("DServices: Eneo la maudhui halijapatikana.");
-            return;
-        }
-
-        if (!canOpenSettings()) {
-            container.innerHTML =
-                "<h3>Huna ruhusa ya kufungua MPANGILIO.</h3>";
-            return;
-        }
-
-        container.innerHTML = `
-            <div class="ds-settings">
-
-                <h2>⚙️ MPANGILIO</h2>
-
-                <div class="ds-settings-menu">
-                    ${SETTINGS_MENUS.map(item => `
-                        <button
-                            class="ds-settings-btn ${
-                                currentSettingsPage === item.id
-                                    ? "active" : ""
-                            }"
-                            onclick="window.openSettingsPage('${item.id}')">
-
-                            <span>${item.icon}</span>
-                            ${item.name}
-
-                        </button>
-                    `).join("")}
-                </div>
-
-                <div id="settingsPageContent">
-                    ${renderSettingsPage(currentSettingsPage)}
-                </div>
-
-            </div>
-        `;
+    if (!container) {
+        console.error("DServices: Eneo la maudhui halijapatikana.");
+        return;
     }
+
+    if (!canOpenSettings()) {
+        container.innerHTML =
+            "<h3>Huna ruhusa ya kufungua MPANGILIO.</h3>";
+        return;
+    }
+
+    container.innerHTML = `
+        <div class="ds-settings">
+
+            <h2>⚙️ MPANGILIO</h2>
+
+            <div class="ds-settings-menu">
+                ${SETTINGS_MENUS.map(item => `
+                    <button
+                        class="ds-settings-btn ${
+                            currentSettingsPage === item.id
+                                ? "active" : ""
+                        }"
+                        onclick="window.openSettingsPage('${item.id}')">
+
+                        <span>${item.icon}</span>
+                        ${item.name}
+
+                    </button>
+                `).join("")}
+            </div>
+
+            <div id="settingsPageContent">
+                ${renderSettingsPage(currentSettingsPage)}
+            </div>
+
+        </div>
+    `;
+}
 
     // KURASA ZA MPANGILIO
     function renderSettingsPage(page) {
-
         switch (page) {
 
             case "account":
@@ -214,13 +215,15 @@
     }
 
     // BADILI UKURASA
-    function openSettingsPage(page) {
-        currentSettingsPage = page;
-        renderSettings();
-    }
+function openSettingsPage(page) {
+    currentSettingsPage = page;
+    renderSettings();
+}
 
-    // WEKA FUNCTIONS GLOBAL
+// WEKA FUNCTIONS GLOBAL
 window.openSettingsPage = openSettingsPage;
 window.renderSettings = renderSettings;
 
-window.renderMpangilioPage = renderSettings;
+window.renderMpangilioPage = function(workspace) {
+    renderSettings(workspace);
+};
