@@ -1346,7 +1346,7 @@
       minlength="6"
     >
     <label for="confirmPassword">
-      RUDIA NENOSIRI MPYA
+         RUDIA NENOSIRI MPYA
     </label>
     <input
       type="password"
@@ -1410,7 +1410,7 @@
       <select id="feedbackType" required>
         <option value="">-- Chagua aina ya maoni --</option>
         <option value="Pongezi">PONGEZI</option>
-        <option value="Pendekezo">PENDEKEZO</option>
+        <option value="Pendekezo">USHAURI</option>
         <option value="Malalamiko">MALALAMIKO</option>
         <option value="Swali">SWALI</option>
         <option value="Changamoto ya Mfumo">CHANGAMOTO YA MFUMO</option>
@@ -1850,7 +1850,7 @@ function getRoleLabel() {
   const role = getUserRole();
 
   const labels = {
- OWNER: "OWNER - Mmiliki wa DServices",
+ OWNER: "OWNER - Mmiliki wa Mfumo",
  ACCOUNT_OWNER: "ACCOUNT OWNER - Mmiliki wa Akaunti",
  ADMIN: "ADMIN - Msimamizi Mkuu wa Akaunti",
   USER: "USER - Mtumiaji"
@@ -1973,9 +1973,10 @@ togglePassword.addEventListener("click", () => {
           return;
         }
 
-        sessionToken = result.token;
-        currentUser = result.user;
+ sessionToken = result.token;
+currentUser = result.user;
 
+console.log("TAARIFA ZA MTUMIAJI:", result.user);
         $("password").value = "";
 
         openApplication();
