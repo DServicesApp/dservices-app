@@ -472,15 +472,16 @@ function renderFinancePage(workspace) {
       showHistory(workspace);
     });
 
-  // FOMU ZA MALIPO NA MATUMIZI workspace.querySelectorAll("[data-form]")
-    .forEach(button => {
-      button.addEventListener("click", () => {
-        showFinanceForm(
-          workspace,
-          button.dataset.form
-        );
-      });
+  // FOMU ZA MALIPO NA MATUMIZI
+workspace.querySelectorAll("[data-form]")
+  .forEach(button => {
+    button.addEventListener("click", () => {
+      showFinanceForm(
+        workspace,
+        button.dataset.form
+      );
     });
+  });
 
   // TAFUTA KWENYE MATOKEO YANAYOONEKANA
   $f("dsfSearchInput", workspace)
@@ -1049,18 +1050,16 @@ content.innerHTML = `
 $f("dsfCloseForm", workspace)
   .addEventListener("click", () => {
     formModal.remove();
-    renderFinanceContent(workspace);
+    showHistory(workspace);
   });
 
 // KUFUNGA KWA KUBONYEZA NJE YA FOMU
 formModal.addEventListener("click", event => {
   if (event.target === formModal) {
     formModal.remove();
-    renderFinanceContent(workspace);
+    showHistory(workspace);
   }
 });
-
-
     $f("dsfFinanceForm", workspace)
       .addEventListener("submit", event => {
 
@@ -1162,19 +1161,15 @@ formModal.addEventListener("click", event => {
 
   ? "Malipo yamehifadhiwa kwenye simu; yatasawazishwa mtandao utakaporudi."
 
- 
  : "Matumizi yamehifadhiwa kwenye simu; yatasawazishwa mtandao utakaporudi."
 
       );
-
-
-      renderFinanceContent(workspace);
-
+      showHistory(workspace);
 
     } catch (error) {
 
       console.error(
-        "DServices finance save error:",
+        "Finance save error:",
         error
       );
       showFinanceMessage(
@@ -1193,17 +1188,11 @@ formModal.addEventListener("click", event => {
     content.innerHTML = `
       <div class="dsf-card">
 
-        <h3>HISTORIA - ${currentFinanceMenu}</h3>
-
         <p class="dsf-muted">
           Inatafuta taarifa zilizohifadhiwa kwenye simu...
         </p>
-
       </div>
-
     `;
-
-
     try {
 
       if (
@@ -1250,36 +1239,13 @@ formModal.addEventListener("click", event => {
       if (!relevant.length) {
 
         content.innerHTML = `
-
-          <div class="dsf-card">
-
-            <h3>HISTORIA</h3>
-
-            <p>
-              Hakuna taarifa zinazosubiri
-              kusawazishwa kwenye simu.
-            </p>
-
-            <button
-              class="dsf-btn dsf-light"
-              id="dsfHistoryBack">
-
-              Rudi
-
-            </button>
-
-          </div>
-
-        `;
-
-
-        $f("dsfHistoryBack", workspace)
-          .addEventListener("click", () => {
-
-            renderFinanceContent(workspace);
-
-          });
-
+  <div class="dsf-card">
+    <p>
+      Hakuna taarifa zinazosubiri
+      kusawazishwa kwenye simu.
+    </p>
+  </div>
+`;
         return;
 
       }
@@ -1290,10 +1256,6 @@ formModal.addEventListener("click", event => {
         <div class="dsf-card">
 
           <div class="dsf-head">
-  <h3>
-  HISTORIA - ${currentFinanceMenu}
-  </h3>
-
             <button
               class="dsf-btn dsf-light"
               id="dsfHistoryBack">
@@ -1373,10 +1335,8 @@ formModal.addEventListener("click", event => {
 
       $f("dsfHistoryBack", workspace)
         .addEventListener("click", () => {
-    renderFinanceContent(workspace);
+    showHistory(workspace);
         });
-
-
     } catch (error) {
 
       content.innerHTML = `
@@ -1397,12 +1357,11 @@ formModal.addEventListener("click", event => {
 
       $f("dsfHistoryBack", workspace)
         .addEventListener("click", () => {
- renderFinanceContent(workspace);
+ showHistory(workspace);
         });
     }
 
   }
-
 
   /* ===============================
      KUUNGANISHA NA INDEX.HTML
