@@ -38,11 +38,19 @@
     }
 
     function getSettingsRole() {
-        const user = getSettingsUser();
+    const user = getSettingsUser();
 
-        return String(user.ROLE || user.role || "")
-            .trim().toUpperCase();
-    }
+    return String(
+        user.ROLE ||
+        user.role ||
+        user.userRole ||
+        user.USER_ROLE ||
+        ""
+    )
+    .trim()
+    .toUpperCase()
+    .replace(/[\s-]+/g, "_");
+}
 
     function canOpenSettings() {
     return [
