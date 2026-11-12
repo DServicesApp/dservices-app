@@ -358,14 +358,16 @@ function renderFinancePage(workspace) {
   injectFinanceStyles();
 
   const selected = String(
-    window.selectedMenu || ""
-  ).trim().toUpperCase();
+  window.selectedMenu || ""
+).trim().toUpperCase();
 
-  const menu = FINANCE_MENUS.includes(selected)
-    ? selected
-    : currentFinanceMenu;
+if (!FINANCE_MENUS.includes(selected)) {
+  workspace.innerHTML = "";
+  return;
+}
+currentFinanceMenu = selected;
 
-  currentFinanceMenu = menu;
+const menu = currentFinanceMenu;
 
   const isPayment = menu === "MALIPO";
 
