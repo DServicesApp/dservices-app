@@ -5,18 +5,17 @@
 (function () {
     "use strict";
 
-    // MENYU ZA MPANGILIO
     const SETTINGS_MENUS = [
         { id: "account", name: "AKAUNTI", icon: "🏢" },
         { id: "users", name: "WATUMIAJI", icon: "👥" },
         { id: "permissions", name: "RUHUSA", icon: "🔐" },
         { id: "history", name: "HISTORIA", icon: "📜" },
-        { id: "about", name: "KUHUSU MFUMO", icon: "ℹ️" }
+        { id: "about", name: "KUHUSU MFUMO", icon: "ℹ️" },
+        { id: "ads", name: "MATANGAZO", icon: "📢" }
     ];
 
-    let currentSettingsPage = "account";
+    let currentSettingsPage = "home";
 
-    // HTML SAFE
     function escapeHTML(value) {
         return String(value ?? "").replace(/[&<>"']/g, char => ({
             "&": "&amp;",
@@ -27,93 +26,139 @@
         })[char]);
     }
 
-    // PATA MTUMIAJI
     function getSettingsUser() {
         return window.currentUser || {};
     }
 
-    // PATA ACCOUNT ID
     function getSettingsAccountId() {
         const user = getSettingsUser();
 
         return user.ACCOUNT_ID ||
                user.accountId ||
-               user.account_id ||
-               "";
+               user.account_id || "";
     }
 
-    // ROLE
     function getSettingsRole() {
         const user = getSettingsUser();
 
         return String(user.ROLE || user.role || "")
-            .trim()
-            .toUpperCase();
+            .trim().toUpperCase();
     }
 
-    // RUHUSA YA KUONA MPANGILIO
     function canOpenSettings() {
-        const role = getSettingsRole();
-
         return [
             "OWNER",
             "ACCOUNT_OWNER",
             "ADMIN"
-        ].includes(role);
+        ].includes(getSettingsRole());
     }
 
     // MUUNDO MKUU
-function renderSettings(targetContainer) {
+    function renderSettings(targetContainer) {
 
-    const container =
-        targetContainer ||
-        document.getElementById("moduleWorkspace") ||
-        document.getElementById("mainContent") ||
-        document.getElementById("content");
+        const container =
+            targetContainer ||
+            document.getElementById("moduleWorkspace") ||
+            document.getElementById("mainContent") ||
+            document.getElementById("content");
 
-    if (!container) {
-        console.error("DServices: Eneo la maudhui halijapatikana.");
-        return;
+        if (!container) return;
+
+        if (!canOpenSettings()) {
+            container.innerHTML =
+                "<h3>Huna ruhusa ya kufungua MPANGILIO.</h3>";
+            return;
+        }
+
+        container.innerHTML = `
+
+            <div class="ds-settings">
+
+                <!-- KUSHOTO -->
+                <aside class="ds-settings-sidebar">
+
+                    <div class="ds-settings-heading">
+                        ⚙ MPANGILIO
+                    </div>
+
+                    ${SETTINGS_MENUS.map(item => `
+                        <button
+                            class="ds-settings-nav ${
+                                currentSettingsPage === item.id
+                                    ? "active" : ""
+                            }"
+                            onclick="window.openSettingsPage('${item.id}')">
+
+                            <span>${item.icon}</span>
+                            <span>${item.name}</span>
+
+                        </button>
+                    `).join("")}
+
+                </aside>
+
+                <!-- KULIA -->
+                <main class="ds-settings-main">
+
+                    <div id="settingsPageContent">
+                        ${renderSettingsPage(currentSettingsPage)}
+                    </div>
+
+                </main>
+
+            </div>
+        `;
     }
 
-    if (!canOpenSettings()) {
-        container.innerHTML =
-            "<h3>Huna ruhusa ya kufungua MPANGILIO.</h3>";
-        return;
-    }
+    // KADI ZA MWANZO
+    function renderHomePage() {
 
-    container.innerHTML = `
-        <div class="ds-settings">
+        return `
 
-            <h2>⚙️ MPANGILIO</h2>
+            <div class="ds-settings-welcome">
 
-            <div class="ds-settings-menu">
+                <h3>MPANGILIO WA MFUMO</h3>
+
+                <p>Chagua sehemu unayotaka kusimamia.</p>
+
+            </div>
+
+            <div class="ds-settings-cards">
+
                 ${SETTINGS_MENUS.map(item => `
+
                     <button
-                        class="ds-settings-btn ${
-                            currentSettingsPage === item.id
-                                ? "active" : ""
-                        }"
+                        class="ds-settings-card"
                         onclick="window.openSettingsPage('${item.id}')">
 
-                        <span>${item.icon}</span>
-                        ${item.name}
+                        <div class="ds-settings-oval">
+                            ${item.icon}
+                        </div>
+
+                        <div class="ds-settings-placeholder"></div>
+
+                        <div class="ds-settings-card-title">
+                            ${item.name}
+                        </div>
+
+                        <div class="ds-settings-card-line"></div>
 
                     </button>
+
                 `).join("")}
+
             </div>
 
-            <div id="settingsPageContent">
-                ${renderSettingsPage(currentSettingsPage)}
-            </div>
-
-        </div>
-    `;
-}
+        `;
+    }
 
     // KURASA ZA MPANGILIO
     function renderSettingsPage(page) {
+
         switch (page) {
+
+            case "home":
+                return renderHomePage();
 
             case "account":
                 return renderAccountPage();
@@ -138,9 +183,15 @@ function renderSettings(targetContainer) {
 
             case "about":
                 return `
-                    <h3>ℹ️ KUHUSU MFUMO</h3>
+                    <h3>ℹ KUHUSU MFUMO</h3>
                     <h2>DServices</h2>
                     <p>Huduma bora kwa ustawi wa jamii.</p>
+                `;
+
+            case "ads":
+                return `
+                    <h3>📢 MATANGAZO</h3>
+                    <p>Usimamizi wa matangazo ya mfumo.</p>
                 `;
 
             default:
@@ -154,6 +205,7 @@ function renderSettings(targetContainer) {
         const user = getSettingsUser();
 
         return `
+
             <div class="ds-account">
 
                 <h3>🏢 AKAUNTI YA TAASISI</h3>
@@ -191,39 +243,54 @@ function renderSettings(targetContainer) {
 
                     <label>
                         HUDUMA
-                        <select id="settingsService" disabled>
+                        <select disabled>
                             <option>Huduma kulingana na ruhusa</option>
                         </select>
                     </label>
 
                     <label>
                         KIPENGELE
-                        <select id="settingsModule" disabled>
+                        <select disabled>
                             <option>Vipengele kulingana na ruhusa</option>
                         </select>
                     </label>
 
                 </div>
 
-                <p class="ds-settings-note">
-                    Taarifa zinaoneshwa kulingana na akaunti na
-                    ruhusa ulizopewa.
-                </p>
-
             </div>
         `;
     }
 
-    // BADILI UKURASA
-function openSettingsPage(page) {
-    currentSettingsPage = page;
-    renderSettings();
-}
+    // KUFUNGUA UKURASA
+    function openSettingsPage(page) {
 
-// WEKA FUNCTIONS GLOBAL
-window.openSettingsPage = openSettingsPage;
-window.renderSettings = renderSettings;
+        currentSettingsPage = page;
 
-window.renderMpangilioPage = function(workspace) {
-    renderSettings(workspace);
-};
+        const content =
+            document.getElementById("settingsPageContent");
+
+        if (content) {
+            content.innerHTML = renderSettingsPage(page);
+        }
+
+        document.querySelectorAll(".ds-settings-nav")
+            .forEach(btn => btn.classList.remove("active"));
+
+        const activeButton = document.querySelector(
+            `.ds-settings-nav[onclick*="'${page}'"]`
+        );
+
+        if (activeButton) {
+            activeButton.classList.add("active");
+        }
+    }
+    window.openSettingsPage = openSettingsPage;
+
+    window.renderSettings = renderSettings;
+
+    window.renderMpangilioPage = function(workspace) {
+        currentSettingsPage = "home";
+        renderSettings(workspace);
+    };
+
+})();
