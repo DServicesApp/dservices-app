@@ -1,7 +1,6 @@
-/* ==========================================
+/* ===================================
    DSERVICES - MPANGILIO.JS
-   ========================================== */
-
+   ================================== */
 (function () {
     "use strict";
 
@@ -46,19 +45,11 @@
     }
 
     function canOpenSettings() {
-    const user = getSettingsUser();
-    if (!user || Object.keys(user).length === 0) {
-        return false;
-    }
-    const role = getSettingsRole();
     return [
         "OWNER",
         "ACCOUNT_OWNER",
-        "ADMIN",
-        "SUPER ADMIN",
-        "SUPER_ADMIN",
-        "MSIMAMIZI MKUU"
-    ].includes(role);
+        "ADMIN"
+    ].includes(getSettingsRole());
 }
 
     // MUUNDO MKUU
@@ -271,23 +262,16 @@
 
     // KUFUNGUA UKURASA
     function openSettingsPage(page) {
-
         currentSettingsPage = page;
-
         const content =
             document.getElementById("settingsPageContent");
-
         if (content) {
             content.innerHTML = renderSettingsPage(page);
-        }
-
-        document.querySelectorAll(".ds-settings-nav")
+        } document.querySelectorAll(".ds-settings-nav")
             .forEach(btn => btn.classList.remove("active"));
-
         const activeButton = document.querySelector(
             `.ds-settings-nav[onclick*="'${page}'"]`
         );
-
         if (activeButton) {
             activeButton.classList.add("active");
         }
