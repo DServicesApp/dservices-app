@@ -46,12 +46,20 @@
     }
 
     function canOpenSettings() {
-        return [
-            "OWNER",
-            "ACCOUNT_OWNER",
-            "ADMIN"
-        ].includes(getSettingsRole());
+    const user = getSettingsUser();
+    if (!user || Object.keys(user).length === 0) {
+        return false;
     }
+    const role = getSettingsRole();
+    return [
+        "OWNER",
+        "ACCOUNT_OWNER",
+        "ADMIN",
+        "SUPER ADMIN",
+        "SUPER_ADMIN",
+        "MSIMAMIZI MKUU"
+    ].includes(role);
+}
 
     // MUUNDO MKUU
     function renderSettings(targetContainer) {
