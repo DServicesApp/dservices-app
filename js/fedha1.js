@@ -9,7 +9,6 @@
   const FINANCE_MENUS = [
     "MALIPO",
     "MATUMIZI",
-    "HALI YA MICHANGO"
   ];
 
   let currentFinanceMenu = "MALIPO";
@@ -286,6 +285,45 @@ const $f = (id, root = document) => {
       .dsf-choice:hover {
         border-color:#f28c28;
       }
+/* KADI ZA MALIPO NA MATUMIZI */
+.dsf-menu-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+  margin-bottom: 14px;
+}
+
+.dsf-menu-card {
+  width: 100%;
+  min-height: 42px;
+  box-sizing: border-box;
+  padding: 11px 8px;
+  border: 1px solid #cfd3d6;
+  border-radius: 7px;
+  background: #eeeeee;
+  color: #222222;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+}
+
+.dsf-menu-card:active {
+  background: #e2e2e2;
+}
+
+.dsf-search {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 11px 8px;
+  border: 1px solid #cfd3d6;
+  border-radius: 7px;
+  background: #eeeeee;
+  color: #222222;
+  font-size: 13px;
+  outline: none;
+}
 
 .dsf-modal-overlay {
   position:fixed;
@@ -369,6 +407,7 @@ const $f = (id, root = document) => {
 =============================== */
 function renderFinancePage(workspace) {
   if (!workspace) return;
+
   injectFinanceStyles();
 
   const selected = String(
@@ -381,65 +420,83 @@ function renderFinancePage(workspace) {
 
   currentFinanceMenu = menu;
 
-  const showActions =
-    menu === "MALIPO" ||
-    menu === "MATUMIZI";
+  const isPayment = menu === "MALIPO";
+
+  const choices = isPayment
+    ? [
+        ["student-payment", "MALIPO MWANAFUNZI"],
+        ["other-payment", "MALIPO MENGINE"]
+      ]
+    : [
+        ["staff-expense", "MATUMIZI MTUMISHI"],
+        ["other-expense", "MATUMIZI MENGINE"]
+      ];
 
   workspace.innerHTML = `
-
     <section class="dsf-wrap">
 
-      ${
-        showActions
-          ? `
-            <div class="dsf-head">
+      <div class="dsf-menu-grid">
 
-              <div class="dsf-actions">
+        <button
+          type="button"
+          class="dsf-menu-card"
+          id="dsfHistoryBtn">
+          HISTORIA
+        </button>
 
-                <button
-                  class="dsf-btn dsf-primary"
-                  id="dsfAddBtn">
-                  ＋ Ongeza
-                </button>
+        <input
+          type="search"
+          class="dsf-search"
+          id="dsfSearchInput"
+          placeholder="Tafuta....">
 
-                <button
-                  class="dsf-btn dsf-light"
-                  id="dsfHistoryBtn">
-                  Historia
-                </button>
+        ${choices.map(([id, label]) => `
+          <button
+            type="button"
+            class="dsf-menu-card"
+            data-form="${id}">
+            ${label}
+          </button>
+        `).join("")}
 
-              </div>
-
-            </div>
-          `
-          : ""
-      }
+      </div>
 
       <div id="dsfContent"></div>
 
     </section>
-
   `;
 
-  if (showActions) {
+  // HISTORIA
+  $f("dsfHistoryBtn", workspace)
+    .addEventListener("click", () => {
+      showHistory(workspace);
+    });
 
-    $f("dsfAddBtn", workspace)
-      .addEventListener("click", () => {
-
-        showChooser(workspace);
-
+  // FOMU ZA MALIPO NA MATUMIZI workspace.querySelectorAll("[data-form]")
+    .forEach(button => {
+      button.addEventListener("click", () => {
+        showFinanceForm(
+          workspace,
+          button.dataset.form
+        );
       });
+    });
 
-    $f("dsfHistoryBtn", workspace)
-      .addEventListener("click", () => {
-
-        showHistory(workspace);
-
+  // TAFUTA KWENYE MATOKEO YANAYOONEKANA
+  $f("dsfSearchInput", workspace)
+    .addEventListener("input", event => {
+      const neno = event.target.value
+        .trim()
+        .toLowerCase();
+      workspace.querySelectorAll(
+        ".dsf-table tbody tr"
+      ).forEach(row => {
+        row.style.display = row.textContent.toLowerCase().includes(neno)
+            ? ""
+            : "none";
       });
-
-  }
-  renderFinanceContent(workspace);
-
+    });
+showHistory(workspace);
 }
 
   /* ===============================
@@ -1233,10 +1290,9 @@ formModal.addEventListener("click", event => {
         <div class="dsf-card">
 
           <div class="dsf-head">
-
-            <h3>
-              HISTORIA - ${currentFinanceMenu}
-            </h3>
+  <h3>
+  HISTORIA - ${currentFinanceMenu}
+  </h3>
 
             <button
               class="dsf-btn dsf-light"
