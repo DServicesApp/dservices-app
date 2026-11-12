@@ -1,14 +1,12 @@
-/* =====================================
+/* ===================================
    DSERVICES - WANAFUNZI
-===================================== */
-
+==================================== */
 let wanafunziData = [];
 
 
 /* =====================================
    UKURASA MKUU WA WANAFUNZI
 ===================================== */
-
 function renderWanafunziPage(workspace) {
 
   workspace.innerHTML = `
@@ -16,20 +14,26 @@ function renderWanafunziPage(workspace) {
 
       <div class="wanafunzi-toolbar">
 
-        <button type="button"
-          onclick="showWanafunziForm()">
-          + SAJILI
-        </button>
+        <input
+          type="search"
+          id="tafutaMwanafunzi"
+          placeholder="Tafuta mwanafunzi..."
+          oninput="tafutaMwanafunzi()"
+        >
 
-        <button type="button"
-          onclick="showWanafunziHistory()">
-          HISTORIA
-        </button>
+        <div class="wanafunzi-actions">
 
-        <button type="button"
-          onclick="showWanafunziSearch()">
-          TAFUTA
-        </button>
+          <button type="button"
+            onclick="showWanafunziHistory()">
+            HISTORIA
+          </button>
+
+          <button type="button"
+            onclick="showWanafunziForm()">
+            USAJILI
+          </button>
+
+        </div>
 
       </div>
 
@@ -41,27 +45,38 @@ function renderWanafunziPage(workspace) {
 
       .wanafunzi-toolbar {
         display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        gap: 8px;
-        flex-wrap: nowrap;
+        flex-direction: column;
+        gap: 9px;
         margin: 4px 0 12px;
       }
 
-      .wanafunzi-toolbar button {
-        flex: 1;
-        min-width: 0;
-        padding: 10px 8px;
-        white-space: nowrap;
+      .wanafunzi-toolbar input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 11px;
         border: 1px solid #4b5320;
-        border-radius: 6px;
+        border-radius: 7px;
+        font-size: 14px;
+      }
+
+      .wanafunzi-actions {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 9px;
+      }
+
+      .wanafunzi-actions button {
+        width: 100%;
+        padding: 11px 8px;
+        border: 1px solid #4b5320;
+        border-radius: 7px;
         background: #4b5320;
         color: white;
+        font-weight: 600;
         cursor: pointer;
       }
 
-      .wanafunzi-toolbar button:active {
+      .wanafunzi-actions button:active {
         opacity: .8;
       }
 
@@ -75,9 +90,7 @@ function renderWanafunziPage(workspace) {
 /* =====================================
    HISTORIA YA WANAFUNZI
 ===================================== */
-
 function showWanafunziHistory() {
-
   const content = document.getElementById(
     "wanafunziContent"
   );
@@ -89,15 +102,9 @@ function showWanafunziHistory() {
       new Date(b["TAR USAJILI"]) -
       new Date(a["TAR USAJILI"])
   );
-
   content.innerHTML = `
-    <h4>HISTORIA YA WANAFUNZI</h4>
-
-    <p>JUMLA YA WANAFUNZI: ${list.length}</p>
-
     <div id="wanafunziList"></div>
-  `;
-
+`;
   const container = document.getElementById(
     "wanafunziList"
   );
@@ -152,15 +159,11 @@ function showWanafunziHistory() {
 /* =====================================
    TAFUTA MWANAFUNZI
 ===================================== */
-
 function showWanafunziSearch() {
-
   const content = document.getElementById(
     "wanafunziContent"
   );
-
   if (!content) return;
-
   content.innerHTML = `
 
     <div class="staff-group">
@@ -193,26 +196,21 @@ function showWanafunziSearch() {
 
 
 function tafutaMwanafunzi() {
-
   const input = document.getElementById(
     "tafutaMwanafunzi"
   );
-
   const matokeo = document.getElementById(
-    "matokeoTafutaMwanafunzi"
-  );
+    "wanafunziContent"
+);
 
   if (!input || !matokeo) return;
 
   const neno = input.value.trim().toLowerCase();
 
   if (!neno) {
-
-    matokeo.innerHTML =
-      "<p>Andika taarifa za kutafuta.</p>";
-
+    showWanafunziHistory();
     return;
-  }
+}
 
   const matokeoYatafutwa = wanafunziData.filter(m => {
 
@@ -243,7 +241,6 @@ function tafutaMwanafunzi() {
       padding:12px;
       border-bottom:1px solid #ddd;
     ">
-
       <strong>${m.NA_USAJILI || "-"}</strong>
 
       <br>
