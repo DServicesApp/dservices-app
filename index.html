@@ -957,36 +957,185 @@
     font-size: 16px;
   }
 }
+/* =================================
+   DSERVICES SETTINGS
+================================= */
+
 .ds-settings {
-    padding: 15px;
-    color: #333;
+    display: grid;
+    grid-template-columns: 210px minmax(0, 1fr);
+    gap: 15px;
+    width: 100%;
+    min-height: 450px;
+    box-sizing: border-box;
 }
 
-.ds-settings-menu {
+/* SIDEBAR */
+
+.ds-settings-sidebar {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 12px;
+    box-sizing: border-box;
+}
+
+.ds-settings-heading {
+    color: #4B5320;
+    font-weight: bold;
+    padding: 12px 5px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 10px;
+}
+
+.ds-settings-nav {
+    width: 100%;
     display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin: 15px 0;
-}
-
-.ds-settings-btn {
-    padding: 12px 16px;
-    border: 1px solid #ddd;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 9px;
+    margin-bottom: 5px;
+    border: none;
     border-radius: 8px;
-    background: white;
+    background: transparent;
+    color: #444;
+    text-align: left;
     cursor: pointer;
+    box-sizing: border-box;
 }
 
-.ds-settings-btn.active {
-    background: #4B5320;
-    color: white;
+.ds-settings-nav:hover,
+.ds-settings-nav.active {
+    background: #f0f2e9;
+    color: #4B5320;
+    border-left: 3px solid #F28C28;
 }
 
-.ds-account {
-    background: white;
-    padding: 18px;
+/* MAIN */
+
+.ds-settings-main {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+.ds-settings-welcome h3 {
+    color: #4B5320;
+    margin-bottom: 5px;
+}
+
+.ds-settings-welcome p {
+    color: #999;
+    font-size: 13px;
+}
+
+/* =================================
+   SETTINGS CARDS
+   KADI MBILI KWA KILA MSTARI
+================================= */
+
+.ds-settings-cards {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 14px;
+    width: 100%;
+    margin-top: 20px;
+
+    box-sizing: border-box;
+}
+
+.ds-settings-card {
+    width: 100%;
+    min-width: 0;
+
+    /* Urefu unaendana na kifaa */
+    height: clamp(115px, 20vw, 180px);
+
+    background: #fff;
+    border: 1px solid #e2e2e2;
+    border-radius: 17px;
+
+    padding: 12px;
+
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    box-sizing: border-box;
+    transition: .25s;
+}
+
+.ds-settings-card:hover {
+    border-color: #F28C28;
+    box-shadow: 0 4px 12px #00000012;
+    transform: translateY(-3px);
+}
+
+/* OVAL ICON */
+
+.ds-settings-oval {
+    width: clamp(40px, 5vw, 55px);
+    height: clamp(40px, 5vw, 55px);
+
+    flex-shrink: 0;
+
+    border: 1px solid rgba(0,0,0,.25);
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 23px;
+    margin-bottom: 12px;
+    color: #777;
+}
+
+/* PLACEHOLDER */
+
+.ds-settings-placeholder {
+    width: 65%;
+    height: 7px;
+
+    background: #eeeeee;
     border-radius: 10px;
+
+    margin-bottom: 10px;
 }
+
+/* CARD TITLE */
+
+.ds-settings-card-title {
+    font-size: 12px;
+    font-weight: bold;
+    color: #4B5320;
+    text-align: center;
+    overflow-wrap: anywhere;
+}
+
+/* CARD BOTTOM LINE */
+
+.ds-settings-card-line {
+    width: 35%;
+    height: 3px;
+
+    background: #eeeeee;
+    border-radius: 5px;
+
+    margin-top: 9px;
+}
+
+/* =================================
+   ACCOUNT
+================================= */
 
 .ds-account-grid {
     display: grid;
@@ -998,24 +1147,152 @@
     display: flex;
     flex-direction: column;
     gap: 6px;
-    font-weight: 600;
+
+    font-size: 12px;
+    color: #4B5320;
 }
 
 .ds-account-grid input,
 .ds-account-grid select {
-    padding: 11px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
     width: 100%;
+    padding: 11px;
+
+    border: 1px solid #ddd;
+    border-radius: 7px;
+
+    background: #f7f7f7;
     box-sizing: border-box;
 }
-.ds-settings-note {
-    color: #666;
-    font-size: 13px;
+
+/* =================================
+   TABLET
+================================= */
+
+@media (min-width: 651px) and (max-width: 1000px) {
+
+    .ds-settings {
+        grid-template-columns: 160px minmax(0, 1fr);
+        gap: 10px;
+    }
+
+    .ds-settings-main {
+        padding: 14px;
+    }
+
+    .ds-settings-card {
+        height: 145px;
+    }
 }
-@media(max-width:600px) {
+
+/* =================================
+   MOBILE
+================================= */
+
+@media (max-width: 650px) {
+
+    .ds-settings {
+        grid-template-columns: 95px minmax(0, 1fr);
+        gap: 7px;
+        min-height: 400px;
+    }
+
+    .ds-settings-sidebar {
+        padding: 5px;
+    }
+
+    .ds-settings-heading {
+        font-size: 10px;
+        padding: 10px 2px;
+        text-align: center;
+    }
+
+    .ds-settings-nav {
+        flex-direction: column;
+        gap: 4px;
+
+        padding: 10px 2px;
+        margin-bottom: 4px;
+
+        font-size: 9px;
+        text-align: center;
+    }
+
+    .ds-settings-main {
+        padding: 9px;
+    }
+
+    .ds-settings-welcome h3 {
+        font-size: 13px;
+    }
+
+    .ds-settings-welcome p {
+        font-size: 10px;
+    }
+
+    /* KADI MBILI, UPANA UNAJITANUA */
+
+    .ds-settings-cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        width: 100%;
+        margin-top: 14px;
+    }
+
+    .ds-settings-card {
+        width: 100%;
+        height: clamp(115px, 28vw, 155px);
+        min-width: 0;
+        padding: 7px 3px;
+        border-radius: 12px;
+    }
+
+    .ds-settings-oval {
+        width: 40px;
+        height: 40px;
+        font-size: 19px;
+        margin-bottom: 9px;
+    }
+
+    .ds-settings-placeholder {
+        width: 65%;
+        height: 6px;
+        margin-bottom: 8px;
+    }
+
+    .ds-settings-card-title {
+        font-size: 9px;
+    }
+
+    .ds-settings-card-line {
+        margin-top: 7px;
+    }
+
     .ds-account-grid {
         grid-template-columns: 1fr;
+    }
+}
+
+/* =================================
+   SIMU NDOGO SANA
+================================= */
+@media (max-width: 360px) {
+    .ds-settings {
+        grid-template-columns: 82px minmax(0, 1fr);
+        gap: 5px;
+    }
+    .ds-settings-main {
+        padding: 6px;
+    }
+    .ds-settings-cards {
+        gap: 6px;
+    }
+
+    .ds-settings-card {
+        height: 115px;
+    }
+
+    .ds-settings-card-title {
+        font-size: 8px;
     }
 }
   </style>
