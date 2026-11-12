@@ -14,7 +14,6 @@
     ];
 
     let currentSettingsPage = "home";
-
     function escapeHTML(value) {
         return String(value ?? "").replace(/[&<>"']/g, char => ({
             "&": "&amp;",
@@ -29,6 +28,10 @@
         return window.currentUser || {};
     }
 
+function getSettingsAccount() {
+    const user = getSettingsUser();
+    return user.account || user.taasisi || user;
+}
     function getSettingsAccountId() {
         const user = getSettingsUser();
 
@@ -119,9 +122,7 @@
 
     // KADI ZA MWANZO
     function renderHomePage() {
-
         return `
-
             <div class="ds-settings-welcome">
 
                 <h3>MPANGILIO WA MFUMO</h3>
@@ -200,77 +201,107 @@
                     <h3>📢 MATANGAZO</h3>
                     <p>Usimamizi wa matangazo ya mfumo.</p>
                 `;
-
             default:
                 return "<p>Ukurasa haujapatikana.</p>";
         }
     }
 
     // AKAUNTI
-    function renderAccountPage() {
+function renderAccountPage() {
+    const user = getSettingsAccount();
 
-        const user = getSettingsUser();
+    return `
+        <div class="ds-account">
 
-        return `
+            <h3>🏢 AKAUNTI YA TAASISI</h3>
 
-            <div class="ds-account">
+            <div class="ds-account-grid">
 
-                <h3>🏢 AKAUNTI YA TAASISI</h3>
+                <label>
+                    ACCOUNT ID
+                    <input
+                        type="text"
+                        value="${escapeHTML(
+                            user.ACCOUNT_ID ||
+                            user.accountId ||
+                            user.account_id ||
+                            ""
+                        )}"
+                        readonly>
+                </label>
 
-                <div class="ds-account-grid">
+                <label>
+                    ACCOUNT NAME
+                    <input
+                        type="text"
+                        value="${escapeHTML(
+                            user.JINA_LA_ACCOUNT ||
+                            user.ACCOUNT_NAME ||
+                            user.accountName ||
+                            ""
+                        )}"
+                        readonly>
+                </label>
 
-                    <label>
-                        ACCOUNT ID
-                        <input
-                            type="text"
-                            value="${escapeHTML(getSettingsAccountId())}"
-                            readonly>
-                    </label>
+                <label>
+                    MOTTO
+                    <input
+                        type="text"
+                        value="${escapeHTML(
+                            user.MOTTO ||
+                            user.motto ||
+                            ""
+                        )}"
+                        readonly>
+                </label>
 
-                    <label>
-                        ACCOUNT NAME
-                        <input
-                            type="text"
-                            value="${escapeHTML(
-                                user.ACCOUNT_NAME ||
-                                user.accountName || ""
-                            )}"
-                            readonly>
-                    </label>
+                <label>
+                    REG
+                    <input
+                        type="text"
+                        value="${escapeHTML(
+                            user.REG ||
+                            user.reg ||
+                            ""
+                        )}"
+                        readonly>
+                </label>
 
-                    <label>
-                        MOTTO
-                        <input type="text" readonly>
-                    </label>
+                <label>
+                    HUDUMA
+                    <select disabled>
+                        <option>Huduma kulingana na ruhusa</option>
+                    </select>
+                </label>
 
-                    <label>
-                        REG
-                        <input type="text" readonly>
-                    </label>
-
-                    <label>
-                        HUDUMA
-                        <select disabled>
-                            <option>Huduma kulingana na ruhusa</option>
-                        </select>
-                    </label>
-
-                    <label>
-                        KIPENGELE
-                        <select disabled>
-                            <option>Vipengele kulingana na ruhusa</option>
-                        </select>
-                    </label>
-
-                </div>
+                <label>
+                    KIPENGELE
+                    <select disabled>
+                        <option>Vipengele kulingana na ruhusa</option>
+                    </select>
+                </label>
 
             </div>
-        `;
-    }
+        </div>
+    `;
+}
 
     // KUFUNGUA UKURASA
     function openSettingsPage(page) {
-        currentSettingsPage = page;
+    const allowedPages = [
+        "home",
+        ...SETTINGS_MENUS.map(item => item.id)
+    ];
+
+    if (!allowedPages.includes(page)) {
+        return;
+    }
+
+    if (!canOpenSettings()) {
+        return;
+    }
+
+    currentSettingsPage = page;
         const content =
             document.getElementById("settingsPageContent");
         if (content) {
