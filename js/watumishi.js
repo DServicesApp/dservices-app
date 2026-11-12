@@ -2,96 +2,74 @@
    DSERVICES - WATUMISHI
 ===================================== */
 let watumishiData = [];
+
 function renderWatumishiPage(workspace) {
   workspace.innerHTML = `
     <section class="section-panel">
-
       <div class="watumishi-toolbar">
 
-        <button type="button"
-          onclick="showWatumishiHistory()">
-          HISTORIA
-        </button>
+        <input
+          type="search"
+          id="tafutaMtumishi"
+          placeholder="Tafuta mtumishi..."
+          oninput="tafutaMtumishi()"
+        >
 
-        <button type="button"
-          onclick="showWatumishiForm()">
-          + SAJILI
-        </button>
+        <div class="watumishi-actions">
 
-        <button type="button"
-          onclick="showWatumishiSearch()">
-          TAFUTA
-        </button>
+          <button type="button"
+            onclick="showWatumishiHistory()">
+            HISTORIA
+          </button>
+
+          <button type="button"
+            onclick="showWatumishiForm()">
+            USAJILI
+          </button>
+
+        </div>
 
       </div>
-
       <div id="watumishiContent"></div>
 
     </section>
 
     <style>
-     .watumishi-toolbar {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: nowrap;
-  margin: 4px 0 12px;
-}
-.watumishi-toolbar button {
-  flex: 1;
-  min-width: 0;
-  padding: 10px 8px;
-  white-space: nowrap;
-  border: 1px solid #4b5320;
-  border-radius: 6px;
-  background: #4b5320;
-  color: white;
-  cursor: pointer;
-}
-      .watumishi-toolbar button:active {
+      .watumishi-toolbar {
+        display: flex;
+        flex-direction: column;
+        gap: 9px;
+        margin: 4px 0 12px;
+      }
+      .watumishi-toolbar input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 11px;
+        border: 1px solid #4b5320;
+        border-radius: 7px;
+        font-size: 14px;
+      }
+      .watumishi-actions {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 9px;
+      }
+      .watumishi-actions button {
+        width: 100%;
+        padding: 11px 8px;
+        border: 1px solid #4b5320;
+        border-radius: 7px;
+        background: #4b5320;
+        color: white;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      .watumishi-actions button:active {
         opacity: .8;
       }
     </style>
   `;
-
   showWatumishiHistory();
-}
-
-
-/* =====================================
-   TAFUTA MTUMISHI
-===================================== */
-function showWatumishiSearch() {
-  const content = document.getElementById(
-    "watumishiContent"
-  );
-
-  if (!content) return;
-
-  content.innerHTML = `
-    <div class="staff-group">
-
-      <h4>TAFUTA MTUMISHI</h4>
-
-      <div class="staff-field">
-
-        <input
-          type="search"
-          id="tafutaMtumishi"
-          placeholder="Andika kutafuta..."
-          oninput="tafutaMtumishi()"
-        >
-
-      </div>
-
-      <div id="matokeoTafutaMtumishi"
-           style="margin-top:15px;">
-      </div>
-
-    </div>
-  `;
 }
 
 
@@ -102,12 +80,17 @@ function tafutaMtumishi() {
   );
 
   const matokeo = document.getElementById(
-    "matokeoTafutaMtumishi"
+    "watumishiContent"
   );
 
   if (!input || !matokeo) return;
 
   const neno = input.value.trim().toLowerCase();
+
+  if (!neno) {
+    showWatumishiHistory();
+    return;
+  }
 
   const matokeoYatafutwa = watumishiData.filter(mt => {
 
@@ -124,23 +107,24 @@ function tafutaMtumishi() {
 
   });
 
-  if (!neno) {
-    matokeo.innerHTML = "<p>Andika taarifa za kutafuta.</p>";
-    return;
-  }
-
   if (matokeoYatafutwa.length === 0) {
-    matokeo.innerHTML = "<p>Hakuna mtumishi aliyepatikana.</p>";
+
+    matokeo.innerHTML =
+      "<p>Hakuna mtumishi aliyepatikana.</p>";
+
     return;
   }
 
   matokeo.innerHTML = matokeoYatafutwa.map(mt => `
+
     <div style="
       padding:12px;
       border-bottom:1px solid #ddd;
     ">
       <strong>${mt.NA_MFANYAKAZI || "-"}</strong>
+
       <br>
+
       ${[
         mt.JINA_LA_KWANZA,
         mt.JINA_LA_KATI,
@@ -166,11 +150,8 @@ function showWatumishiHistory() {
       new Date(a.TAREHE_YA_USAJILI)
   );
   content.innerHTML = `
-    <h4>HISTORIA YA WATUMISHI</h4>
-    <p>JUMLA YA WATUMISHI: ${list.length}</p>
-
     <div id="watumishiList"></div>
-  `;
+`;
   const container = document.getElementById(
     "watumishiList"
   );
@@ -641,5 +622,4 @@ function showWatumishiForm() {
 window.renderWatumishiPage = renderWatumishiPage;
 window.showWatumishiHistory = showWatumishiHistory;
 window.showWatumishiForm = showWatumishiForm;
-window.showWatumishiSearch = showWatumishiSearch;
 window.tafutaMtumishi = tafutaMtumishi;
