@@ -1,7 +1,7 @@
 /* =========================================
    DSERVICES - USIMAMIZI FEDHA
    FILE: Fedha.js
-   MALIPO | MATUMIZI | HALI YA MICHANGO
+   MALIPO | MATUMIZI
 ====================================== */
 (function () {
   "use strict";
@@ -158,28 +158,6 @@ const $f = (id, root = document) => {
         color:#4b5320;
       }
 
-      .dsf-tabs {
-        display:flex;
-        gap:7px;
-        flex-wrap:wrap;
-        margin:12px 0 16px;
-      }
-
-      .dsf-tab {
-        background:#fff;
-        border:1px solid #d7ddce;
-        color:#4b5320;
-        border-radius:7px;
-        padding:9px 13px;
-        cursor:pointer;
-      }
-
-      .dsf-tab.active {
-        background:#4b5320;
-        color:#fff;
-        border-color:#4b5320;
-      }
-
       .dsf-card {
         background:#fff;
         border:1px solid #e1e5dc;
@@ -266,25 +244,6 @@ const $f = (id, root = document) => {
         color:#4b5320;
       }
 
-      .dsf-chooser {
-        display:grid;
-        grid-template-columns:
-          repeat(2,minmax(0,1fr));
-        gap:10px;
-      }
-      .dsf-choice {
-        padding:15px;
-        border:1px solid #d7ddce;
-        border-radius:8px;
-        background:#fff;
-        color:#4b5320;
-        text-align:left;
-        cursor:pointer;
-        font-weight:600;
-      }
-      .dsf-choice:hover {
-        border-color:#f28c28;
-      }
 /* KADI ZA MALIPO NA MATUMIZI */
 .dsf-menu-grid {
   display: grid;
@@ -336,15 +295,6 @@ const $f = (id, root = document) => {
   z-index:9999;
 }
 
-.dsf-modal {
-  background:#fff;
-  width:100%;
-  max-width:430px;
-  border-radius:12px;
-  padding:18px;
-  box-shadow:0 8px 30px rgba(0,0,0,.2);
-}
-
 .dsf-modal-header {
   display:flex;
   align-items:center;
@@ -389,9 +339,6 @@ const $f = (id, root = document) => {
 
       @media(max-width:600px) {
         .dsf-grid {
-          grid-template-columns:1fr;
-        }
-        .dsf-chooser {
           grid-template-columns:1fr;
         }
         .dsf-title {
@@ -501,159 +448,6 @@ showHistory(workspace);
 }
 
   /* ===============================
-     MAUDHUI YA KILA MENYU
-  =============================== */
-function renderFinanceContent(workspace) {
-  const content = $f("dsfContent", workspace);
-  if (!content) return;
-
-  if (
-    currentFinanceMenu === "MALIPO" ||
-    currentFinanceMenu === "MATUMIZI"
-  ) {
-    content.innerHTML = `
-      <div class="dsf-card">
-        <p class="dsf-muted">
-          Tumia kitufe cha ONGEZA kusajili taarifa.
-        </p>
-      </div>
-    `;
-  }
-
-  else {
-    content.innerHTML = `
-      <div class="dsf-card">
-
-        <h3>HALI YA MICHANGO</h3>
-
-        <p class="dsf-muted">
-          Chagua mwaka wa masomo na
-          mpango wa malipo.
-        </p>
-
-        <div class="dsf-grid">
-
-          <div class="dsf-field">
-            <label for="dsfSchoolYear">
-              MWAKA WA MASOMO
-            </label>
-
-            <input
-              id="dsfSchoolYear"
-              type="number"
-              value="${new Date().getFullYear()}">
-          </div>
-
-          <div class="dsf-field">
-            <label for="dsfPlan">
-              MPANGO WA MALIPO
-            </label>
-
-            <select id="dsfPlan">
-              <option value="">Chagua mpango</option>
-              <option value="MWEZI">MWEZI</option>
-              <option value="MWAKA">MWAKA</option>
-              <option value="MADA">MADA</option>
-              <option value="MUHULA">MUHULA</option>
-            </select>
-          </div>
-
-        </div>
-
-      </div>
-    `;
-  }
-}
-
-
-  /* ===============================
-     KICHAGUO CHA AINA YA TAARIFA
-  =============================== */
-  function showChooser(workspace) {
-  const content = $f("dsfContent", workspace);
-  if (!content) return;
-  const choices =
-    currentFinanceMenu === "MATUMIZI"
-      ? [
-          ["staff-expense", "Matumizi Mtumishi"],
-          ["other-expense", "Matumizi Mengine"]
-        ]
-      : [
-          ["student-payment", "Malipo Mwanafunzi"],
-          ["other-payment", "Malipo Mengine"]
-        ];
-
-  content.insertAdjacentHTML("beforeend", `
-
-    <div class="dsf-modal-overlay" id="dsfChooserModal">
-
-      <div class="dsf-modal">
-
-        <div class="dsf-modal-header">
-
-          <h3>
-            CHAGUA AINA YA ${currentFinanceMenu}
-          </h3>
-
-          <button
-            type="button"
-            class="dsf-modal-close"
-            id="dsfModalClose">
-            ×
-          </button>
-
-        </div>
-
-        <div class="dsf-chooser">
-
-          ${choices.map(([id, label]) => `
-            <button
-              type="button"
-              class="dsf-choice"
-              data-form="${id}">
-              ＋ ${label}
-            </button>
-          `).join("")}
-
-        </div>
-
-      </div>
-
-    </div>
-
-  `);
-
-  const modal = $f("dsfChooserModal", workspace);
-
-  $f("dsfModalClose", workspace)
-    .addEventListener("click", () => {
-      modal.remove();
-    });
-
-  modal.addEventListener("click", event => {
-    if (event.target === modal) {
-      modal.remove();
-    }
-  });
-
-  modal.querySelectorAll("[data-form]")
-    .forEach(button => {
-
-      button.addEventListener("click", () => {
-
-        const formType = button.dataset.form;
-
-        modal.remove();
-
-        showFinanceForm(workspace, formType);
-
-      });
-
-    });
-}
-
-
-  /* ===============================
      KUTENGENEZA VIPENGELE VYA FOMU
   =============================== */
   function field(label, name, type = "text", options = {}) {
@@ -727,8 +521,6 @@ function renderFinanceContent(workspace) {
 
     const isStaffExpense =
       formType === "staff-expense";
-
-    const isExpense = !isPayment;
 
     const prefix = isPayment
       ? "MALIPO"
@@ -1097,7 +889,7 @@ formModal.addEventListener("click", event => {
     ) {
 
       showFinanceMessage(
-        "IndexedDB haijapatikana. Hakikisha offline-db.js imepakiwa kabla ya Fedha1.js.",
+        "IndexedDB haijapatikana. Hakikisha offline-db.js imepakiwa kabla ya Fedha.js.",
         true
       );
 
@@ -1185,7 +977,8 @@ formModal.addEventListener("click", event => {
   =============================== */
   async function showHistory(workspace) {
     const content = $f("dsfContent", workspace);
-    content.innerHTML = `
+if (!content) return;
+content.innerHTML = `
       <div class="dsf-card">
 
         <p class="dsf-muted">
@@ -1202,17 +995,18 @@ formModal.addEventListener("click", event => {
         throw new Error(
           "IndexedDB haijapatikana."
         );
-
       }
 
+const records =
+  await window.getPendingRecords(
+    getAccountId()
+  );
 
-      const records =
-        await window.getPendingRecords(
-          getAccountId()
-        );
+const safeRecords = Array.isArray(records)
+  ? records
+  : [];
 
-
-      const relevant = records
+      const relevant = safeRecords
 
         .filter(record => {
 
@@ -1249,22 +1043,7 @@ formModal.addEventListener("click", event => {
         return;
 
       }
-
-
       content.innerHTML = `
-
-        <div class="dsf-card">
-
-          <div class="dsf-head">
-            <button
-              class="dsf-btn dsf-light"
-              id="dsfHistoryBack">
-
-              Rudi
-
-            </button>
-
-          </div>
 
 
           <div class="dsf-table-wrap">
@@ -1298,7 +1077,7 @@ formModal.addEventListener("click", event => {
                       <td>
                         ${esc(
                           d.TAREHE ||
-                          record.createdAt.slice(0, 10)
+                          String(record.createdAt || "").slice(0, 10)
                         )}
                       </td>
 
@@ -1329,14 +1108,8 @@ formModal.addEventListener("click", event => {
 
           </div>
 
-        </div>
-
       `;
-
-      $f("dsfHistoryBack", workspace)
-        .addEventListener("click", () => {
-    showHistory(workspace);
-        });
+      
     } catch (error) {
 
       content.innerHTML = `
@@ -1346,19 +1119,8 @@ formModal.addEventListener("click", event => {
           <p>
             ${esc(error.message || error)}
           </p>
-
-          <button
-            class="dsf-btn dsf-light"
-            id="dsfHistoryBack">
-            Rudi
-          </button>
         </div>
       `;
-
-      $f("dsfHistoryBack", workspace)
-        .addEventListener("click", () => {
- showHistory(workspace);
-        });
     }
 
   }
