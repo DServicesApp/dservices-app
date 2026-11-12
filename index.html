@@ -2652,9 +2652,14 @@ function renderModulePage() {
       }
       return;
 
-    case "TAARIFA & TATHIMINI":
     case "TAARIFA":
-    case "TATHIMINI":
+if (typeof renderTaarifaelimuPage === "function") {
+ renderTaarifaelimuPage(workspace);
+      } else {
+        workspace.textContent =
+          "taarifaelimu.js haijapakiwa vizuri.";
+      }
+      return;
 
       workspace.innerHTML = `
         <section class="section-panel">
