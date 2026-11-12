@@ -8,7 +8,6 @@ let wanafunziData = [];
    UKURASA MKUU WA WANAFUNZI
 ===================================== */
 function renderWanafunziPage(workspace) {
-
   workspace.innerHTML = `
     <section class="section-panel">
 
@@ -148,70 +147,28 @@ function showWanafunziHistory() {
         ${mwanafunzi.HALI || ""}
       </small>
     `;
-
     container.appendChild(item);
-
   });
-
 }
 
-
-/* =====================================
-   TAFUTA MWANAFUNZI
-===================================== */
-function showWanafunziSearch() {
-  const content = document.getElementById(
-    "wanafunziContent"
-  );
-  if (!content) return;
-  content.innerHTML = `
-
-    <div class="staff-group">
-
-      <h4>TAFUTA MWANAFUNZI</h4>
-
-      <div class="staff-field">
-
-        <label>
-          Jina, namba ya usajili au darasa
-        </label>
-
-        <input
-          type="search"
-          id="tafutaMwanafunzi"
-          placeholder="Andika hapa kutafuta..."
-          oninput="tafutaMwanafunzi()"
-        >
-
-      </div>
-
-      <div id="matokeoTafutaMwanafunzi"
-           style="margin-top:15px;">
-      </div>
-
-    </div>
-
-  `;
-}
 
 
 function tafutaMwanafunzi() {
+
   const input = document.getElementById(
     "tafutaMwanafunzi"
   );
+
   const matokeo = document.getElementById(
     "wanafunziContent"
-);
-
+  );
   if (!input || !matokeo) return;
-
   const neno = input.value.trim().toLowerCase();
 
   if (!neno) {
     showWanafunziHistory();
     return;
-}
-
+  }
   const matokeoYatafutwa = wanafunziData.filter(m => {
 
     const taarifa = [
