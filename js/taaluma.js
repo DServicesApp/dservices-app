@@ -264,13 +264,13 @@
           )}
 
           ${createCard(
-            "WEKA RATIBA YA MASOMO",
+            "WEKA RATIBA MASOMO",
             "Panga vipindi",
             "WEKA_RATIBA_MASOMO"
           )}
 
           ${createCard(
-            "WEKA RATIBA YA MITIHANI",
+            "WEKA RATIBA MITIHANI",
             "Panga mitihani",
             "WEKA_RATIBA_MITIHANI"
           )}
@@ -1356,7 +1356,7 @@
         </button>
 
         <button onclick="taalumaBack()">
-          GHARIRI / RUDI
+          HARIRI / RUDI
         </button>
 
       </div>
@@ -1750,13 +1750,17 @@
       }
 
       /* KADI KUU */
-
       .card-actions {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 9px;
-        width: 100%;
-      }
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+}
+
+.card-actions button {
+    width: 100%;
+    padding: 11px 8px;
+    box-sizing: border-box;
+}
 
       .taaluma-card {
         width: 100%;
