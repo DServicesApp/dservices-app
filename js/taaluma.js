@@ -218,7 +218,6 @@
   /* =================================
      4. MAIN PAGE
   ================================== */
-
   function renderTaalumaPage(container) {
 
     if (!container) return;
@@ -232,7 +231,7 @@
       <section class="taaluma-container">
 
         <div class="taaluma-heading">
-          <h3>USIMAMIZI WA TAALUMA</h3>
+          <h3>USIMAMIZI WA KITAALUMA</h3>
         </div>
 
         <div class="card-actions">
@@ -256,9 +255,9 @@
           )}
 
           ${createCard(
-            "SAJILI MASOMO",
-            "Usajili wa masomo",
-            "MASOMO"
+            "SAJILI MASOMO/MITIHANI",
+            "Usajili wa masomo/mitihani",
+            "MASOMO/MITIHANI"
           )}
 
           ${createCard(
@@ -370,7 +369,6 @@
   }
 
   function pageHeader(title) {
-
     return `
       <div class="taaluma-page-header">
 
@@ -387,22 +385,18 @@
   }
 
   function taalumaBack() {
-
     const area = document.getElementById(
       "taalumaWorkspace"
     );
-
     if (area) area.innerHTML = "";
 
     currentPage = "HOME";
   }
 
-  /* ==============================================
+  /* ==================================
      6. SAJILI DARASA
-  ============================================== */
-
+  =================================== */
   function formDarasa() {
-
     return `
       ${pageHeader("SAJILI DARASA")}
 
@@ -433,7 +427,6 @@
   }
 
   async function taalumaSaveDarasa() {
-
     const jina = document.getElementById(
       "talDarasa"
     ).value.trim();
@@ -609,15 +602,16 @@ function taalumaShowSajiliForm() {
 
         <select id="talAinaMtihani">
 
-          <option value="">CHAGUA AINA</option>
-          <option>KILA MWEZI</option>
+    <option value="">CHAGUA AINA</option>
+          <option>KILA WIKI</option>
+         <option>KILA MWEZI</option>
+          <option>ROBO MUHULA</option>
           <option>NUSU MUHULA</option>
-          <option>MWISHO WA MUHULA</option>
-          <option>MWISHO WA MWAKA</option>
-          <option>MAJARIBIO</option>
+         <option>MWISHO WA MWAKA</option>
+          <option>KUJIPIMA</option>
+          <option>UMOJA</option>
           <option>MOCK</option>
           <option>TAIFA</option>
-          <option>KUJIPIMA</option>
 
         </select>
 
@@ -626,11 +620,9 @@ function taalumaShowSajiliForm() {
         <select id="talMuhula">
 
           <option value="">CHAGUA MUHULA</option>
-          <option>MUHULA WA KWANZA</option>
-          <option>MUHULA WA PILI</option>
-          <option>MUHULA WA TATU</option>
-          <option>MWAKA MZIMA</option>
-
+          <option>MUHULA I</option>
+          <option>MUHULA II</option>
+     
         </select>
 
         <label>TAREHE YA MWANZO</label>
@@ -656,9 +648,7 @@ function taalumaShowSajiliForm() {
 /* =====================================
    ROW YA SOMO
 ===================================== */
-
 function taalumaSubjectRow(index) {
-
   return `
     <div class="tal-input-row">
 
@@ -677,7 +667,6 @@ function taalumaSubjectRow(index) {
 /* =====================================
    ROW YA MTIHANI
 ==================================== */
-
 function taalumaExamRow(index) {
 
   return `
@@ -695,9 +684,9 @@ function taalumaExamRow(index) {
 }
 
 
-/* ==============================================
+/* ===================================
    KUONGEZA SOMO
-============================================== */
+==================================== */
 
 function taalumaAddSubject() {
 
@@ -716,10 +705,9 @@ function taalumaAddSubject() {
 }
 
 
-/* ==============================================
+/* ==================================
    KUONGEZA MTIHANI
-============================================== */
-
+==================================== */
 function taalumaAddExam() {
 
   const area = document.getElementById(
@@ -737,12 +725,10 @@ function taalumaAddExam() {
 }
 
 
-/* ==============================================
+/* ===================================
    KUFUNGA FOMU
-============================================== */
-
+=================================== */
 function taalumaCloseSajiliForm() {
-
   document.getElementById(
     "talSajiliFormArea"
   ).innerHTML = "";
@@ -753,12 +739,10 @@ function taalumaCloseSajiliForm() {
 }
 
 
-/* ==============================================
+/* ====================================
    KUHIFADHI MASOMO
-============================================== */
-
+===================================== */
 async function taalumaSaveSubjects() {
-
   const mwaka = document.getElementById(
     "talSajiliMwaka"
   ).value;
@@ -860,12 +844,10 @@ async function taalumaSaveSubjects() {
 }
 
 
-/* ==============================================
+/* ==================================
    KUHIFADHI MITIHANI
-============================================== */
-
+==================================== */
 async function taalumaSaveExams() {
-
   const mwaka = document.getElementById(
     "talSajiliMwaka"
   ).value;
@@ -963,10 +945,8 @@ async function taalumaSaveExams() {
      8. SAJILI MAJUKUMU
   ================================== */
   function formMajukumu() {
-
     return `
       ${pageHeader("SAJILI MAJUKUMU")}
-
       <div class="taaluma-form">
 
         <label>JINA LA MWALIMU</label>
@@ -1012,7 +992,7 @@ async function taalumaSaveExams() {
 
         <button
           onclick="taalumaSaveJukumu()">
-          HIFADHI JUKUMU
+          HIFADHI
         </button>
 
       </div>
@@ -1020,7 +1000,6 @@ async function taalumaSaveExams() {
   }
 
   async function taalumaSaveJukumu() {
-
     const jina = document.getElementById(
       "talMwalimu"
     ).value.trim();
@@ -1069,7 +1048,6 @@ async function taalumaSaveExams() {
      9. RATIBA ZA MASOMO
   =================================== */
   function formRatibaMasomo() {
-
     return `
       ${pageHeader("WEKA RATIBA YA MASOMO")}
 
@@ -1120,7 +1098,7 @@ async function taalumaSaveExams() {
 
         <button
           onclick="taalumaSaveRatibaMasomo()">
-          HIFADHI RATIBA
+          HIFADHI
         </button>
 
       </div>
@@ -1238,7 +1216,7 @@ async function taalumaSaveExams() {
 
         <button
           onclick="taalumaSaveRatibaMitihani()">
-          HIFADHI RATIBA
+          HIFADHI
         </button>
 
       </div>
@@ -1311,8 +1289,7 @@ async function taalumaSaveExams() {
 
   /* =================================
    11. WEKA ALAMA
-==================================== */
-
+================================== */
 function formAlama() {
 
   return `
@@ -1409,8 +1386,7 @@ function formAlama() {
 
 /* =================================
    KUPATA WANAFUNZI
-==================================== */
-
+=================================== */
 function taalumaLoadAlamaStudents() {
 
   const mwaka = document.getElementById(
@@ -1564,7 +1540,6 @@ function taalumaLoadAlamaStudents() {
 /* =================================
    KUKOKOTOA DARAJA
 ==================================== */
-
 function taalumaCalculateGrade(input) {
 
   const mark = Number(input.value);
@@ -1599,7 +1574,6 @@ function taalumaCalculateGrade(input) {
 /* =================================
    KUPATA DARAJA KUTOKA DB.MADARAJA
 ==================================== */
-
 function getGrade(mark, darasa) {
 
   const madaraja = (DB.madaraja || [])
@@ -1646,7 +1620,6 @@ function getGrade(mark, darasa) {
 /* =================================
    KUHIFADHI ALAMA
 ==================================== */
-
 async function taalumaSaveAlama() {
 
   const mwaka = document.getElementById(
