@@ -1186,7 +1186,6 @@ async function taalumaSaveExams() {
   /* =============================
      10. RATIBA ZA MITIHANI
   ================================ */
-
   function formRatibaMitihani() {
 
     return `
@@ -1327,6 +1326,7 @@ function formAlama() {
           MWAKA
           <select id="talAlamaMwaka"
             onchange="taalumaLoadAlamaStudents()">
+            <option value="">CHAGUA MWAKA</option>
           </select>
         </label>
 
@@ -1334,7 +1334,9 @@ function formAlama() {
           DRS
           <select id="talAlamaDarasa"
             onchange="taalumaLoadAlamaStudents()">
+
             <option value="">CHAGUA DARASA</option>
+
           </select>
         </label>
 
@@ -1342,7 +1344,9 @@ function formAlama() {
           MTIHANI
           <select id="talAlamaMtihani"
             onchange="taalumaLoadAlamaStudents()">
+
             <option value="">CHAGUA MTIHANI</option>
+
           </select>
         </label>
 
@@ -1350,11 +1354,14 @@ function formAlama() {
           SOMO
           <select id="talAlamaSomo"
             onchange="taalumaLoadAlamaStudents()">
+
             <option value="">CHAGUA SOMO</option>
+
           </select>
         </label>
 
       </div>
+
 
       <div id="talAlamaStudentArea">
 
@@ -1372,11 +1379,13 @@ function formAlama() {
             </thead>
 
             <tbody id="talAlamaStudentRows">
+
               <tr>
                 <td colspan="4">
-                  CHAGUA MWAKA, DARAJA, MTIHANI NA SOMO
+                  CHAGUA MWAKA, DRS, MTIHANI NA SOMO
                 </td>
               </tr>
+
             </tbody>
 
           </table>
@@ -1386,76 +1395,524 @@ function formAlama() {
         <button
           type="button"
           onclick="taalumaSaveAlama()">
+
           HIFADHI
+
         </button>
 
       </div>
 
     </div>
   `;
+}
+
+
+/* =================================
+   KUPATA WANAFUNZI
+==================================== */
 
 function taalumaLoadAlamaStudents() {
-  const mwaka = document.getElementById("talAlamaMwaka").value;
-  const darasa = document.getElementById("talAlamaDarasa").value;
-  const mtihani = document.getElementById("talAlamaMtihani").value;
-  const somo = document.getElementById("talAlamaSomo").value;
 
-  const tbody = document.getElementById("talAlamaStudentRows");
+  const mwaka = document.getElementById(
+    "talAlamaMwaka"
+  ).value;
+
+  const darasa = document.getElementById(
+    "talAlamaDarasa"
+  ).value;
+
+  const mtihani = document.getElementById(
+    "talAlamaMtihani"
+  ).value;
+
+  const somo = document.getElementById(
+    "talAlamaSomo"
+  ).value;
+
+  const tbody = document.getElementById(
+    "talAlamaStudentRows"
+  );
+
+  if (!tbody) return;
 
   if (!mwaka || !darasa || !mtihani || !somo) {
+
     tbody.innerHTML = `
-      <tr><td colspan="4">CHAGUA TAARIFA ZOTE JUU.</td></tr>
+      <tr>
+        <td colspan="4">
+          CHAGUA MWAKA, DRS, MTIHANI NA SOMO.
+        </td>
+      </tr>
     `;
+
     return;
   }
 
+
+  // PATA JINA LA DARASA
+  const classItem = DB.madarasa.find(item =>
+    String(item.ID_DARASA || item.ID) === String(darasa)
+  );
+
+  const className = classItem
+    ? String(classItem.JINA_LA_DARASA || "")
+    : "";
+
+
+  // CHUJA WANAFUNZI
   const wanafunzi = (DB.wanafunzi || []).filter(student => {
 
     const studentYear = String(
-      student.MWAKA_WA_MASOMO || student.MWAKA || ""
+      student.MWAKA_WA_MASOMO ||
+      student.MWAKA ||
+      ""
     );
 
     const studentClass = String(
-      student.DARASA_ID || student.DARASA || ""
+      student.DARASA_ID ||
+      student.ID_DARASA ||
+      student.DARASA ||
+      ""
     );
 
-    const status = String(student.HALI || "ACTIVE").toUpperCase();
+    const status = String(
+      student.HALI || "ACTIVE"
+    ).trim().toUpperCase();
+
+    const classMatches =
+      studentClass === String(darasa) ||
+      studentClass === className;
 
     return (
       studentYear === String(mwaka) &&
-      studentClass === String(darasa) &&
+      classMatches &&
       status !== "INACTIVE" &&
-      status !== "HAI"
+      status !== "HAIFAI"
     );
+
   });
 
+
   if (!wanafunzi.length) {
+
     tbody.innerHTML = `
-      <tr><td colspan="4">HAKUNA WANAFUNZI WALIOPATIKANA.</td></tr>
+      <tr>
+        <td colspan="4">
+          HAKUNA WANAFUNZI WALIOPATIKANA.
+        </td>
+      </tr>
     `;
+
     return;
   }
 
-  tbody.innerHTML = wanafunzi.map((student, index) => {
 
-    const usajili = student.NA_USAJILI ||
-                    student.NUMBER ||
-                    student.REG_NO ||
-                    "";
+  // ONYESHA WANAFUNZI
+  tbody.innerHTML = wanafunzi.map(student => {
 
-    const jina = student.JINA ||
-                 student.JINA_KAMILI ||
-                 [
-                   student.JINA_LA_KWANZA,
-                   student.JINA_LA_KATI,
-                   student.JINA_LA_MWISHO
-                 ].filter(Boolean).join(" ");
+    const usajili =
+      student.NA_USAJILI || "";
+
+    const jina =
+      student.JINA ||
+      student.JINA_KAMILI ||
+      [
+        student.JINA_LA_KWANZA,
+        student.JINA_LA_KATI,
+        student.JINA_LA_MWISHO
+      ].filter(Boolean).join(" ");
 
     return `
       <tr>
-        <td>${escapeHTML(usajili)}</td>
 
-        <td>${escapeHTML(jina)}</td>
+        <td>
+          ${escapeHTML(usajili)}
+        </td>
+
+        <td>
+          ${escapeHTML(jina)}
+        </td>
+
+        <td>
+
+          <input
+            type="number"
+            class="tal-alama-input"
+            data-usajili="${escapeHTML(usajili)}"
+            data-jina="${escapeHTML(jina)}"
+            min="0"
+            max="100"
+            step="0.01"
+            oninput="taalumaCalculateGrade(this)"
+            style="width:75px"
+          >
+
+        </td>
+
+        <td class="tal-alama-grade">
+          -
+        </td>
+
+      </tr>
+    `;
+
+  }).join("");
+
+}
+
+
+/* =================================
+   KUKOKOTOA DARAJA
+==================================== */
+
+function taalumaCalculateGrade(input) {
+
+  const mark = Number(input.value);
+
+  const gradeCell = input.closest("tr")
+    .querySelector(".tal-alama-grade");
+
+  if (input.value === "") {
+
+    gradeCell.textContent = "-";
+    return;
+
+  }
+
+  if (!Number.isFinite(mark) || mark < 0 || mark > 100) {
+
+    gradeCell.textContent = "!";
+
+    return;
+
+  }
+
+  const darasa = document.getElementById(
+    "talAlamaDarasa"
+  ).value;
+
+  gradeCell.textContent = getGrade(mark, darasa);
+
+}
+
+
+/* =================================
+   KUPATA DARAJA KUTOKA DB.MADARAJA
+==================================== */
+
+function getGrade(mark, darasa) {
+
+  const madaraja = (DB.madaraja || [])
+    .filter(item => {
+
+      const classId = String(
+        item.DARASA || item.ID_DARASA || ""
+      );
+
+      return (
+        !classId ||
+        classId === String(darasa)
+      );
+
+    })
+    .sort((a, b) => {
+
+      return Number(a.ALAMA_KUANZIA) -
+             Number(b.ALAMA_KUANZIA);
+
+    });
+
+
+  const found = madaraja.find(item => {
+
+    const kuanzia = Number(item.ALAMA_KUANZIA);
+
+    const hadi = Number(item.ALAMA_HADI);
+
+    return (
+      mark >= kuanzia &&
+      mark <= hadi
+    );
+
+  });
+
+  return found
+    ? String(found.DARAJA || "-")
+    : "-";
+
+}
+
+
+/* =================================
+   KUHIFADHI ALAMA
+==================================== */
+
+async function taalumaSaveAlama() {
+
+  const mwaka = document.getElementById(
+    "talAlamaMwaka"
+  ).value;
+
+  const darasa = document.getElementById(
+    "talAlamaDarasa"
+  ).value;
+
+  const mtihani = document.getElementById(
+    "talAlamaMtihani"
+  ).value;
+
+  const somo = document.getElementById(
+    "talAlamaSomo"
+  ).value;
+
+
+  if (!mwaka || !darasa || !mtihani || !somo) {
+
+    alert(
+      "Chagua MWAKA, DRS, MTIHANI na SOMO."
+    );
+
+    return;
+
+  }
+
+
+  const inputs = [
+    ...document.querySelectorAll(".tal-alama-input")
+  ];
+
+
+  if (!inputs.length) {
+
+    alert("Hakuna wanafunzi wa kuhifadhi.");
+
+    return;
+
+  }
+
+
+  const records = [];
+
+
+  // HAKIKI ALAMA ZOTE
+  for (const input of inputs) {
+
+    if (input.value === "") {
+
+      alert(
+        "Weka alama za wanafunzi wote kabla ya kuhifadhi."
+      );
+
+      input.focus();
+
+      return;
+
+    }
+
+
+    const alama = Number(input.value);
+
+
+    if (
+      !Number.isFinite(alama) ||
+      alama < 0 ||
+      alama > 100
+    ) {
+
+      alert(
+        "Alama lazima ziwe kati ya 0 na 100."
+      );
+
+      input.focus();
+
+      return;
+
+    }
+
+
+    const daraja = getGrade(alama, darasa);
+
+
+    if (daraja === "-") {
+
+      alert(
+        "Daraja halijapatikana. Kagua mpangilio wa MADARAJA."
+      );
+
+      return;
+
+    }
+
+
+    records.push({
+
+      MWAKA_WA_MASOMO: mwaka,
+
+      ID_DARASA: darasa,
+
+      ID_MTIHANI: mtihani,
+
+      ID_SOMO: somo,
+
+      NA_USAJILI: input.dataset.usajili,
+
+      JINA: input.dataset.jina,
+
+      ALAMA: alama,
+
+      DARAJA: daraja
+
+    });
+
+  }
+
+
+  // HIFADHI RECORDS
+  for (const record of records) {
+
+    const ok = await saveRecord(
+      "ALAMA",
+      record
+    );
+
+    if (!ok) {
+
+      alert(
+        "Kuna tatizo kuhifadhi alama. Jaribu tena."
+      );
+
+      return;
+
+    }
+
+  }
+  alert(
+    "Alama za darasa zimehifadhiwa kikamilifu."
+  );
+}
+
+
+/* =================================
+   KUPATA WANAFUNZI
+==================================== */
+
+function taalumaLoadAlamaStudents() {
+
+  const mwaka = document.getElementById(
+    "talAlamaMwaka"
+  ).value;
+
+  const darasa = document.getElementById(
+    "talAlamaDarasa"
+  ).value;
+
+  const mtihani = document.getElementById(
+    "talAlamaMtihani"
+  ).value;
+
+  const somo = document.getElementById(
+    "talAlamaSomo"
+  ).value;
+
+  const tbody = document.getElementById(
+    "talAlamaStudentRows"
+  );
+
+  if (!tbody) return;
+
+  if (!mwaka || !darasa || !mtihani || !somo) {
+
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="4">
+          CHAGUA MWAKA, DRS, MTIHANI NA SOMO.
+        </td>
+      </tr>
+    `;
+
+    return;
+  }
+
+  // PATA JINA LA DARASA
+  const classItem = (DB.madarasa || []).find(item =>
+    String(item.ID_DARASA || item.ID) === String(darasa)
+  );
+
+  const className = classItem
+    ? String(classItem.JINA_LA_DARASA || "")
+    : "";
+
+  // CHUJA WANAFUNZI
+  const wanafunzi = (DB.wanafunzi || []).filter(student => {
+
+    const studentYear = String(
+      student.MWAKA_WA_MASOMO ||
+      student.MWAKA ||
+      ""
+    );
+
+    const studentClass = String(
+      student.DARASA_ID ||
+      student.ID_DARASA ||
+      student.DARASA ||
+      ""
+    );
+
+    const status = String(
+      student.HALI || "ACTIVE"
+    ).trim().toUpperCase();
+
+    const classMatches =
+      studentClass === String(darasa) ||
+      studentClass === className;
+
+    return (
+      studentYear === String(mwaka) &&
+      classMatches &&
+      status !== "INACTIVE" &&
+      status !== "HAIFAI"
+    );
+
+  });
+
+  if (!wanafunzi.length) {
+
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="4">
+          HAKUNA WANAFUNZI WALIOPATIKANA.
+        </td>
+      </tr>
+    `;
+
+    return;
+  }
+
+  // ONYESHA WANAFUNZI
+  tbody.innerHTML = wanafunzi.map(student => {
+
+    const usajili =
+      student.NA_USAJILI || "";
+
+    const jina =
+      student.JINA ||
+      student.JINA_KAMILI ||
+      [
+        student.JINA_LA_KWANZA,
+        student.JINA_LA_KATI,
+        student.JINA_LA_MWISHO
+      ].filter(Boolean).join(" ");
+
+    return `
+      <tr>
+
+        <td>
+          ${escapeHTML(usajili)}
+        </td>
+
+        <td>
+          ${escapeHTML(jina)}
+        </td>
 
         <td>
           <input
@@ -1465,110 +1922,237 @@ function taalumaLoadAlamaStudents() {
             data-jina="${escapeHTML(jina)}"
             min="0"
             max="100"
+            step="0.01"
             oninput="taalumaCalculateGrade(this)"
-            style="width:75px">
+            style="width:75px"
+          >
         </td>
 
-        <td class="tal-alama-grade">-</td>
+        <td class="tal-alama-grade">
+          -
+        </td>
+
       </tr>
     `;
 
   }).join("");
+
 }
+
+
+/* =================================
+   KUKOKOTOA DARAJA
+==================================== */
 
 function taalumaCalculateGrade(input) {
 
   const mark = Number(input.value);
+
   const gradeCell = input.closest("tr")
     .querySelector(".tal-alama-grade");
 
   if (input.value === "") {
+
     gradeCell.textContent = "-";
     return;
+
   }
 
-  if (mark < 0 || mark > 100) {
+  if (!Number.isFinite(mark) || mark < 0 || mark > 100) {
+
     gradeCell.textContent = "!";
     return;
+
   }
 
-  gradeCell.textContent = getGrade(mark);
+  const darasa = document.getElementById(
+    "talAlamaDarasa"
+  ).value;
+
+  gradeCell.textContent = getGrade(mark, darasa);
+
 }
 
-function getGrade(mark) {
 
-  if (mark >= 75) return "A";
-  if (mark >= 65) return "B";
-  if (mark >= 45) return "C";
-  if (mark >= 30) return "D";
+/* =================================
+   KUPATA DARAJA KUTOKA DB.MADARAJA
+==================================== */
 
-  return "F";
+function getGrade(mark, darasa) {
+
+  const madaraja = (DB.madaraja || [])
+    .filter(item => {
+
+      const classId = String(
+        item.DARASA || item.ID_DARASA || ""
+      );
+
+      return (
+        !classId ||
+        classId === String(darasa)
+      );
+
+    })
+    .sort((a, b) => {
+
+      return Number(a.ALAMA_KUANZIA) -
+             Number(b.ALAMA_KUANZIA);
+
+    });
+
+  const found = madaraja.find(item => {
+
+    const kuanzia = Number(item.ALAMA_KUANZIA);
+    const hadi = Number(item.ALAMA_HADI);
+
+    return (
+      mark >= kuanzia &&
+      mark <= hadi
+    );
+
+  });
+
+  return found
+    ? String(found.DARAJA || "-")
+    : "-";
+
 }
+
+
+/* =================================
+   KUHIFADHI ALAMA
+==================================== */
 
 async function taalumaSaveAlama() {
 
-  const mwaka = document.getElementById("talAlamaMwaka").value;
-  const darasa = document.getElementById("talAlamaDarasa").value;
-  const mtihani = document.getElementById("talAlamaMtihani").value;
-  const somo = document.getElementById("talAlamaSomo").value;
+  const mwaka = document.getElementById(
+    "talAlamaMwaka"
+  ).value;
+
+  const darasa = document.getElementById(
+    "talAlamaDarasa"
+  ).value;
+
+  const mtihani = document.getElementById(
+    "talAlamaMtihani"
+  ).value;
+
+  const somo = document.getElementById(
+    "talAlamaSomo"
+  ).value;
+
+  if (!mwaka || !darasa || !mtihani || !somo) {
+
+    alert(
+      "Chagua MWAKA, DRS, MTIHANI na SOMO."
+    );
+
+    return;
+
+  }
 
   const inputs = [
     ...document.querySelectorAll(".tal-alama-input")
   ];
 
-  if (!mwaka || !darasa || !mtihani || !somo) {
-    alert("Chagua MWAKA, DRS, MTIHANI na SOMO.");
-    return;
-  }
-
   if (!inputs.length) {
+
     alert("Hakuna wanafunzi wa kuhifadhi.");
     return;
+
   }
 
   const records = [];
 
+  // HAKIKI ALAMA ZOTE
   for (const input of inputs) {
 
     if (input.value === "") {
-      alert("Weka alama za wanafunzi wote kabla ya kuhifadhi.");
+
+      alert(
+        "Weka alama za wanafunzi wote kabla ya kuhifadhi."
+      );
+
+      input.focus();
       return;
+
     }
 
     const alama = Number(input.value);
 
-    if (!Number.isFinite(alama) || alama < 0 || alama > 100) {
-      alert("Alama lazima ziwe kati ya 0 na 100.");
+    if (
+      !Number.isFinite(alama) ||
+      alama < 0 ||
+      alama > 100
+    ) {
+
+      alert(
+        "Alama lazima ziwe kati ya 0 na 100."
+      );
+
+      input.focus();
       return;
+
+    }
+
+    const daraja = getGrade(alama, darasa);
+
+    if (daraja === "-") {
+
+      alert(
+        "Daraja halijapatikana. Kagua mpangilio wa MADARAJA."
+      );
+
+      return;
+
     }
 
     records.push({
-      MWAKA: mwaka,
-      DARASA_ID: darasa,
-      MTIHANI: mtihani,
-      SOMO_ID: somo,
+
+      MWAKA_WA_MASOMO: mwaka,
+
+      ID_DARASA: darasa,
+
+      ID_MTIHANI: mtihani,
+
+      ID_SOMO: somo,
+
       NA_USAJILI: input.dataset.usajili,
+
       JINA: input.dataset.jina,
+
       ALAMA: alama,
-      DARAJA: getGrade(alama)
+
+      DARAJA: daraja
+
     });
+
   }
 
+  // HIFADHI RECORDS
   for (const record of records) {
 
-    const ok = await saveRecord("ALAMA", record);
+    const ok = await saveRecord(
+      "ALAMA",
+      record
+    );
 
     if (!ok) {
-      alert("Kuna tatizo kuhifadhi alama. Hakikisha muunganisho wa mfumo.");
+
+      alert(
+        "Kuna tatizo kuhifadhi alama. Jaribu tena."
+      );
+
       return;
     }
+
   }
 
-  alert("Alama za darasa zimehifadhiwa.");
+  alert(
+    "Alama za darasa zimehifadhiwa kikamilifu."
+  );
 
 }
-
-
  /*==================================
      12. MATOKEO YA DARASA
   ==================================== */
@@ -2080,115 +2664,151 @@ async function taalumaSaveAlama() {
     });
   }
 
-  async function loadPageData(page) {
+  /* ============================
+   KUPAKIA DATA ZA UKURASA
+================================= */
+async function loadPageData(page) {
 
-    if (CONFIG.API_URL) {
+  // 1. PAKIA DATA KUTOKA API
+  if (CONFIG.API_URL) {
 
-      const result = await taalumaAPI(
-        "getTaalumaData",
-        { page }
-      );
+    const result = await taalumaAPI(
+      "getTaalumaData",
+      { page }
+    );
 
-      if (result.success && result.data) {
+    if (result.success && result.data) {
 
-        Object.keys(DB).forEach(key => {
+      Object.keys(DB).forEach(key => {
 
-          if (Array.isArray(result.data[key])) {
-            DB[key] = result.data[key];
-          }
+        if (Array.isArray(result.data[key])) {
+          DB[key] = result.data[key];
+        }
 
-        });
-
-      }
+      });
 
     }
 
-    fillSelect(
-      "talSomoDarasa",
-      DB.madarasa,
-      "ID",
-      "JINA_LA_DARASA"
-    );
-
-    fillSelect(
-      "talJukumuDarasa",
-      DB.madarasa,
-      "ID",
-      "JINA_LA_DARASA"
-    );
-
-    fillSelect(
-      "talJukumuSomo",
-      DB.masomo,
-      "ID",
-      "JINA_LA_SOMO"
-    );
-
-    fillSelect(
-      "talRatibaDarasa",
-      DB.madarasa,
-      "ID",
-      "JINA_LA_DARASA"
-    );
-
-    fillSelect(
-      "talRatibaSomo",
-      DB.masomo,
-      "ID",
-      "JINA_LA_SOMO"
-    );
-
-    fillSelect(
-      "talMtihaniDarasa",
-      DB.madarasa,
-      "ID",
-      "JINA_LA_DARASA"
-    );
-
-    fillSelect(
-      "talMtihaniSomo",
-      DB.masomo,
-      "ID",
-      "JINA_LA_SOMO"
-    );
-
-    fillSelect(
-      "talAlamaDarasa",
-      DB.madarasa,
-      "ID",
-      "JINA_LA_DARASA"
-    );
-
-    fillSelect(
-      "talAlamaSomo",
-      DB.masomo,
-      "ID",
-      "JINA_LA_SOMO"
-    );
-
-    fillSelect(
-      "resDarasaDarasa",
-      DB.madarasa,
-      "ID",
-      "JINA_LA_DARASA"
-    );
-
-    fillSelect(
-      "resMwanafunziDarasa",
-      DB.madarasa,
-      "ID",
-      "JINA_LA_DARASA"
-    );
-
-    fillSelect(
-      "viewRatibaClass",
-      DB.madarasa,
-      "ID",
-      "JINA_LA_DARASA"
-    );
-
-    fillResultFilters();
   }
+
+  // 2. MADARASA
+  fillSelect(
+    "talSomoDarasa",
+    DB.madarasa,
+    "ID_DARASA",
+    "JINA_LA_DARASA"
+  );
+
+  fillSelect(
+    "talJukumuDarasa",
+    DB.madarasa,
+    "ID_DARASA",
+    "JINA_LA_DARASA"
+  );
+
+  fillSelect(
+    "talRatibaDarasa",
+    DB.madarasa,
+    "ID_DARASA",
+    "JINA_LA_DARASA"
+  );
+
+  fillSelect(
+    "talMtihaniDarasa",
+    DB.madarasa,
+    "ID_DARASA",
+    "JINA_LA_DARASA"
+  );
+
+  fillSelect(
+    "talAlamaDarasa",
+    DB.madarasa,
+    "ID_DARASA",
+    "JINA_LA_DARASA"
+  );
+
+  fillSelect(
+    "resDarasaDarasa",
+    DB.madarasa,
+    "ID_DARASA",
+    "JINA_LA_DARASA"
+  );
+
+  fillSelect(
+    "resMwanafunziDarasa",
+    DB.madarasa,
+    "ID_DARASA",
+    "JINA_LA_DARASA"
+  );
+
+  fillSelect(
+    "viewRatibaClass",
+    DB.madarasa,
+    "ID_DARASA",
+    "JINA_LA_DARASA"
+  );
+
+
+  // 3. MASOMO
+  fillSelect(
+    "talJukumuSomo",
+    DB.masomo,
+    "ID_SOMO",
+    "JINA_LA_SOMO"
+  );
+
+  fillSelect(
+    "talRatibaSomo",
+    DB.masomo,
+    "ID_SOMO",
+    "JINA_LA_SOMO"
+  );
+
+  fillSelect(
+    "talMtihaniSomo",
+    DB.masomo,
+    "ID_SOMO",
+    "JINA_LA_SOMO"
+  );
+
+  fillSelect(
+    "talAlamaSomo",
+    DB.masomo,
+    "ID_SOMO",
+    "JINA_LA_SOMO"
+  );
+
+
+  // 4. DARASA LA USAJILI WA MASOMO / MITIHANI
+  const classSelect = document.getElementById(
+    "talSajiliDarasa"
+  );
+
+  if (classSelect) {
+
+    classSelect.innerHTML =
+      '<option value="">CHAGUA DRS</option>';
+
+    DB.madarasa.forEach(item => {
+
+      const id = item.ID_DARASA || item.ID;
+
+      const option = document.createElement("option");
+
+      option.value = id;
+
+      option.textContent =
+        item.JINA_LA_DARASA || id;
+
+      classSelect.appendChild(option);
+
+    });
+  }
+
+  // 5. VICHUJIO VYA MATOKEO
+  fillResultFilters();
+
+}
 
   function fillResultFilters() {
     const years = [
