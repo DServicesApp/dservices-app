@@ -1,4 +1,4 @@
-/* =================================================
+/* ==================================
    DSERVICES - TAALUMA
    FILE: taaluma.js
 
@@ -16,12 +16,12 @@
 
    BACKEND: GOOGLE APPS SCRIPT
    doGet / doPost - TO BE CONNECTED
-====================================== */
+==================================== */
 
 (function () {
   "use strict";
 
-  /* ==================================
+ /* ==================================
      1. CONFIGURATION
   =================================== */
 
@@ -39,7 +39,7 @@
   /* =================================
      2. DATA STATE
      Hizi ni data za muda za majaribio.
-     Baadaye zitasomwa moja kwa moja Sheets.
+  Baadaye zitasomwa moja kwa moja Sheets.
   =================================== */
   const DB = {
   madarasa: [],
@@ -112,10 +112,9 @@
     );
   }
 
-  /* ===================================
+ /* ===================================
      3. API CONNECTION
-
-     Tutaunganisha na doGet/doPost baadaye.
+  Tutaunganisha na doGet/doPost baadaye.
   =================================== */
   async function taalumaAPI(action, payload = {}) {
 
@@ -162,8 +161,8 @@
     }
   }
 
-  /*
-    Kwa sasa data zinatunzwa kwenye DB ya muda
+  /*  
+Kwa sasa data zinatunzwa kwenye DB ya muda
     ili tuweze kujaribu interface.
 
     Baadaye tutatumia Google Sheets.
@@ -216,7 +215,6 @@
      4. MAIN PAGE
   ================================== */
   function renderTaalumaPage(container) {
-
     if (!container) return;
 
     workspace = container;
@@ -226,10 +224,6 @@
 
     workspace.innerHTML = `
       <section class="taaluma-container">
-
-        <div class="taaluma-heading">
-          <h3>USIMAMIZI WA KITAALUMA</h3>
-        </div>
 
         <div class="card-actions">
 
@@ -2444,7 +2438,7 @@ async function taalumaSaveAlama() {
 
         <meta charset="UTF-8">
 
-        <title>MATOKEO - DSERVICES</title>
+        <title>MATOKEO - DS</title>
 
         <style>
 
@@ -2866,22 +2860,16 @@ async function loadPageData(page) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
-      .taaluma-container {
-        width: 100%;
-        padding: 10px;
-        box-sizing: border-box;
-      }
-
-      .taaluma-heading {
-        text-align: right;
-        margin-bottom: 12px;
-      }
-
-      .taaluma-heading h3 {
-        color: #222;
-        font-size: 16px;
-        margin: 0;
-      }
+  .taaluma-container {
+  width: 100%;
+  padding: 2px 10px 10px;
+  box-sizing: border-box;
+}
+   .taaluma-heading h3 {
+    color: #222;
+    font-size: 16px;
+    margin: 0;
+  }
 
       /* KADI KUU */
       .card-actions {
