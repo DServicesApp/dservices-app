@@ -5,7 +5,7 @@
    MODULES:
    1. DASHBOARD
    2. MADARASA
-   3. MASOMO
+   3. MASOMO/ MITIHANI
    4. MAJUKUMU
    5. RATIBA MASOMO
    6. RATIBA MITIHANI
@@ -44,14 +44,16 @@
   ============================================== */
 
   const DB = {
-    madarasa: [],
-    masomo: [],
-    majukumu: [],
-    ratibaMasomo: [],
-    ratibaMitihani: [],
-    alama: [],
-    wanafunzi: []
-  };
+  madarasa: [],
+  masomo: [],
+  masomoDarasa: [],
+  mitihani: [],
+  majukumu: [],
+  ratibaMasomo: [],
+  ratibaMitihani: [],
+  alama: [],
+  wanafunzi: []
+};
 
   const user = () => window.currentUser || {};
 
@@ -194,13 +196,15 @@
     } else {
 
       const key = {
-        DARASA: "madarasa",
-        SOMO: "masomo",
-        JUKUMU: "majukumu",
-        RATIBA_MASOMO: "ratibaMasomo",
-        RATIBA_MITIHANI: "ratibaMitihani",
-        ALAMA: "alama"
-      }[type];
+  DARASA: "madarasa",
+  SOMO: "masomo",
+  SOMO_DARASA: "masomoDarasa",
+  MTIHANI: "mitihani",
+  JUKUMU: "majukumu",
+  RATIBA_MASOMO: "ratibaMasomo",
+  RATIBA_MITIHANI: "ratibaMitihani",
+  ALAMA: "alama"
+}[type];
 
       if (key && DB[key]) {
         DB[key].push(payload);
@@ -211,9 +215,9 @@
     return true;
   }
 
-  /* ==============================================
+  /* =================================
      4. MAIN PAGE
-  ============================================== */
+  ================================== */
 
   function renderTaalumaPage(container) {
 
@@ -322,10 +326,9 @@
     `;
   }
 
-  /* ==============================================
+  /* ==================================
      5. PAGE NAVIGATION
-  ============================================== */
-
+  =================================== */
   function taalumaOpen(page) {
 
     currentPage = page;
@@ -457,78 +460,508 @@
     }
   }
 
-  /* ==============================================
-     7. SAJILI MASOMO
-  ============================================== */
+ /* ==============================
+   7. SAJILI MASOMO / MITIHANI
+==================================== */
+function formMasomo() {
 
-  function formMasomo() {
+  const mwaka = new Date().getFullYear();
 
-    return `
-      ${pageHeader("SAJILI MASOMO")}
+  const years = [];
 
-      <div class="taaluma-form">
+  for (let y = mwaka - 2; y <= mwaka + 2; y++) {
+    years.push(`
+      <option value="${y}" ${y === mwaka ? "selected" : ""}>
+        ${y}
+      </option>
+    `);
+  }
 
-        <label>JINA LA SOMO</label>
+  return `
+    ${pageHeader("SAJILI MASOMO / MITIHANI")}
 
-        <input
-          id="talSomo"
-          type="text"
-          placeholder="Mfano: HISABATI">
+    <div class="taaluma-form">
+
+      <div class="taaluma-filter-grid">
+
+        <label>
+          MWAKA
+          <select id="talSajiliMwaka">
+            ${years.join("")}
+          </select>
+        </label>
+
+        <label>
+          DRS
+          <select id="talSajiliDarasa">
+            <option value="">CHAGUA DARASA</option>
+          </select>
+        </label>
+
+        <label>
+          CHAGUA
+          <select id="talSajiliAina"
+            onchange="taalumaShowSajiliForm()">
+
+            <option value="">CHAGUA</option>
+            <option value="SOMO">SOMO</option>
+            <option value="MTIHANI">MTIHANI</option>
+
+          </select>
+        </label>
+
+      </div>
+
+      <div id="talSajiliFormArea"></div>
+
+    </div>
+  `;
+}
+
+
+/* ====================================
+   KUONYESHA FOMU
+===================================== */
+function taalumaShowSajiliForm() {
+
+  const aina = document.getElementById(
+    "talSajiliAina"
+  ).value;
+
+  const area = document.getElementById(
+    "talSajiliFormArea"
+  );
+
+  if (!aina) {
+    area.innerHTML = "";
+    return;
+  }
+
+  if (aina === "MASOMO") {
+
+    area.innerHTML = `
+
+      <div class="tal-sajili-box">
+
+        <div class="tal-sajili-title">
+          <strong>SAJILI MASOMO</strong>
+
+          <button type="button"
+            onclick="taalumaCloseSajiliForm()">
+            X
+          </button>
+        </div>
+
+        <div id="talSomoRows">
+
+          ${taalumaSubjectRow(0)}
+
+        </div>
+
+        <button type="button"
+          class="tal-add-button"
+          onclick="taalumaAddSubject()">
+          + ONGEZA SOMO
+        </button>
 
         <label>MAELEZO</label>
 
         <textarea id="talSomoMaelezo"></textarea>
 
-        <label>DARASA</label>
+        <button type="button"
+          onclick="taalumaSaveSubjects()">
+          HIFADHI
+        </button>
 
-        <select id="talSomoDarasa">
-          <option value="">CHAGUA DARASA</option>
+      </div>
+    `;
+
+  }
+
+  if (aina === "MTIHANI") {
+
+    area.innerHTML = `
+
+      <div class="tal-sajili-box">
+
+        <div class="tal-sajili-title">
+          <strong>SAJILI MITIHANI</strong>
+
+          <button type="button"
+            onclick="taalumaCloseSajiliForm()">
+            X
+          </button>
+        </div>
+
+        <div id="talMtihaniRows">
+
+          ${taalumaExamRow(0)}
+
+        </div>
+
+        <button type="button"
+          class="tal-add-button"
+          onclick="taalumaAddExam()">
+          + ONGEZA MTIHANI
+        </button>
+
+        <label>AINA YA MTIHANI</label>
+
+        <select id="talAinaMtihani">
+
+          <option value="">CHAGUA AINA</option>
+          <option>KILA MWEZI</option>
+          <option>NUSU MUHULA</option>
+          <option>MWISHO WA MUHULA</option>
+          <option>MWISHO WA MWAKA</option>
+          <option>MAJARIBIO</option>
+          <option>MOCK</option>
+          <option>TAIFA</option>
+          <option>KUJIPIMA</option>
+
         </select>
 
-        <button
-          onclick="taalumaSaveSomo()">
-          HIFADHI SOMO
+        <label>MUHULA</label>
+
+        <select id="talMuhula">
+
+          <option value="">CHAGUA MUHULA</option>
+          <option>MUHULA WA KWANZA</option>
+          <option>MUHULA WA PILI</option>
+          <option>MUHULA WA TATU</option>
+          <option>MWAKA MZIMA</option>
+
+        </select>
+
+        <label>TAREHE YA MWANZO</label>
+        <input type="date" id="talMtihaniMwanzo">
+
+        <label>TAREHE YA MWISHO</label>
+        <input type="date" id="talMtihaniMwisho">
+
+        <label>MAELEZO</label>
+        <textarea id="talMtihaniMaelezo"></textarea>
+
+        <button type="button"
+          onclick="taalumaSaveExams()">
+          HIFADHI
         </button>
 
       </div>
     `;
   }
+}
 
-  async function taalumaSaveSomo() {
 
-    const jina = document.getElementById(
-      "talSomo"
-    ).value.trim();
+/* =====================================
+   ROW YA SOMO
+===================================== */
 
-    const darasa = document.getElementById(
-      "talSomoDarasa"
-    ).value;
+function taalumaSubjectRow(index) {
 
-    const maelezo = document.getElementById(
-      "talSomoMaelezo"
-    ).value.trim();
+  return `
+    <div class="tal-input-row">
 
-    if (!jina || !darasa) {
-      alert("Jaza jina la somo na darasa.");
+      <label>JINA LA SOMO ${index + 1}</label>
+
+      <input
+        type="text"
+        class="tal-subject-name"
+        placeholder="Mfano: HISABATI">
+
+    </div>
+  `;
+}
+
+
+/* =====================================
+   ROW YA MTIHANI
+==================================== */
+
+function taalumaExamRow(index) {
+
+  return `
+    <div class="tal-input-row">
+
+      <label>JINA LA MTIHANI ${index + 1}</label>
+
+      <input
+        type="text"
+        class="tal-exam-name"
+        placeholder="Jina la mtihani">
+
+    </div>
+  `;
+}
+
+
+/* ==============================================
+   KUONGEZA SOMO
+============================================== */
+
+function taalumaAddSubject() {
+
+  const area = document.getElementById(
+    "talSomoRows"
+  );
+
+  const index = area.querySelectorAll(
+    ".tal-subject-name"
+  ).length;
+
+  area.insertAdjacentHTML(
+    "beforeend",
+    taalumaSubjectRow(index)
+  );
+}
+
+
+/* ==============================================
+   KUONGEZA MTIHANI
+============================================== */
+
+function taalumaAddExam() {
+
+  const area = document.getElementById(
+    "talMtihaniRows"
+  );
+
+  const index = area.querySelectorAll(
+    ".tal-exam-name"
+  ).length;
+
+  area.insertAdjacentHTML(
+    "beforeend",
+    taalumaExamRow(index)
+  );
+}
+
+
+/* ==============================================
+   KUFUNGA FOMU
+============================================== */
+
+function taalumaCloseSajiliForm() {
+
+  document.getElementById(
+    "talSajiliFormArea"
+  ).innerHTML = "";
+
+  document.getElementById(
+    "talSajiliAina"
+  ).value = "";
+}
+
+
+/* ==============================================
+   KUHIFADHI MASOMO
+============================================== */
+
+async function taalumaSaveSubjects() {
+
+  const mwaka = document.getElementById(
+    "talSajiliMwaka"
+  ).value;
+
+  const darasa = document.getElementById(
+    "talSajiliDarasa"
+  ).value;
+
+  const maelezo = document.getElementById(
+    "talSomoMaelezo"
+  ).value.trim();
+
+  const inputs = [
+    ...document.querySelectorAll(".tal-subject-name")
+  ];
+
+  const majina = inputs
+    .map(input => input.value.trim())
+    .filter(Boolean);
+
+  if (!mwaka || !darasa) {
+    alert("Chagua mwaka na darasa.");
+    return;
+  }
+
+  if (!majina.length) {
+    alert("Ingiza angalau jina moja la somo.");
+    return;
+  }
+
+  const zilizopo = DB.masomo.filter(item =>
+    String(item.ID_DARASA || "") === String(darasa)
+  );
+
+  for (const jina of majina) {
+
+    const duplicate = DB.masomo.some(item =>
+      String(item.JINA_LA_SOMO || "").toUpperCase() ===
+        jina.toUpperCase() &&
+      String(item.ACCOUNT_ID || "") === accountId() &&
+      DB.masomoDarasa.some(link =>
+        String(link.ID_SOMO) === String(item.ID_SOMO) &&
+        String(link.ID_DARASA) === String(darasa)
+      )
+    );
+
+    if (duplicate) {
+      alert("Somo " + jina + " tayari limesajiliwa kwenye darasa hili.");
       return;
-    }
-
-    const ok = await saveRecord("SOMO", {
-      JINA_LA_SOMO: jina,
-      DARASA_ID: darasa,
-      MAELEZO: maelezo
-    });
-
-    if (ok) {
-      alert("Somo limehifadhiwa.");
-      taalumaOpen("MASOMO");
     }
   }
 
-  /* ==============================================
-     8. SAJILI MAJUKUMU
-  ============================================== */
+  for (const jina of majina) {
 
+    const idSomo = uid();
+
+    const okSomo = await saveRecord("SOMO", {
+
+      ID_SOMO: idSomo,
+
+      ACCOUNT_ID: accountId(),
+
+      KIPENGELE: CONFIG.MODULE,
+
+      DARASA: darasa,
+
+      JINA_LA_SOMO: jina,
+
+      HALI: "ACTIVE",
+
+      MAELEZO: maelezo
+
+    });
+
+    if (!okSomo) return;
+
+    const okLink = await saveRecord("SOMO_DARASA", {
+
+      ID_DARASA: darasa,
+
+      ID_SOMO: idSomo,
+
+      HUDUMA: CONFIG.SERVICE,
+
+      KIPENGELE: CONFIG.MODULE,
+
+      HALI: "ACTIVE",
+
+      MAELEZO: maelezo
+
+    });
+
+    if (!okLink) return;
+  }
+
+  alert("Masomo yamesajiliwa.");
+
+  taalumaOpen("MASOMO");
+}
+
+
+/* ==============================================
+   KUHIFADHI MITIHANI
+============================================== */
+
+async function taalumaSaveExams() {
+
+  const mwaka = document.getElementById(
+    "talSajiliMwaka"
+  ).value;
+
+  const darasa = document.getElementById(
+    "talSajiliDarasa"
+  ).value;
+
+  const aina = document.getElementById(
+    "talAinaMtihani"
+  ).value;
+
+  const muhula = document.getElementById(
+    "talMuhula"
+  ).value;
+
+  const mwanzo = document.getElementById(
+    "talMtihaniMwanzo"
+  ).value;
+
+  const mwisho = document.getElementById(
+    "talMtihaniMwisho"
+  ).value;
+
+  const maelezo = document.getElementById(
+    "talMtihaniMaelezo"
+  ).value.trim();
+
+  const inputs = [
+    ...document.querySelectorAll(".tal-exam-name")
+  ];
+
+  const majina = inputs
+    .map(input => input.value.trim())
+    .filter(Boolean);
+
+  if (!mwaka || !darasa) {
+    alert("Chagua mwaka na darasa.");
+    return;
+  }
+
+  if (!majina.length || !aina || !muhula || !mwanzo || !mwisho) {
+    alert("Jaza taarifa zote za mtihani.");
+    return;
+  }
+
+  if (mwanzo > mwisho) {
+    alert("Tarehe ya mwisho haiwezi kuwa kabla ya tarehe ya mwanzo.");
+    return;
+  }
+
+  for (const jina of majina) {
+
+    const ok = await saveRecord("MTIHANI", {
+
+      ID_MTIHANI: uid(),
+
+      ACCOUNT_ID: accountId(),
+
+      HUDUMA: CONFIG.SERVICE,
+
+      KIPENGELE: CONFIG.MODULE,
+
+      MWAKA_WA_MASOMO: mwaka,
+
+      ID_DARASA: darasa,
+
+      JINA_LA_MTIHANI: jina,
+
+      AINA_YA_MTIHANI: aina,
+
+      MUHULA: muhula,
+
+      TAREHE_YA_MWANZO: mwanzo,
+
+      TAREHE_YA_MWISHO: mwisho,
+
+      HALI: "ACTIVE",
+
+      MAELEZO: maelezo,
+
+      MSajili: currentUsername()
+
+    });
+
+    if (!ok) return;
+  }
+
+  alert("Mitihani imesajiliwa.");
+
+  taalumaOpen("MASOMO");
+}
+
+  /* =================================
+     8. SAJILI MAJUKUMU
+  ================================== */
   function formMajukumu() {
 
     return `
@@ -632,10 +1065,9 @@
     }
   }
 
-  /* ==============================================
+  /* =================================
      9. RATIBA ZA MASOMO
-  ============================================== */
-
+  =================================== */
   function formRatibaMasomo() {
 
     return `
@@ -751,9 +1183,9 @@
     }
   }
 
-  /* ==============================================
+  /* =============================
      10. RATIBA ZA MITIHANI
-  ============================================== */
+  ================================ */
 
   function formRatibaMitihani() {
 
@@ -878,9 +1310,9 @@
     }
   }
 
-  /* /* ==============================================
+  /* =================================
    11. WEKA ALAMA
-============================================== */
+==================================== */
 
 function formAlama() {
 
@@ -1137,7 +1569,7 @@ async function taalumaSaveAlama() {
 }
 
 
-} =======================================
+ /*==================================
      12. MATOKEO YA DARASA
   ==================================== */
   function resultsDarasa() {
@@ -1292,9 +1724,9 @@ async function taalumaSaveAlama() {
     `;
   }
 
-  /* ==============================================
+  /* ===================================
      13. MATOKEO YA MWANAFUNZI
-  ============================================== */
+  ==================================== */
 
   function resultsMwanafunzi() {
 
@@ -1454,10 +1886,9 @@ async function taalumaSaveAlama() {
     `;
   }
 
-  /* ==============================================
+  /* ===================================
      14. PRINT / PDF
-  ============================================== */
-
+  ================================== */
   function taalumaPrintReport() {
 
     const report = document.getElementById(
@@ -1575,10 +2006,9 @@ async function taalumaSaveAlama() {
     printWindow.document.close();
   }
 
-  /* ==============================================
+  /* ===================================
      15. RATIBA VIEW
-  ============================================== */
-
+  =============================== */
   function viewRatiba(type) {
 
     const title = type === "MASOMO"
@@ -1606,10 +2036,9 @@ async function taalumaSaveAlama() {
     `;
   }
 
-  /* ==============================================
+  /* ==================================
      16. DATA HELPERS
-  ============================================== */
-
+  =================================== */
   function getClassName(id) {
 
     const item = DB.madarasa.find(
@@ -1762,7 +2191,6 @@ async function taalumaSaveAlama() {
   }
 
   function fillResultFilters() {
-
     const years = [
       ...new Set(DB.alama.map(x => String(x.MWAKA)))
     ];
@@ -1807,12 +2235,10 @@ async function taalumaSaveAlama() {
     options("resMwanafunziJina", students);
   }
 
-  /* ==============================================
+  /* ==================================
      17. CSS
-  ============================================== */
-
+  =================================== */
   function injectStyles() {
-
     if (document.getElementById("taalumaStyles")) {
       return;
     }
@@ -1822,7 +2248,48 @@ async function taalumaSaveAlama() {
     style.id = "taalumaStyles";
 
     style.textContent = `
+.taaluma-filter-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
 
+.tal-sajili-box {
+  margin-top: 18px;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #f8f8f8;
+}
+
+.tal-sajili-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.tal-sajili-title button {
+  background: #F28C28;
+  color: white;
+  padding: 7px 13px;
+}
+
+.tal-input-row {
+  margin-bottom: 10px;
+}
+
+.tal-add-button {
+  width: 100%;
+  background: #F28C28 !important;
+  color: white;
+}
+
+@media(max-width:450px) {
+  .taaluma-filter-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
       .taaluma-container {
         width: 100%;
         padding: 10px;
@@ -2083,17 +2550,16 @@ async function taalumaSaveAlama() {
     document.head.appendChild(style);
   }
 
-  /* ==============================================
+  /* ===================================
      18. PUBLIC FUNCTIONS
-  ============================================== */
-
+  ================================= */
   window.renderTaalumaPage = renderTaalumaPage;
 
   window.taalumaOpen = taalumaOpen;
   window.taalumaBack = taalumaBack;
 
   window.taalumaSaveDarasa = taalumaSaveDarasa;
-  window.taalumaSaveSomo = taalumaSaveSomo;
+
   window.taalumaSaveJukumu = taalumaSaveJukumu;
 
   window.taalumaSaveRatibaMasomo =
@@ -2112,4 +2578,12 @@ async function taalumaSaveAlama() {
 
   window.taalumaPrintReport = taalumaPrintReport;
 
+window.taalumaShowSajiliForm = taalumaShowSajiliForm;
+window.taalumaCloseSajiliForm = taalumaCloseSajiliForm;
+
+window.taalumaAddSubject = taalumaAddSubject;
+window.taalumaAddExam = taalumaAddExam;
+
+window.taalumaSaveSubjects = taalumaSaveSubjects;
+window.taalumaSaveExams = taalumaSaveExams;
 })();
