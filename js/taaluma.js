@@ -16,14 +16,14 @@
 
    BACKEND: GOOGLE APPS SCRIPT
    doGet / doPost - TO BE CONNECTED
-================================================= */
+====================================== */
 
 (function () {
   "use strict";
 
-  /* ==============================================
+  /* ==================================
      1. CONFIGURATION
-  ============================================== */
+  =================================== */
 
   const CONFIG = {
     SERVICE: "ELIMU",
@@ -36,13 +36,11 @@
   let workspace = null;
   let currentPage = "HOME";
 
-  /* ==============================================
+  /* =================================
      2. DATA STATE
-
      Hizi ni data za muda za majaribio.
      Baadaye zitasomwa moja kwa moja Sheets.
-  ============================================== */
-
+  =================================== */
   const DB = {
   madarasa: [],
   masomo: [],
@@ -114,12 +112,11 @@
     );
   }
 
-  /* ==============================================
+  /* ===================================
      3. API CONNECTION
 
      Tutaunganisha na doGet/doPost baadaye.
-  ============================================== */
-
+  =================================== */
   async function taalumaAPI(action, payload = {}) {
 
     if (!CONFIG.API_URL) {
@@ -329,13 +326,10 @@
      5. PAGE NAVIGATION
   =================================== */
   function taalumaOpen(page) {
-
     currentPage = page;
-
     const area = document.getElementById(
       "taalumaWorkspace"
     );
-
     if (!area) return;
 
     const pages = {
@@ -455,7 +449,7 @@
 
  /* ==============================
    7. SAJILI MASOMO / MITIHANI
-==================================== */
+================================= */
 function formMasomo() {
 
   const mwaka = new Date().getFullYear();
@@ -1291,7 +1285,6 @@ async function taalumaSaveExams() {
    11. WEKA ALAMA
 ================================== */
 function formAlama() {
-
   return `
     ${pageHeader("WEKA ALAMA")}
 
@@ -1299,46 +1292,27 @@ function formAlama() {
 
       <div class="taaluma-filter-grid">
 
-        <label>
-          MWAKA
-          <select id="talAlamaMwaka"
-            onchange="taalumaLoadAlamaStudents()">
-            <option value="">CHAGUA MWAKA</option>
-          </select>
-        </label>
+  <select id="talAlamaMwaka"
+    onchange="taalumaLoadAlamaStudents()">
+    <option value="">MWAKA</option>
+  </select>
 
-        <label>
-          DRS
-          <select id="talAlamaDarasa"
-            onchange="taalumaLoadAlamaStudents()">
+  <select id="talAlamaDarasa"
+    onchange="taalumaLoadAlamaStudents()">
+    <option value="">DARASA</option>
+  </select>
 
-            <option value="">CHAGUA DARASA</option>
+  <select id="talAlamaMtihani"
+    onchange="taalumaLoadAlamaStudents()">
+    <option value="">MTIHANI</option>
+  </select>
 
-          </select>
-        </label>
+  <select id="talAlamaSomo"
+    onchange="taalumaLoadAlamaStudents()">
+    <option value="">SOMO</option>
+  </select>
 
-        <label>
-          MTIHANI
-          <select id="talAlamaMtihani"
-            onchange="taalumaLoadAlamaStudents()">
-
-            <option value="">CHAGUA MTIHANI</option>
-
-          </select>
-        </label>
-
-        <label>
-          SOMO
-          <select id="talAlamaSomo"
-            onchange="taalumaLoadAlamaStudents()">
-
-            <option value="">CHAGUA SOMO</option>
-
-          </select>
-        </label>
-
-      </div>
-
+</div>
 
       <div id="talAlamaStudentArea">
 
@@ -2843,8 +2817,17 @@ async function loadPageData(page) {
     style.textContent = `
 .taaluma-filter-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  width: 100%;
+}
+
+.taaluma-filter-grid select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px;
+  margin: 0;
+  font-size: 12px;
 }
 
 .tal-sajili-box {
@@ -2880,7 +2863,7 @@ async function loadPageData(page) {
 
 @media(max-width:450px) {
   .taaluma-filter-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
       .taaluma-container {
