@@ -358,7 +358,7 @@ function renderFinancePage(workspace) {
   injectFinanceStyles();
 
   const selected = String(
-  window.selectedMenu || ""
+  selectedMenu || ""
 ).trim().toUpperCase();
 
 if (!FINANCE_MENUS.includes(selected)) {
