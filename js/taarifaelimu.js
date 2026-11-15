@@ -18,32 +18,32 @@
   const CARDS = [
     {
       id: "michango",
-      title: "TAARIFA YA MICHANGO",
+      title: "Taarifa ya Michango",
       icon: "📊"
     },
     {
       id: "ada",
-      title: "ADA MWANAFUNZI",
+      title: "Ada Mwanafunzi",
       icon: "💳"
     },
     {
       id: "usajili",
-      title: "TAARIFA YA USAJILI",
+      title: "Taarifa ya Usajili",
       icon: "📝"
     },
     {
       id: "fedha",
-      title: "TAARIFA YA FEDHA",
+      title: "Taarifa ya Fedha",
       icon: "💰"
     },
     {
       id: "maendeleo",
-      title: "TATHIMINI YA MAENDELEO",
+      title: "Tathimini",
       icon: "📈"
     },
     {
       id: "wazazi",
-      title: "TAARIFA WAZAZI/WALEZI",
+      title: "Taarifa ya Wazazi/ Walezi",
       icon: "👨‍👩‍👧"
     }
   ];
@@ -65,12 +65,14 @@
     style.id = "taarifaElimuStyles";
 
     style.textContent = `
-      #${ROOT_ID} {
-        width: 100%;
-        box-sizing: border-box;
-        color: #222;
-        font-family: Arial, sans-serif;
-      }
+    #${ROOT_ID} {
+    width: 100%;
+    box-sizing: border-box;
+    color: #222;
+    font-family: Arial, sans-serif;
+    margin-top: -12px;
+    padding-top: 0;
+  }
 
       #${ROOT_ID} * {
         box-sizing: border-box;
@@ -302,7 +304,6 @@
   /* =================================
      HELPERS
   ================================ */
-
   function escapeHTML(value) {
     return String(value ?? "").replace(/[&<>"']/g, function (char) {
       return {
@@ -400,16 +401,13 @@
     `;
   }
 
-  /* =====================================================
+  /* =================================
      LANDING PAGE
-  ===================================================== */
-
+  ================================== */
   function renderHome(root) {
     state.activeReport = null;
-
     root.innerHTML = `
-      <div class="te-heading">TAARIFA ZA ELIMU</div>
-
+     
       <div class="te-card-actions">
         ${CARDS.map(card => `
           <button class="te-card"
@@ -424,10 +422,9 @@
     `;
   }
 
-  /* =====================================================
+  /* ================================
      FILTERS
-  ===================================================== */
-
+  ================================== */
   function getReportFields(id) {
     switch (id) {
 
@@ -535,10 +532,9 @@
     }
   }
 
-  /* =====================================================
+  /* ===============================
      REPORT DISPLAY
-  ===================================================== */
-
+  ================================ */
   function renderReport(root, id, data) {
     const output = root.querySelector("#teReportOutput");
 
