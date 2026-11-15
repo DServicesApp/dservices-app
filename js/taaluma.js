@@ -518,7 +518,7 @@ function taalumaShowSajiliForm() {
     return;
   }
 
-  if (aina === "MASOMO") {
+  if (aina === "SOMO") {
 
     area.innerHTML = `
 
