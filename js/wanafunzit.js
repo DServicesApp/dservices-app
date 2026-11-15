@@ -42,11 +42,11 @@ function renderWanafunziPage(workspace) {
 
     <style>
 
-      .wanafunzi-toolbar {
-        display: flex;
-        flex-direction: column;
-        gap: 9px;
-        margin: 4px 0 12px;
+     .wanafunzi-toolbar {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    margin: -12px 0 12px;
       }
 
       .wanafunzi-toolbar input {
