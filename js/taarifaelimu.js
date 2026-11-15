@@ -3,7 +3,6 @@
    MODULI: TAARIFA
    FILE: taarifaelimu.js
 =================================== */
-
 (function () {
 
   const TAARIFA_ELIMU = {
@@ -11,32 +10,32 @@
     CARDS: [
       {
         id: "michango",
-        title: "TAARIFA YA MICHANGO",
+        title: "Taarifa ya Michango",
         icon: "📊"
       },
       {
         id: "ada",
-        title: "ADA MWANAFUNZI",
+        title: "Ada Mwanafunzi",
         icon: "🎓"
       },
       {
         id: "usajili",
-        title: "TAARIFA YA USAJILI",
+        title: "Taarifa Usajili",
         icon: "📝"
       },
       {
         id: "fedha",
-        title: "TAARIFA YA FEDHA",
+        title: "Taarifa ya Fedha",
         icon: "💰"
       },
       {
         id: "tathimini",
-        title: "TATHIMINI YA MAENDELEO",
+        title: "Tathimini ya maendeleo",
         icon: "📈"
       },
       {
         id: "wazazi",
-        title: "TAARIFA WAZAZI/WALEZI",
+        title: "Taarifa wazazi/ walezi ",
         icon: "👨‍👩‍👧"
       }
     ]
