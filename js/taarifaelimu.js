@@ -1,8 +1,8 @@
-/* =================================================
+/* =====================================
    DSERVICES - ELIMU
    MODULI: TAARIFA
    FILE: taarifaelimu.js
-================================================= */
+=================================== */
 
 (function () {
 
@@ -44,12 +44,10 @@
   };
 
 
-  /* =========================================
+  /* ================================
      1. CSS
-  ========================================= */
-
+  ================================= */
   function taarifaElimuCSS() {
-
     if (document.getElementById("taarifa-elimu-style")) return;
 
     const style = document.createElement("style");
@@ -205,10 +203,9 @@
   }
 
 
-  /* =========================================
+  /* ==================================
      2. KUFUNGUA MODULI
-  ========================================= */
-
+  =================================== */
   function renderTaarifaElimu(container) {
 
     const target = typeof container === "string"
@@ -276,9 +273,8 @@
   }
 
 
-  /* =========================================
-     3. KUFUNGUA KAZI ILIYOCHAGULIWA
-  ========================================= */
+  /* =================================
+     3. KUFUNGUA KAZI ILIYOCHAGULIWA ================================= */
 
   function funguaTaarifaElimu(id, target) {
 
@@ -350,9 +346,9 @@
   }
 
 
-  /* =========================================
+  /* ===================================
      4. FOMU ZA KILA TAARIFA
-  ========================================= */
+  =================================== */
 
   function jengaTaarifaElimuForm(id) {
 
@@ -448,10 +444,9 @@
   }
 
 
-  /* =========================================
+  /* =================================
      5. KURUHUSU MODULE KUITWA NA DSERVICES
-  ========================================= */
-
-  window.renderTaarifaElimu = renderTaarifaElimu;
-
-})();
+  ================================== */
+  window.renderTaarifaelimuPage = function(workspace) {
+  // UI ya TAARIFA ELIMU
+};
