@@ -159,13 +159,14 @@ const $f = (id, root = document) => {
       }
 
       .dsf-card {
-        background:#fff;
-        border:1px solid #e1e5dc;
-        border-radius:10px;
-        padding:15px;
-        margin-bottom:13px;
-        box-shadow:0 2px 7px rgba(0,0,0,.04);
-      }
+    background: #fff;
+    border: 1px solid #e1e5dc;
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: -12px;
+    margin-bottom: 13px;
+    box-shadow: 0 2px 7px rgba(0,0,0,.04);
+}
 
       .dsf-grid {
         display:grid;
