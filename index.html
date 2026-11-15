@@ -2642,12 +2642,13 @@ function renderModulePage() {
       return;
 
     case "TAARIFA":
-if (typeof renderTaarifaelimuPage === "function") {
- renderTaarifaelimuPage(workspace);
-      } else {
-        workspace.textContent =
-          "taarifaelimu.js haijapakiwa vizuri.";
-      }
+  if (selectedService === "ELIMU") {
+    if (typeof window.renderTaarifaelimuPage === "function") { window.renderTaarifaelimuPage(workspace);
+    } else {
+      workspace.textContent =
+        "taarifaelimu.js haijapakiwa vizuri.";
+    }
+  }
       return;
 
       workspace.innerHTML = `
