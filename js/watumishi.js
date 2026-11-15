@@ -36,10 +36,10 @@ function renderWatumishiPage(workspace) {
 
     <style>
       .watumishi-toolbar {
-        display: flex;
-        flex-direction: column;
-        gap: 9px;
-        margin: 4px 0 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    margin: -12px 0 12px;
       }
       .watumishi-toolbar input {
         width: 100%;
