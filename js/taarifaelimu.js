@@ -444,9 +444,11 @@
   }
 
 
-  /* =================================
-     5. KURUHUSU MODULE KUITWA NA DSERVICES
-  ================================== */
-  window.renderTaarifaelimuPage = function(workspace) {
-  // UI ya TAARIFA ELIMU
+  /* ================================
+   5. KUUNGANISHA NA DSERVICES
+================================ */
+window.renderTaarifaelimuPage = function(workspace) {
+  renderTaarifaElimu(workspace);
 };
+
+})();
