@@ -485,7 +485,7 @@ function formMasomo() {
             onchange="taalumaShowSajiliForm()">
 
             <option value="">CHAGUA</option>
-            <option value="SOMO">SOMO</option>
+            <option value="MASOMO">MASOMO</option>
             <option value="MTIHANI">MTIHANI</option>
 
           </select>
@@ -518,7 +518,7 @@ function taalumaShowSajiliForm() {
     return;
   }
 
-  if (aina === "SOMO") {
+  if (aina === "MASOMO") {
 
     area.innerHTML = `
 
@@ -597,7 +597,6 @@ function taalumaShowSajiliForm() {
           <option>NUSU MUHULA</option>
          <option>MWISHO WA MWAKA</option>
           <option>KUJIPIMA</option>
-          <option>UMOJA</option>
           <option>MOCK</option>
           <option>TAIFA</option>
 
@@ -1033,127 +1032,180 @@ async function taalumaSaveExams() {
   }
 
   /* =================================
-     9. RATIBA ZA MASOMO
-  =================================== */
-  function formRatibaMasomo() {
-    return `
-      ${pageHeader("WEKA RATIBA YA MASOMO")}
+   9. RATIBA ZA MASOMO
+=================================== */
+function formRatibaMasomo() {
+  return `
+    ${pageHeader("WEKA RATIBA YA MASOMO")}
 
-      <div class="taaluma-form">
+    <div class="taaluma-form">
 
-        <label>DARASA</label>
+      <label>DARASA</label>
+      <select id="talRatibaDarasa">
+        <option value="">CHAGUA DARASA</option>
+      </select>
 
-        <select id="talRatibaDarasa">
-          <option value="">CHAGUA DARASA</option>
-        </select>
+      <label>MKONDO</label>
+      <input
+        id="talRatibaMkondo"
+        type="text"
+        placeholder="INGIZA MKONDO">
 
-        <label>SIKU</label>
+      <label>SOMO</label>
+      <select id="talRatibaSomo">
+        <option value="">CHAGUA SOMO</option>
+      </select>
 
-        <select id="talRatibaSiku">
+      <label>SIKU</label>
+      <select id="talRatibaSiku">
+        <option value="">CHAGUA SIKU</option>
+        <option>JUMATATU</option>
+        <option>JUMANNE</option>
+        <option>JUMATANO</option>
+        <option>ALHAMISI</option>
+        <option>IJUMAA</option>
+        <option>JUMAMOSI</option>
+      </select>
 
-          <option>JUMATATU</option>
-          <option>JUMANNE</option>
-          <option>JUMATANO</option>
-          <option>ALHAMISI</option>
-          <option>IJUMAA</option>
-          <option>JUMAMOSI</option>
+      <label>MWALIMU</label>
+      <input
+        id="talRatibaMwalimu"
+        type="text"
+        placeholder="JINA LA MWALIMU">
 
-        </select>
+      <label>MWANZO</label>
+      <input
+        id="talRatibaMwanzo"
+        type="time">
 
-        <label>SOMO</label>
+      <label>MWISHO</label>
+      <input
+        id="talRatibaMwisho"
+        type="time">
 
-        <select id="talRatibaSomo">
-          <option value="">CHAGUA SOMO</option>
-        </select>
+      <label>HALI</label>
+      <select id="talRatibaHali">
+        <option value="HAIJAANZA">HAIJAANZA</option>
+        <option value="INAENDELEA">INAENDELEA</option>
+        <option value="IMESITISHWA">IMESITISHWA</option>
+      </select>
 
-        <label>MWALIMU</label>
+      <label>MAELEZO</label>
+      <textarea
+        id="talRatibaMaelezo"
+        placeholder="MAELEZO YA ZIADA"></textarea>
 
-        <input
-          id="talRatibaMwalimu"
-          type="text">
+      <button onclick="taalumaSaveRatibaMasomo()">
+        HIFADHI
+      </button>
 
-        <label>MUDA WA KUANZA</label>
+    </div>
+  `;
+}
 
-        <input
-          id="talRatibaMwanzo"
-          type="time">
+async function taalumaSaveRatibaMasomo() {
 
-        <label>MUDA WA KUMALIZA</label>
+  const darasaSelect = document.getElementById(
+    "talRatibaDarasa"
+  );
 
-        <input
-          id="talRatibaMwisho"
-          type="time">
+  const somoSelect = document.getElementById(
+    "talRatibaSomo"
+  );
 
-        <button
-          onclick="taalumaSaveRatibaMasomo()">
-          HIFADHI
-        </button>
+  const darasa = darasaSelect.value
+    ? darasaSelect.options[darasaSelect.selectedIndex].text
+    : "";
 
-      </div>
-    `;
+  const somo = somoSelect.value
+    ? somoSelect.options[somoSelect.selectedIndex].text
+    : "";
+
+  const mkondo = document.getElementById(
+    "talRatibaMkondo"
+  ).value.trim();
+
+  const siku = document.getElementById(
+    "talRatibaSiku"
+  ).value;
+
+  const mwalimu = document.getElementById(
+    "talRatibaMwalimu"
+  ).value.trim();
+
+  const mwanzo = document.getElementById(
+    "talRatibaMwanzo"
+  ).value;
+
+  const mwisho = document.getElementById(
+    "talRatibaMwisho"
+  ).value;
+
+  const hali = document.getElementById(
+    "talRatibaHali"
+  ).value;
+
+  const maelezo = document.getElementById(
+    "talRatibaMaelezo"
+  ).value.trim();
+
+  if (
+    !darasa ||
+    !mkondo ||
+    !somo ||
+    !siku ||
+    !mwalimu ||
+    !mwanzo ||
+    !mwisho
+  ) {
+    alert("Jaza taarifa zote muhimu.");
+    return;
   }
 
-  async function taalumaSaveRatibaMasomo() {
-
-    const darasa = document.getElementById(
-      "talRatibaDarasa"
-    ).value;
-
-    const somo = document.getElementById(
-      "talRatibaSomo"
-    ).value;
-
-    const mwanzo = document.getElementById(
-      "talRatibaMwanzo"
-    ).value;
-
-    const mwisho = document.getElementById(
-      "talRatibaMwisho"
-    ).value;
-
-    if (!darasa || !somo || !mwanzo || !mwisho) {
-      alert("Jaza taarifa zote muhimu.");
-      return;
-    }
-
-    if (mwanzo >= mwisho) {
-      alert("Muda wa kumaliza lazima uwe baada ya muda wa kuanza.");
-      return;
-    }
-
-    const ok = await saveRecord("RATIBA_MASOMO", {
-
-      DARASA_ID: darasa,
-
-      SIKU: document.getElementById(
-        "talRatibaSiku"
-      ).value,
-
-      SOMO_ID: somo,
-
-      MWALIMU: document.getElementById(
-        "talRatibaMwalimu"
-      ).value,
-
-      MUDA_KUANZA: mwanzo,
-
-      MUDA_KUMALIZA: mwisho
-
-    });
-
-    if (ok) {
-
-      alert("Ratiba imehifadhiwa.");
-
-      taalumaOpen("WEKA_RATIBA_MASOMO");
-    }
+  if (mwanzo >= mwisho) {
+    alert("Muda wa kumaliza lazima uwe baada ya muda wa kuanza.");
+    return;
   }
+
+  const idRatiba =
+    "RAT-" + Date.now();
+
+  const ok = await saveRecord("RATIBA_MASOMO", {
+
+    KIPENGELE: CONFIG.MODULE,
+
+    ID_RATIBA: idRatiba,
+
+    DARASA: darasa,
+
+    MKONDO: mkondo,
+
+    SOMO: somo,
+
+    MWALIMU: mwalimu,
+
+    SIKU: siku,
+
+    MWANZO: mwanzo,
+
+    MWISHO: mwisho,
+
+    HALI: hali,
+
+    MAELEZO: maelezo
+
+  });
+
+  if (ok) {
+    alert("Ratiba imehifadhiwa.");
+    taalumaOpen("WEKA_RATIBA_MASOMO");
+  }
+}
 
   /* =============================
      10. RATIBA ZA MITIHANI
   ================================ */
   function formRatibaMitihani() {
-
     return `
       ${pageHeader("WEKA RATIBA YA MITIHANI")}
 
