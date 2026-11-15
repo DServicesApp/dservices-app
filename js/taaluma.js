@@ -2872,42 +2872,36 @@ async function loadPageData(page) {
   }
 
       /* KADI KUU */
-      .card-actions {
+    .card-actions {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 9px;
     margin-top: -12px;
+    align-items: stretch;
 }
 
 .card-actions button {
     width: 100%;
+    min-width: 0;
+    min-height: 76px;
     padding: 11px 8px;
     box-sizing: border-box;
+    border: 1px solid #d2d2d2;
+    border-radius: 8px;
+    background: #eeeeee;
+    color: #111;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    box-shadow: inset 0 0 5px rgba(0,0,0,.035);
 }
 
-      .taaluma-card {
-        width: 100%;
-        min-width: 0;
-        min-height: 76px;
-        padding: 11px 8px;
-        border: 1px solid #d2d2d2;
-        border-radius: 8px;
-        background: #eeeeee;
-        color: #111;
-        text-align: center;
-        cursor: pointer;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 5px;
-        box-shadow: inset 0 0 5px rgba(0,0,0,.035);
-      }
-
-      .taaluma-card:active {
-        background: #e2e2e2;
-      }
-
+.card-actions button:active {
+    background: #e2e2e2;
+}
       .taaluma-card-title {
         font-size: 13px;
         font-weight: 700;
