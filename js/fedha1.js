@@ -455,61 +455,102 @@ showHistory(workspace);
   =============================== */
   function field(label, name, type = "text", options = {}) {
 
-    const id = "dsf_" + name;
+  const id = "dsf_" + name;
 
-    const required =
-      options.required ? "required" : "";
-    const full =
-      options.full ? "dsf-full" : "";
-    let control = "";
-    if (type === "select") {
-      control = `
-        <select
-          id="${id}"
-          name="${name}"
-          ${required}>
-          <option value="">
-            Chagua ${esc(label.toLowerCase())}
-          </option>
-          ${(options.items || []).map(item => `
-            <option value="${esc(item)}">
-              ${esc(item)}
+  const required =
+    options.required ? "required" : "";
+
+  const full =
+    options.full ? "dsf-full" : "";
+
+  const readonly =
+    options.readonly ? "readonly" : "";
+
+  const value =
+    options.value !== undefined
+      ? esc(options.value)
+      : "";
+
+  let control = "";
+
+  /* DROPDOWN */
+  if (type === "select") {
+
+    control = `
+      <select
+        id="${id}"
+        name="${name}"
+        ${required}
+        ${options.disabled ? "disabled" : ""}>
+
+        <option value="">
+          Chagua ${esc(label.toLowerCase())}
+        </option>
+
+        ${(options.items || []).map(item => {
+
+          const itemValue =
+            typeof item === "object"
+              ? item.value
+              : item;
+
+          const itemLabel =
+            typeof item === "object"
+              ? item.label
+              : item;
+
+          return `
+            <option value="${esc(itemValue)}">
+              ${esc(itemLabel)}
             </option>
-          `).join("")}
-        </select>
-      `;
-    }
-    else if (type === "textarea") {
-      control = `
-        <textarea
-          id="${id}"
-          name="${name}"
-          ${required}></textarea>
-      `;
-    }
-    else {
-      control = `
-        <input
-          id="${id}"
-          name="${name}"
-          type="${type}"
-          ${required}
-          ${options.readonly ? "readonly" : ""}
-          ${options.value !== undefined
-            ? `value="${esc(options.value)}"`
-            : ""}
-          ${options.step ? `step="${options.step}"` : ""}>
-      `;
-    }
-    return `
-      <div class="dsf-field ${full}">
-        <label for="${id}">
-          ${esc(label)}${options.required ? " *" : ""}
-        </label>
-        ${control}
-      </div>
+          `;
+
+        }).join("")}
+
+      </select>
     `;
   }
+
+  /* TEXTAREA */
+  else if (type === "textarea") {
+
+    control = `
+      <textarea
+        id="${id}"
+        name="${name}"
+        ${required}>${value}</textarea>
+    `;
+  }
+
+  /* INPUT */
+  else {
+
+    control = `
+      <input
+        id="${id}"
+        name="${name}"
+        type="${type}"
+        value="${value}"
+        ${required}
+        ${readonly}
+        ${options.step ? `step="${options.step}"` : ""}
+        ${options.min !== undefined ? `min="${options.min}"` : ""}
+        ${options.max !== undefined ? `max="${options.max}"` : ""}>
+    `;
+  }
+
+  return `
+    <div class="dsf-field ${full}">
+
+      <label for="${id}">
+        ${esc(label)}${options.required ? " *" : ""}
+      </label>
+
+      ${control}
+
+    </div>
+  `;
+}
 
   /* ===============================
      FOMU ZA MALIPO NA MATUMIZI
