@@ -2031,42 +2031,112 @@ const moduleMenu = {
 };
 
   
-    /* API + OFFLINE SUPPORT */
+    /* ==========================================
+   DSERVICES - API + OFFLINE SUPPORT
+   VERSION 2
+========================================== */
+
+// Maombi yanayoruhusiwa kuhifadhiwa OFFLINE
+const OFFLINE_WRITE_ACTIONS = [
+  "saveFeedback",
+
+  "SAVE_MALIPO",
+  "SAVE_MATUMIZI",
+
+  "saveTaalumaDARASA",
+  "saveTaalumaSOMO",
+  "saveTaalumaSOMO_DARASA",
+  "saveTaalumaMTIHANI",
+  "saveTaalumaJUKUMU",
+  "saveTaalumaRATIBA_MASOMO",
+  "saveTaalumaRATIBA_MITIHANI",
+  "saveTaalumaALAMA"
+];
+
+
+/* ==========================================
+   KUTUMA MAOMBI YA API
+========================================== */
+
 async function callAPI(payload) {
 
-  // Kama hakuna intaneti, hifadhi ombi kwenye IndexedDB
+  const action = String(payload.action || "").trim();
+
+  const isWriteAction =
+    OFFLINE_WRITE_ACTIONS.includes(action);
+
+
+  /* ========================================
+     1. OFFLINE
+  ======================================== */
+
   if (!navigator.onLine) {
 
+    // LOGIN, LOGOUT na READ hazihifadhiwi kama miamala
+    if (!isWriteAction) {
+
+      throw new Error(
+        "Hakuna mtandao. Ombi hili linahitaji intaneti."
+      );
+
+    }
+
+    const user = currentUser || {};
+
     const record = await saveOfflineRecord({
-      accountId: currentUser?.accountId || "",
+
+      accountId:
+        user.accountId ||
+        user.ACCOUNT_ID ||
+        "",
+
       serviceId: selectedService || "",
+
       moduleId: selectedModule || "",
-      action: payload.action || "",
+
+      action: action,
+
       payload: payload
+
     });
 
     return {
+
       success: true,
+
       offline: true,
+
       localId: record.localId,
-      message: "Taarifa imehifadhiwa kwenye simu. Itatumwa mtandao utakaporudi."
+
+      message:
+        "Taarifa imehifadhiwa kwenye kifaa. Itatumwa mtandao utakaporudi."
+
     };
+
   }
 
-  // Kama kuna intaneti, tumia Google Apps Script
+
+  /* ======================
+     2. ONLINE
+  ================================ */
   const response = await fetch(API_URL, {
+
     method: "POST",
+
     redirect: "follow",
     headers: {
       "Content-Type": "text/plain;charset=UTF-8"
     },
     body: JSON.stringify(payload)
   });
-
   if (!response.ok) {
-    throw new Error("Server imeshindwa kupokea ombi.");
+
+    throw new Error(
+      "Server imeshindwa kupokea ombi."
+    );
   }
-  return await response.json();
+  const result = await response.json();
+  return result;
 }
 
     function showMessage(element, message, type = "info") {
