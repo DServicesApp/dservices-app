@@ -70,6 +70,29 @@ const $f = (id, root = document) => {
     ].join("-");
   }
 
+async function loadFinanceSettings() {
+
+  const response = await window.callAPI(
+    "getFinanceSettings",
+    {
+      moduleId: getModuleId()
+    }
+  );
+
+  if (!response || !response.success) {
+    throw new Error(
+      response?.message || "Imeshindikana kupata mipangilio ya fedha."
+    );
+  }
+
+  return {
+    methods: response.methods || [],
+    paymentTypes: response.paymentTypes || [],
+    expenseTypes: response.expenseTypes || [],
+    paymentPlans: response.paymentPlans || []
+  };
+}
+
   function makeId(prefix) {
   const now = new Date();
   const pad = n => String(n).padStart(2, "0");
