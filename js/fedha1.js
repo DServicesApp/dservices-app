@@ -93,6 +93,27 @@ async function loadFinanceSettings() {
   };
 }
 
+
+async function loadFinanceClasses(date) {
+
+  const response = await callAPI({
+    action: "getFinanceClasses",
+    token: sessionToken,
+    payload: {
+      moduleId: getModuleId(),
+      date: date
+    }
+  });
+
+  if (!response || !response.success) {
+    throw new Error(
+      response?.message || "Imeshindikana kupata madarasa."
+    );
+  }
+
+  return response.classes || [];
+}
+
   function makeId(prefix) {
   const now = new Date();
   const pad = n => String(n).padStart(2, "0");
@@ -578,7 +599,22 @@ showHistory(workspace);
   /* ===============================
      FOMU ZA MALIPO NA MATUMIZI
   =============================== */
-  function showFinanceForm(workspace, formType) {
+  async function showFinanceForm(workspace, formType) {
+    let settings;
+    try {
+      settings = await loadFinanceSettings();
+
+    } catch (error) {
+
+      showFinanceMessage(
+        "Imeshindikana kupata mipangilio ya fedha: " +
+        (error.message || error),
+        true
+      );
+
+      return;
+
+    }
 
     const isPayment =
       formType === "student-payment" ||
@@ -656,23 +692,8 @@ showHistory(workspace);
           required: true,
 
           items: isPayment
-
-            ? [
-                "ADA",
-                "FOMU YA USAJILI",
-                "MITIHANI",
-                "MICHANGO",
-                "MALIPO MENGINE"
-              ]
-
-            : [
-                "MSHAHARA",
-                "MOTISHA",
-                "NAULI",
-                "CHAKULA",
-                "VIFAA",
-                "MATUMIZI MENGINE"
-              ]
+  ? settings.paymentTypes
+  : settings.expenseTypes
         }
       )
 
@@ -686,10 +707,14 @@ showHistory(workspace);
       fields.push(
 
         field(
-          "DARASA",
-          "DARASA"
-        ),
-
+  "DARASA",
+  "DARASA",
+  "select",
+  {
+    items: [],
+    required: true
+  }
+),
         field(
           "JINA LA MWANAFUNZI",
           "JINA_LA_MWANAFUNZI",
@@ -805,15 +830,7 @@ else {
         {
           required: true,
 
-          items: [
-            "TASLIMU",
-            "M-PESA",
-            "MIX BY YAS",
-            "AIRTEL MONEY",
-            "Halo-PESA",
-            "BENKI",
-            "Nyingine"
-          ]
+          items: settings.methods
         }
       ),
 
