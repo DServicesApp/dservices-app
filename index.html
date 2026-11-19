@@ -3210,14 +3210,3220 @@ if ("serviceWorker" in navigator) {
           registration.scope
         );
       })
-      .catch(error => {
-        console.error(
- "Service Worker imeshindwa kusajiliwa:",
-          error
+      <!DOCTYPE html>
+<html lang="sw">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#4b5320">
+  <title>DServices</title>
+
+  <style>
+* {
+  box-sizing: border-box;
+}
+    :root {
+      --green: #4b5320;
+      --orange: #f28c28;
+      --background: #f4f6f8;
+      --white: #ffffff;
+      --text: #252525;
+      --muted: #687078;
+      --border: #dfe4dc;
+      --success: #23833d;
+      --danger: #b42318;
+    }
+    
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background: var(--background);
+      color: var(--text);
+    }
+
+    button,
+    select,
+    input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+    button:disabled {
+      opacity: 0.6;
+      cursor: wait;
+    }
+    .hidden {
+      display: none !important;
+    }
+
+    /* FOMU YA MAONI */
+.feedback-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: #00000070;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  overflow-y: auto;
+}
+
+.feedback-modal {
+  width: 100%;
+  max-width: 460px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px #00000030;
+}
+
+.feedback-header {
+  background: var(--green);
+  color: white;
+  padding: 15px;
+  border-bottom: 4px solid var(--orange);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.feedback-header h2 {
+  margin: 0;
+  font-size: 17px;
+}
+
+.feedback-close {
+  border: none;
+  background: transparent;
+  color: white;
+  font-size: 27px;
+  cursor: pointer;
+}
+
+.feedback-body {
+  padding: 18px;
+}
+
+.feedback-body label {
+  display: block;
+  color: var(--green);
+  font-size: 12px;
+  font-weight: bold;
+  margin: 12px 0 6px;
+}
+
+.feedback-body input,
+.feedback-body select,
+.feedback-body textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #fff;
+  color: #333;
+  font: inherit;
+  font-size: 14px;
+}
+
+.feedback-body textarea {
+  resize: vertical;
+}
+
+.feedback-date-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.feedback-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 18px;
+}
+.feedback-actions button {
+  width: 100%;
+  min-height: 44px;
+  cursor: pointer;
+}
+.feedback-error {
+  color: #c0392b;
+  font-size: 13px;
+  margin: 8px 0;
+}
+
+    /* =========================
+       LOGIN
+    ========================= */
+    #loginScreen {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .login-header {
+      background: var(--green);
+      color: white;
+      text-align: center;
+      padding: 22px 15px 17px;
+      border-bottom: 4px solid var(--orange);
+    }
+    .login-header h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    .login-lines {
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+      margin-top: 10px;
+    }
+
+    .login-lines span {
+      width: 40px;
+      height: 3px;
+      border-radius: 5px;
+    }
+
+    .login-lines span:first-child {
+      background: white;
+    }
+
+    .login-lines span:last-child {
+      background: var(--orange);
+    }
+
+    .login-area {
+  flex: 1;
+  width: 100%;
+  max-width: 440px;
+  margin: auto;
+  padding: 10px 18px;
+  display: flex;
+  align-items: flex-start;
+}
+
+    .login-card {
+      width: 100%;
+      background: white;
+      padding: 20px 22px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: 0 4px 16px #00000008;
+    }
+
+.language-selection {
+  margin-bottom: 25px;
+}
+.language-selection label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--green);
+  font-size: 13px;
+  font-weight: bold;
+}
+.language-selection select {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: white;
+}
+
+    .field {
+      margin-bottom: 18px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--green);
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .field input {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      outline: none;
+    }
+
+    .field input:focus {
+      border-color: var(--green);
+    }
+
+    .password-wrapper {
+  position: relative;
+  width: 100%;
+}
+.password-wrapper input {
+  width: 100%;
+  padding-right: 48px;
+}
+.password-toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 19px;
+  padding: 5px;
+  color: var(--green);
+}
+
+    .btn {
+      border: 0;
+      border-radius: 7px;
+      padding: 12px 15px;
+      font-weight: bold;
+    }
+    .btn-primary {
+      color: white;
+      background: var(--green);
+    }
+
+    .btn-orange {
+      color: white;
+      background: var(--orange);
+    }
+
+    .btn-outline {
+      color: var(--green);
+      background: white;
+      border: 1px solid var(--green);
+    }
+    .login-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: nowrap;
+  width: 100%;
+}
+.login-actions .btn {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 5px;
+  white-space: nowrap;
+  font-size: 13px;
+}
+.login-footer {
+  text-align: center;
+  padding: 8px 15px 12px;
+  margin-top: -5px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+
+    /* =========================
+       UJUMBE
+    ========================= */
+    .message {
+      display: none;
+      padding: 12px;
+      border-radius: 7px;
+      margin-top: 14px;
+      font-size: 13px;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+
+    .message.show {
+      display: block;
+    }
+    .message.info {
+      color: #244765;
+      background: #eaf2f9;
+    }
+    .message.success {
+      color: #205b2b;
+      background: #e7f5e9;
+    }
+    .message.error {
+      color: #922b21;
+      background: #fdebea;
+    }
+
+
+    /* =========================
+       MSTARI WA JUU WA DSERVICES
+    ========================= */
+    .topbar {
+  min-height: 64px;
+  width: 100%;
+  box-sizing: border-box;
+  background: #E5E7EB;
+  color: #333333;
+  border-bottom: 4px solid var(--orange);
+  box-shadow: 0 2px 0 #4B5320;
+  padding: 8px 14px;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: nowrap;
+}
+    .brand-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+      background: transparent;
+      color: white;
+      border: 0;
+      font-weight: bold;
+      font-size: 20px;
+      padding: 7px 0;
+      white-space: nowrap;
+    }
+
+    .brand-button:hover {
+      color: #ffd6ad;
+    }
+
+    .menu-icon {
+      font-size: 22px;
+      line-height: 1;
+    }
+    .top-control {
+      display: flex;
+      align-items: center;
+      flex-shrink: 1;
+      min-width: 0;
+    }
+
+    .top-select {
+      width: auto;
+      max-width: 190px;
+      min-width: 100px;
+      padding: 9px 25px 9px 9px;
+      border-radius: 5px;
+      border: 1px solid #ffffff66;
+      background: white;
+      color: var(--green);
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .top-divider {
+      color: white;
+      opacity: 0.7;
+    }
+
+    .top-spacer {
+      flex: 1;
+      min-width: 4px;
+    }
+
+    .connection {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+      white-space: nowrap;
+      font-size: 12px;
+    }
+
+    .status-dot {
+      width: 9px;
+      height: 9px;
+      display: inline-block;
+      border-radius: 50%;
+      background: #66df7a;
+    }
+
+    .status-dot.offline {
+      background: #ff8c82;
+    }
+
+    .date-time {
+      text-align: right;
+      line-height: 1.5;
+      white-space: nowrap;
+      flex-shrink: 0;
+      font-size: 11px;
+    }
+    .icon-button {
+      position: relative;
+      width: 35px;
+      height: 35px;
+      flex-shrink: 0;
+      border: 1px solid #ffffff45;
+      border-radius: 50%;
+      background: transparent;
+      color: white;
+      font-size: 17px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .icon-button:hover {
+      background: #ffffff18;
+    }
+
+    .avatar {
+      background: var(--orange);
+      border: 2px solid white;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+
+    .notification-dot {
+      position: absolute;
+      top: 2px;
+      right: 1px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ff7468;
+    }
+
+
+    /* =========================
+       DASHBOARD
+    ========================= */
+    #appScreen {
+      min-height: 100vh;
+    }
+    .main-content {
+      padding: 28px;
+      max-width: 1500px;
+      margin: 0 auto;
+    }
+
+
+    .welcome-panel {
+      min-height: 260px;
+      padding: 35px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: 0 3px 12px #00000006;
+    }
+    .welcome-icon {
+      width: 64px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: #eef1e5;
+      color: var(--green);
+      font-size: 29px;
+      margin-bottom: 17px;
+    }
+    .welcome-panel h2 {
+      color: var(--green);
+      margin: 0 0 9px;
+      font-size: 23px;
+    }
+    .welcome-panel p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+
+    .page-heading {
+      margin-bottom: 22px;
+    }
+
+
+    .page-heading h2 {
+      color: var(--green);
+      margin: 0 0 8px;
+      font-size: 24px;
+    }
+
+
+    .page-heading p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+
+    .stat-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--orange);
+      border-radius: 10px;
+      padding: 22px;
+      box-shadow: 0 3px 12px #00000006;
+    }
+
+
+    .stat-card h3 {
+      color: var(--muted);
+      font-size: 13px;
+      margin: 0 0 14px;
+    }
+
+
+    .stat-number {
+      font-size: 30px;
+      font-weight: bold;
+      color: var(--green);
+    }
+    .section-panel {
+      margin-top: 20px;
+      background: white;
+      padding: 22px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+    .section-panel h3 {
+      margin-top: 0;
+      color: var(--green);
+    }
+    .section-panel p {
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+
+    /* =========================
+       PAZIA LA MENYU
+    ========================= */
+    .drawer-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: #00000060;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s ease, visibility 0.2s ease;
+    }
+    .drawer-backdrop.open {
+      opacity: 1;
+      visibility: visible;
+    }
+    .drawer {
+      position: fixed;
+      z-index: 1001;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: min(300px, 85vw);
+      background: white;
+      box-shadow: 5px 0 22px #00000020;
+      transform: translateX(-105%);
+      transition: transform 0.25s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .drawer.open {
+      transform: translateX(0);
+    }
+    .drawer-header {
+      padding: 19px;
+      background: var(--green);
+      color: white;
+      border-bottom: 4px solid var(--orange);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .drawer-header h2 {
+      margin: 0;
+      font-size: 21px;
+    }
+    .drawer-close {
+      background: transparent;
+      color: white;
+      border: 0;
+      font-size: 27px;
+      padding: 0 5px;
+    }
+    .drawer-caption {
+      padding: 16px 17px 8px;
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: bold;
+    }
+
+
+    .drawer-menu {
+      overflow-y: auto;
+      padding: 5px 10px 15px;
+      flex: 1;
+    }
+
+
+    .drawer-item {
+      width: 100%;
+      display: block;
+      text-align: left;
+      border: 0;
+      border-radius: 7px;
+      padding: 13px 12px;
+      margin: 3px 0;
+      background: white;
+      color: #333;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+
+    .drawer-item:hover,
+    .drawer-item.active {
+      background: #edf0e5;
+      color: var(--green);
+      border-left: 4px solid var(--orange);
+    }
+
+
+    .drawer-bottom {
+      padding: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+
+    .drawer-bottom button {
+      width: 100%;
+    }
+
+
+    /* =========================
+       PANELI ZA TARIFA NA WASIFU
+    ========================= */
+    .floating-panel {
+      position: fixed;
+      z-index: 1100;
+      top: 82px;
+      right: 14px;
+      width: min(340px, calc(100vw - 28px));
+      padding: 20px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      box-shadow: 0 8px 28px #00000020;
+    }
+
+
+    .floating-panel h3 {
+      margin: 0 0 15px;
+      color: var(--green);
+    }
+    .panel-close {
+      float: right;
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      font-size: 21px;
+    }
+    .profile-row {
+      margin: 12px 0;
+      font-size: 13px;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+
+    .profile-row strong {
+      color: var(--green);
+    }
+
+    .panel-note {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+
+    .panel-button {
+      width: 100%;
+      margin-top: 8px;
+    }
+
+
+    .app-footer {
+      padding: 20px 12px;
+      text-align: center;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+
+   /* =========================
+     TOPBAR - KOMPYUTA NA LAPTOP
+      ========================= */
+ @media (min-width: 651px) {
+  .date-time {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .brand-button {
+    color: var(--green);
+  }
+  .top-divider {
+    color: var(--green);
+  }
+  .icon-button {
+    color: var(--green);
+    border-color: var(--green);
+  }
+}
+
+ /* =========================
+       SIMU
+    ========================= */
+@media (max-width: 650px) {
+  .topbar {
+    display: grid;
+    grid-template-columns:
+      auto minmax(0, 1fr) minmax(0, 1fr) 32px 32px;
+    grid-template-areas:
+      "brand service module bell profile"
+      "connection connection datetime datetime datetime";
+    align-items: center;
+    gap: 7px;
+    padding: 9px 8px;
+  }
+
+  .brand-button {
+    grid-area: brand;
+    font-size: 17px;
+    gap: 5px;
+  }
+
+  .top-service {
+    grid-area: service;
+    min-width: 0;
+  }
+
+  .top-module {
+    grid-area: module;
+    min-width: 0;
+  }
+
+  .top-select {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    padding: 8px 3px;
+    font-size: 10px;
+  }
+
+  .top-divider,
+  .top-spacer {
+    display: none;
+  }
+
+  #notificationButton {
+    grid-area: bell;
+  }
+
+  #avatarButton {
+    grid-area: profile;
+  }
+
+  .connection {
+    grid-area: connection;
+    justify-content: flex-start;
+    font-size: 11px;
+  }
+
+  .date-time {
+    grid-area: datetime;
+    display: flex;
+    justify-content: flex-end;
+    gap: 7px;
+    font-size: 10px;
+    text-align: right;
+  }
+
+  .icon-button {
+    width: 32px;
+    height: 32px;
+  }
+
+  .main-content {
+    padding: 15px;
+  }
+
+  .welcome-panel {
+    min-height: 230px;
+    padding: 25px 15px;
+  }
+
+  .welcome-panel h2 {
+    font-size: 20px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .stat-card {
+    padding: 15px;
+  }
+
+  .stat-number {
+    font-size: 25px;
+  }
+
+  .floating-panel {
+    top: 12px;
+  }
+}
+
+    /* =========================
+       SIMU NDOGO SANA
+    ========================= */
+    @media (max-width: 360px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+      .brand-button {
+        font-size: 17px;
+      }
+    }
+
+/* VICHWA VYA HUDUMA NA KIPENGELE */
+#serviceDashboard .page-heading {
+  text-align: center;
+}
+#serviceDashboard #moduleHeading {
+  text-align: center;
+}
+/* =========================
+   TAARIFA ZA TAASISI
+========================= */
+.account-header {
+  width: 100%;
+  text-align: center;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-bottom: 3px solid var(--orange);
+  border-radius: 10px;
+  padding: 22px 15px 15px;
+  margin-bottom: 18px;
+}
+.account-logo {
+  display: block;
+  width: 75px;
+  height: 75px;
+  object-fit: contain;
+  margin: 0 auto 10px;
+}
+.account-header h2 {
+  margin: 5px 0;
+  color: var(--green);
+  font-size: 22px;
+}
+.account-header p {
+  margin: 5px 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+.account-header h3 {
+  margin: 18px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  color: var(--green);
+  font-size: 18px;
+}
+@media (max-width: 650px) {
+  .account-header {
+    padding: 18px 10px 13px;
+  }
+  .account-logo {
+    width: 60px;
+    height: 60px;
+  }
+  .account-header h2 {
+    font-size: 18px;
+  }
+  .account-header h3 {
+    font-size: 16px;
+  }
+}
+/* =================================
+   DSERVICES SETTINGS
+================================= */
+
+.ds-settings {
+    display: grid;
+    grid-template-columns: 210px minmax(0, 1fr);
+    gap: 15px;
+    width: 100%;
+    min-height: 450px;
+    box-sizing: border-box;
+}
+
+/* SIDEBAR */
+
+.ds-settings-sidebar {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 12px;
+    box-sizing: border-box;
+}
+
+.ds-settings-heading {
+    color: #4B5320;
+    font-weight: bold;
+    padding: 12px 5px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 10px;
+}
+
+.ds-settings-nav {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 9px;
+    margin-bottom: 5px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: #444;
+    text-align: left;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.ds-settings-nav:hover,
+.ds-settings-nav.active {
+    background: #f0f2e9;
+    color: #4B5320;
+    border-left: 3px solid #F28C28;
+}
+
+/* MAIN */
+
+.ds-settings-main {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+.ds-settings-welcome h3 {
+    color: #4B5320;
+    margin-bottom: 5px;
+}
+
+.ds-settings-welcome p {
+    color: #999;
+    font-size: 13px;
+}
+
+/* =================================
+   SETTINGS CARDS
+   KADI MBILI KWA KILA MSTARI
+================================= */
+
+.ds-settings-cards {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 14px;
+    width: 100%;
+    margin-top: 20px;
+
+    box-sizing: border-box;
+}
+
+.ds-settings-card {
+    width: 100%;
+    min-width: 0;
+
+    /* Urefu unaendana na kifaa */
+    height: clamp(115px, 20vw, 180px);
+
+    background: #fff;
+    border: 1px solid #e2e2e2;
+    border-radius: 17px;
+
+    padding: 12px;
+
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    box-sizing: border-box;
+    transition: .25s;
+}
+
+.ds-settings-card:hover {
+    border-color: #F28C28;
+    box-shadow: 0 4px 12px #00000012;
+    transform: translateY(-3px);
+}
+
+/* OVAL ICON */
+
+.ds-settings-oval {
+    width: clamp(40px, 5vw, 55px);
+    height: clamp(40px, 5vw, 55px);
+
+    flex-shrink: 0;
+
+    border: 1px solid rgba(0,0,0,.25);
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 23px;
+    margin-bottom: 12px;
+    color: #777;
+}
+
+/* PLACEHOLDER */
+
+.ds-settings-placeholder {
+    width: 65%;
+    height: 7px;
+
+    background: #eeeeee;
+    border-radius: 10px;
+
+    margin-bottom: 10px;
+}
+
+/* CARD TITLE */
+
+.ds-settings-card-title {
+    font-size: 12px;
+    font-weight: bold;
+    color: #4B5320;
+    text-align: center;
+    overflow-wrap: anywhere;
+}
+
+/* CARD BOTTOM LINE */
+
+.ds-settings-card-line {
+    width: 35%;
+    height: 3px;
+
+    background: #eeeeee;
+    border-radius: 5px;
+
+    margin-top: 9px;
+}
+
+/* =================================
+   ACCOUNT
+================================= */
+
+.ds-account-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+}
+
+.ds-account-grid label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    font-size: 12px;
+    color: #4B5320;
+}
+
+.ds-account-grid input,
+.ds-account-grid select {
+    width: 100%;
+    padding: 11px;
+
+    border: 1px solid #ddd;
+    border-radius: 7px;
+
+    background: #f7f7f7;
+    box-sizing: border-box;
+}
+
+/* =================================
+   TABLET
+================================= */
+
+@media (min-width: 651px) and (max-width: 1000px) {
+
+    .ds-settings {
+        grid-template-columns: 160px minmax(0, 1fr);
+        gap: 10px;
+    }
+
+    .ds-settings-main {
+        padding: 14px;
+    }
+
+    .ds-settings-card {
+        height: 145px;
+    }
+}
+
+/* =================================
+   MOBILE
+================================= */
+
+@media (max-width: 650px) {
+
+    .ds-settings {
+        grid-template-columns: 95px minmax(0, 1fr);
+        gap: 7px;
+        min-height: 400px;
+    }
+
+    .ds-settings-sidebar {
+        padding: 5px;
+    }
+
+    .ds-settings-heading {
+        font-size: 10px;
+        padding: 10px 2px;
+        text-align: center;
+    }
+
+    .ds-settings-nav {
+        flex-direction: column;
+        gap: 4px;
+
+        padding: 10px 2px;
+        margin-bottom: 4px;
+
+        font-size: 9px;
+        text-align: center;
+    }
+
+    .ds-settings-main {
+        padding: 9px;
+    }
+
+    .ds-settings-welcome h3 {
+        font-size: 13px;
+    }
+
+    .ds-settings-welcome p {
+        font-size: 10px;
+    }
+
+    /* KADI MBILI, UPANA UNAJITANUA */
+
+    .ds-settings-cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        width: 100%;
+        margin-top: 14px;
+    }
+
+    .ds-settings-card {
+        width: 100%;
+        height: clamp(115px, 28vw, 155px);
+        min-width: 0;
+        padding: 7px 3px;
+        border-radius: 12px;
+    }
+
+    .ds-settings-oval {
+        width: 40px;
+        height: 40px;
+        font-size: 19px;
+        margin-bottom: 9px;
+    }
+
+    .ds-settings-placeholder {
+        width: 65%;
+        height: 6px;
+        margin-bottom: 8px;
+    }
+
+    .ds-settings-card-title {
+        font-size: 9px;
+    }
+
+    .ds-settings-card-line {
+        margin-top: 7px;
+    }
+
+    .ds-account-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =================================
+   SIMU NDOGO SANA
+================================= */
+@media (max-width: 360px) {
+    .ds-settings {
+        grid-template-columns: 82px minmax(0, 1fr);
+        gap: 5px;
+    }
+    .ds-settings-main {
+        padding: 6px;
+    }
+    .ds-settings-cards {
+        gap: 6px;
+    }
+
+    .ds-settings-card {
+        height: 115px;
+    }
+
+    .ds-settings-card-title {
+        font-size: 8px;
+    }
+}
+  </style>
+</head>
+<body>
+
+
+  <!-- LOGIN -->
+  <section id="loginScreen">
+    <header class="login-header">
+      <h1>DServices</h1>
+      <div class="login-lines">
+        <span></span><span></span>
+      </div>
+    </header>
+
+    <main class="login-area">
+      <section class="login-card">
+
+  <!-- CHAGUA LUGHA -->
+  <div class="language-selection">
+<label for="languageSelect">LUGHA / LANGUAGE</label>
+   <select id="languageSelect">
+  <option value="KISWAHILI" selected>KISWAHILI</option>
+      <option value="ENGLISH">ENGLISH</option>
+    </select>
+  </div>
+
+        <form id="loginForm">
+          <div class="field">
+            <label for="username">JINA LA MTUMIAJI </label>
+            <input
+              id="username"
+              name="username"
+              type="text"
+              autocomplete="username"
+              placeholder="Ingiza username yako"
+              required
+            >
+          </div>
+
+          <div class="field">
+  <label for="password">NENOSIRI</label>
+  <div class="password-wrapper">
+    <input
+      id="password"
+      name="password"
+      type="password"
+   autocomplete="current-password"
+      placeholder="Weka password yako"
+      required
+    >
+    <button
+      type="button"
+      class="password-toggle"
+      id="togglePassword"
+      aria-label="Onyesha password"
+      aria-pressed="false"
+    >
+      👁
+    </button>
+  </div>
+</div>
+
+
+          <div class="login-actions">
+            <button class="btn btn-primary" id="loginButton" type="submit">
+              INGIA
+            </button>
+
+            <button class="btn btn-outline" id="feedbackButton" type="button">
+              MAONI
+            </button>
+
+            <button class="btn" id="clearButton" type="button">
+              TOKA
+            </button>
+          </div>
+        </form>
+        <div id="loginMessage" class="message" role="status"></div>
+      </section>
+    </main>
+
+
+    <footer class="login-footer">
+      Huduma bora huleta Ustawi
+    </footer>
+  </section>
+
+  <!-- MFUMO BAADA YA LOGIN -->
+  <section id="appScreen" class="hidden">
+    <header class="topbar">
+
+  <!-- DSERVICES -->
+  <button
+    type="button"
+    class="brand-button"
+    id="brandButton"
+    aria-label="Fungua menyu"
+    title="Fungua menyu"
+  >
+    <span class="menu-icon">☰</span>
+    <span>DServices</span>
+  </button>
+
+  <!-- HUDUMA -->
+  <div class="top-control top-service">
+    <select id="serviceSelect" class="top-select"
+            aria-label="Huduma">
+      <option value="">HUDUMA</option>
+    </select>
+  </div>
+
+  <span class="top-divider">|</span>
+
+  <!-- KIPELELE -->
+  <div class="top-control top-module">
+    <select id="moduleSelect" class="top-select"
+            aria-label="Kipengele" disabled>
+      <option value="">KIPENGELE</option>
+    </select>
+  </div>
+  <div class="top-spacer"></div>
+
+  <!-- ONLINE / OFFLINE -->
+  <div class="connection">
+    <span id="statusDot" class="status-dot"></span>
+    <span id="networkLabel">Online</span>
+  </div>
+
+  <!-- MUDA NA TAREHE -->
+  <div class="date-time">
+    <div id="clock">00:00</div>
+    <div id="dateLabel">Siku, tarehe</div>
+  </div>
+
+  <!-- NOTIFICATION -->
+  <button
+    type="button"
+    class="icon-button"
+    id="notificationButton"
+    aria-label="Taarifa"
+    title="Taarifa"
+  >
+    🔔
+    <span class="notification-dot"></span>
+  </button>
+
+  <!-- PROFILE -->
+  <button
+    type="button"
+    class="icon-button avatar"
+    id="avatarButton"
+    aria-label="Wasifu"
+    title="Wasifu wa mtumiaji"
+  >
+    ?
+  </button>
+</header>
+
+
+    <!-- ENEO LA DASHBOARD -->
+    <main class="main-content">
+
+      <section id="welcomePanel" class="welcome-panel">
+        <div class="welcome-icon">☰</div>
+        <h2>Chagua huduma ili kuendelea</h2>
+        <p id="welcomeUserName">
+       Ndugu, Mtumiaji.
+        </p>
+      </section>
+
+
+      <!-- DASHBOARD YA ALL -->
+      <section id="adminDashboard" class="hidden">
+        <div class="page-heading">
+          <h2>DASHBOARD YA DS APP</h2>
+         <p>Muhtasari wa mfumo mzima.</p>
+        </div>
+        <div class="stats-grid">
+          <article class="stat-card">
+            <h3>TAASISI / ACCOUNTS</h3>
+            <div class="stat-number" id="statAccounts">—</div>
+          </article>
+          <article class="stat-card">
+            <h3>WATUMIAJI</h3>
+            <div class="stat-number" id="statUsers">—</div>
+          </article>
+
+
+          <article class="stat-card">
+            <h3>HUDUMA ZA MFUMO</h3>
+            <div class="stat-number" id="statServices">—</div>
+          </article>
+          <article class="stat-card">
+            <h3>TIMU</h3>
+            <div class="stat-number" id="statTeams">—</div>
+          </article>
+        </div>
+
+        <div class="section-panel">
+          <h3>Usimamizi wa mfumo</h3>
+          <p>
+           Tumia menyu kusimamia taasisi,
+            watumiaji, timu, huduma, usajili na mipangilio
+            inayopatikana kwa ruhusa zako.
+          </p>
+          <div id="adminMessage" class="message" role="status"></div>
+        </div>
+      </section>
+
+<!-- DASHBOARD YA HUDUMA YA KAWAIDA -->
+<section id="serviceDashboard" class="hidden">
+
+  <!-- TAARIFA ZA TAASISI -->
+  <div class="account-header">
+
+    <img
+      id="accountLogo"
+      class="account-logo hidden"
+      alt="Logo ya taasisi"
+    >
+    <h2 id="accountName">JINA LA TAASISI</h2>
+    <p id="accountMotto"></p>
+    <p id="accountReg"></p>
+    <!-- KICHWA CHA MENYU -->
+    <h3 id="moduleHeading">TUITION - MUHTASARI</h3>
+  </div>
+
+  <!-- UJUMBE WA HUDUMA -->
+  <div id="serviceNotice" class="message" role="status"></div>
+
+  <!-- UWANJA WA KAZI -->
+  <div id="moduleWorkspace"></div>
+
+</section>
+
+    </main>
+    <footer class="app-footer">
+      DServices
+    </footer>
+  </section>
+
+
+  <!-- PAZIA LA MENYU -->
+  <div id="drawerBackdrop" class="drawer-backdrop"></div>
+  <aside id="menuDrawer" class="drawer" aria-label="Menyu ya DServices">
+    <div class="drawer-header">
+      <h2>DServices</h2>
+      <button
+        type="button"
+        class="drawer-close"
+        id="closeDrawer"
+        aria-label="Funga menyu"
+      >
+        ×
+      </button>
+    </div>
+    <div class="drawer-caption" id="drawerCaption">
+      MENYU
+    </div>
+    <nav id="drawerMenu" class="drawer-menu"></nav>
+    <div class="drawer-bottom">
+      <button type="button" class="btn btn-orange" id="logoutButton">
+        TOKA
+      </button>
+    </div>
+  </aside>
+  <!-- NOTIFICATIONS -->
+  <section id="notificationPanel" class="floating-panel hidden">
+    <button type="button" class="panel-close" data-close-panel="notificationPanel">
+      ×
+    </button>
+    <h3>Notifications</h3>
+    <p class="panel-note">
+      Hakuna taarifa mpya kwa sasa.
+    </p>
+  </section>
+
+ <!-- PROFILE -->
+<section id="profilePanel" class="floating-panel hidden">
+  <button
+    type="button"
+    class="panel-close"
+    data-close-panel="profilePanel"
+  >
+    ×
+  </button>
+  <h3>Wasifu wa Mtumiaji</h3>
+  <div class="profile-row">
+    <strong>Jina:</strong>
+    <span id="profileName">—</span>
+  </div>
+  <div class="profile-row">
+    <strong>Username:</strong>
+    <span id="profileUsername">—</span>
+  </div>
+  <div class="profile-row">
+    <strong>Nafasi:</strong>
+    <span id="profileRole">—</span>
+  </div>
+  <div class="profile-row">
+    <strong>Muunganisho:</strong>
+    <span id="profileNetwork">—</span>
+  </div>
+  <hr>
+  <h3>Badilisha Password</h3>
+  <form id="changePasswordForm">
+    <label for="oldPassword">
+      NENOSIRI LA ZAMANI
+    </label>
+    <input
+      type="password"
+      id="oldPassword"
+      autocomplete="current-password"
+      placeholder="Ingiza password ya zamani"
+      required
+    >
+    <label for="newPassword">
+      NENOSIRI MPYA
+    </label>
+    <input
+      type="password"
+      id="newPassword"
+      autocomplete="new-password"
+      placeholder="Ingiza password mpya"
+      required
+      minlength="6"
+    >
+    <label for="confirmPassword">
+         RUDIA NENOSIRI MPYA
+    </label>
+    <input
+      type="password"
+      id="confirmPassword"
+      autocomplete="new-password"
+      placeholder="Rudia password mpya"
+      required
+      minlength="6"
+    >
+    <p
+      id="changePasswordMessage"
+      class="panel-note"
+      role="status"
+      aria-live="polite"
+    ></p>
+    <button
+      type="submit"
+      class="btn btn-primary panel-button"
+      id="changePasswordButton"
+    >
+      BADILI NENOSIRI
+    </button>
+  </form>
+  <hr>
+  <button
+    type="button"
+    class="btn btn-outline panel-button"
+    id="profileLogoutButton"
+  >
+    TOKA
+  </button>
+</section>
+
+    <!-- FOMU YA MAONI -->
+<div id="feedbackModal" class="feedback-overlay hidden">  
+  <section class="feedback-modal">
+    <header class="feedback-header">
+      <h2>MAONI KUTOKA MFUMO</h2>
+      <button type="button" id="feedbackClose"
+        class="feedback-close">×</button>
+    </header>
+    <form id="feedbackForm" class="feedback-body">
+
+      <label for="feedbackName">JINA KAMILI</label>
+      <input
+        type="text"
+        id="feedbackName"
+        placeholder="Andika jina lako kamili"
+        required
+      >
+
+      <label for="feedbackPhone">SIMU</label>
+      <input
+        type="tel"
+        id="feedbackPhone"
+        placeholder="Namba yako ya simu"
+        required
+      >
+
+      <label for="feedbackType">AINA YA MAONI</label>
+      <select id="feedbackType" required>
+        <option value="">-- Chagua aina ya maoni --</option>
+        <option value="Pongezi">PONGEZI</option>
+        <option value="Pendekezo">USHAURI</option>
+        <option value="Malalamiko">MALALAMIKO</option>
+        <option value="Swali">SWALI</option>
+        <option value="Changamoto ya Mfumo">CHANGAMOTO YA MFUMO</option>
+        <option value="Nyingine">NYINGINE</option>
+      </select>
+
+      <label for="feedbackText">UJUMBE</label>
+      <textarea
+        id="feedbackText"
+        placeholder="Andika ujumbe wako hapa..."
+        rows="4"
+        maxlength="2000"
+        required
+      ></textarea>
+
+      <div class="feedback-date-row">
+        <div>
+          <label for="feedbackDate">TAREHE</label>
+          <input type="date" id="feedbackDate" required>
+        </div>
+
+        <div>
+          <label for="feedbackTime">MUDA</label>
+          <input type="time" id="feedbackTime" required>
+        </div>
+      </div>
+      <p id="feedbackError" class="feedback-error"></p>
+      <div class="feedback-actions">
+        <button type="button" id="sendWhatsApp"
+          class="btn btn-primary">
+          WHATSAPP
+        </button>
+        <button type="button" id="sendSMS"
+          class="btn btn-orange">
+          SMS
+        </button>
+      </div>
+    </form>
+  </section>
+</div>
+<script src="./js/offline-db.js"></script>
+  <script>
+    "use strict";
+
+
+    /*
+      MUHIMU:
+      Kiungo cha Apps Script kimehifadhiwa kama kilivyokuwa.
+    */
+    const API_URL =
+      "https://script.google.com/macros/s/AKfycbwrqIq6RG_9-9hyU3AhDii8xpn1ctVy8VNaYFyMplqRV0c8LtaSJ8hqZ1Ap4IwP8Fsv/exec";
+
+    const $ = id => document.getElementById(id);
+
+    let sessionToken = null;
+    let currentUser = null;
+    let selectedService = "";
+    let selectedModule = "";
+    let selectedMenu = "MUHTASARI";
+    let adminStatsLoaded = false;
+
+    /* HUDUMA ZOTE ZA DSERVICES */
+const allServices = [
+  "ELIMU",
+  "SHAMBA",
+  "BIASHARA",
+  "USAIDIZI",
+  "SALUNI",
+  "MATUKIO",
+  "MIKOPO & AKIBA"
+];
+
+
+/* VIPENGELE VYA KILA HUDUMA */
+const serviceModules = {
+
+  "ELIMU": [
+    "TUITION",
+    "DAYCARE",
+    "NURSERY",
+    "EXAM RMS"
+  ],
+
+  "SHAMBA": [
+    "MAZAO",
+    "MIFUGO"
+  ],
+
+  "BIASHARA": [
+    "BIASHARA"
+  ],
+
+  "USAIDIZI": [
+    "USAIDIZI"
+  ],
+
+  "SALUNI": [
+    "MAPAMBO"
+  ],
+
+  "MATUKIO": [
+    "SHEREHE",
+    "VIKAO",
+    "MIKUTANO",
+    "MISIBA"
+  ],
+
+  "MIKOPO & AKIBA": [
+    "VIKOBA",
+    "HISA",
+    "KIKUNDI JAMII"
+  ]
+
+};
+
+
+/* MENYU ZA MSIMAMIZI MKUU */
+const adminMenu = [
+  { label: "DASHBOARD", page: "adminDashboard" },
+  { label: "TAASISI / ACCOUNTS", page: "accounts" },
+  { label: "WATUMIAJI", page: "users" },
+  { label: "TIMU ZA USIMAMIZI", page: "teams" },
+  { label: "HUDUMA ZA MFUMO", page: "systemServices" },
+  { label: "USAJILI NA MALIPO", page: "subscriptions" },
+  { label: "MIPANGILIO YA MFUMO", page: "settings" },
+  { label: "UKAGUZI WA MFUMO", page: "audit" }
+];
+
+/*
+  MENYU ZA KILA KIPENGELE
+
+  Kila kipengele kina menyu yake.
+  Majina ya hapa yanalingana na serviceModules.
+*/
+
+const moduleMenu = {
+
+  /* =========================
+     ELIMU
+  ========================= */
+  "TUITION": [
+    "MUHTASARI",
+    "WANAFUNZI",
+    "WATUMISHI",
+    "MAHUDHURIO",
+    "MALIPO",
+    "MATUMIZI",
+    "TAALUMA",
+    "TAARIFA",
+    "MPANGILIO"
+  ],
+
+  "DAYCARE": [
+    "MUHTASARI",
+    "WATOTO",
+    "WATUMISHI",
+    "MAHUDHURIO",
+    "TAALUMA",
+    "MALIPO",
+    "MATUMIZI",
+    "TAARIFA",
+    "MPANGILIO"
+  ],
+
+  "NURSERY": [
+    "MUHTASARI",
+    "WANAFUNZI",
+    "WATUMISHI",
+    "MAHUDHURIO",
+    "TAALUMA",
+    "MALIPO",
+    "MATUMIZI",
+    "TAARIFA",
+    "MPANGILIO"
+  ],
+
+  "EXAM RMS": [
+  "MUHTASARI",
+  "WEKA TAARIFA",
+  "UCHAKATAJI",
+  "MATOKEO",
+  "RIPOTI",
+  "MPANGILIO"
+ ],
+
+
+  /* =========================
+     BIASHARA
+  ========================= */
+  "BIASHARA": [
+    "MUHTASARI",
+    "WATUMISHI",
+    "MANUNUZI",
+    "MATUMIZI",
+    "MAUZO",
+    "ODA",
+    "WATEJA/ WAZABUNI",
+    "BIDHAA/ STOO",
+    "TAARIFA",
+    "MPANGILIO"
+  ],
+
+
+  /* =========================
+     SALUNI
+  ========================= */
+  "MAPAMBO": [
+    "MUHTASARI",
+    "WATUMISHI",
+    "WATEJA",
+    "ODA",
+    "MANUNUZI",
+    "MATUMIZI",
+    "MAUZO",
+    "MALIPO",
+    "VIFAA",
+    "TAARIFA",
+    "MPANGILIO"
+  ],
+
+
+  /* =========================
+     SHAMBA - MAZAO
+  ========================= */
+  "MAZAO": [
+    "MUHTASARI",
+    "WATUMISHI",
+    "MANUNUZI",
+    "MATUMIZI",
+    "MAUZO",
+    "MAVUNO",
+    "GHALA",
+    "TAARIFA",
+    "MPANGILIO"
+  ],
+
+
+  /* =========================
+     SHAMBA - MIFUGO
+  ========================= */
+  "MIFUGO": [
+    "MUHTASARI",
+    "WATUMISHI",
+    "UTAMBULISHO",
+    "UZAZI",
+    "UZALISHAJI",
+    "AFYA & MATIBABU",
+    "CHAKULA/ LISHE",
+    "MAVUNO",
+    "MAPATO",
+    "MATUMIZI",
+    "TAARIFA",
+    "MPANGILIO"
+  ],
+
+
+  /* =========================
+     USAIDIZI
+  ========================= */
+  "USAIDIZI": [
+    "MUHTASARI",
+    "MAJUKUMU",
+    "ODA",
+    "FEDHA",
+    "TAARIFA",
+    "MPANGILIO"
+  ],
+
+
+  /* =========================
+     MATUKIO
+  ========================= */
+  "SHEREHE": [
+    "MUHTASARI",
+    "USIMAMIZI SHEREHE",
+    "USIMAMIZI FEDHA",
+    "TAARIFA",
+    "MPANGILIO"
+  ],
+
+  "VIKAO": [
+    "MUHTASARI",
+    "USIMAMIZI KIKAO",
+    "USIMAMIZI FEDHA",
+    "TAARIFA",
+    "MPANGILIO"
+  ],
+
+  "MIKUTANO": [
+    "MUHTASARI",
+    "USIMAMIZI MKUTANO",
+    "USIMAMIZI FEDHA",
+    "TAARIFA",
+    "MPANGILIO"
+  ],
+
+  "MISIBA": [
+    "MUHTASARI",
+    "USIMAMIZI MSIBA",
+    "USIMAMIZI FEDHA",
+    "TAARIFA",
+    "MPANGILIO"
+  ],
+
+
+  /* =========================
+     MIKOPO & AKIBA
+  ========================= */
+  "VIKOBA": [
+    "MUHTASARI",
+    "WANACHAMA",
+    "UONGOZI",
+    "AKIBA",
+    "MIKOPO",
+    "MAREJESHO",
+    "RATIBA",
+    "TAARIFA",
+    "MPANGILIO"
+  ],
+
+  "HISA": [
+    "MUHTASARI",
+    "WANACHAMA",
+    "UONGOZI",
+    "HISA",
+    "MICHANGO",
+    "TAARIFA",
+    "MPANGILIO"
+  ],
+
+  "KIKUNDI JAMII": [
+    "MUHTASARI",
+    "WANACHAMA",
+    "UONGOZI",
+    "MICHANGO",
+    "MIRADI",
+    "MATUMIZI",
+    "TAARIFA",
+    "MPANGILIO"
+  ]
+};
+
+  
+    /* ==========================================
+   DSERVICES - API + OFFLINE SUPPORT
+   VERSION 2
+========================================== */
+
+// Maombi yanayoruhusiwa kuhifadhiwa OFFLINE
+const OFFLINE_WRITE_ACTIONS = [
+  "saveFeedback",
+
+  "SAVE_MALIPO",
+  "SAVE_MATUMIZI",
+
+  "saveTaalumaDARASA",
+  "saveTaalumaSOMO",
+  "saveTaalumaSOMO_DARASA",
+  "saveTaalumaMTIHANI",
+  "saveTaalumaJUKUMU",
+  "saveTaalumaRATIBA_MASOMO",
+  "saveTaalumaRATIBA_MITIHANI",
+  "saveTaalumaALAMA"
+];
+
+
+/* ==========================================
+   KUTUMA MAOMBI YA API
+========================================== */
+
+async function callAPI(payload) {
+
+  const action = String(payload.action || "").trim();
+
+  const isWriteAction =
+    OFFLINE_WRITE_ACTIONS.includes(action);
+
+
+  /* ========================================
+     1. OFFLINE
+  ======================================== */
+
+  if (!navigator.onLine) {
+
+    // LOGIN, LOGOUT na READ hazihifadhiwi kama miamala
+    if (!isWriteAction) {
+
+      throw new Error(
+        "Hakuna mtandao. Ombi hili linahitaji intaneti."
+      );
+
+    }
+
+    const user = currentUser || {};
+
+    const record = await saveOfflineRecord({
+
+      accountId:
+        user.accountId ||
+        user.ACCOUNT_ID ||
+        "",
+
+      serviceId: selectedService || "",
+
+      moduleId: selectedModule || "",
+
+      action: action,
+
+      payload: payload
+
+    });
+
+    return {
+
+      success: true,
+
+      offline: true,
+
+      localId: record.localId,
+
+      message:
+        "Taarifa imehifadhiwa kwenye kifaa. Itatumwa mtandao utakaporudi."
+
+    };
+
+  }
+
+
+  /* ======================
+     2. ONLINE
+  ================================ */
+  const response = await fetch(API_URL, {
+
+    method: "POST",
+
+    redirect: "follow",
+    headers: {
+      "Content-Type": "text/plain;charset=UTF-8"
+    },
+    body: JSON.stringify(payload)
+  });
+  if (!response.ok) {
+
+    throw new Error(
+      "Server imeshindwa kupokea ombi."
+    );
+  }
+  const result = await response.json();
+  return result;
+}
+
+    function showMessage(element, message, type = "info") {
+      element.textContent = message;
+      element.className = "message show " + type;
+    }
+
+    function hideMessage(element) {
+      element.textContent = "";
+      element.className = "message";
+    }
+
+  /* ================================
+   UTAMBUZI WA NAFASI ZA WATUMIAJI
+   ============================== */
+function getUserRole() {
+  const user = currentUser || {};
+  return String(
+    user.role ||
+    user.ROLE ||
+    user.userRole ||
+    user.USER_ROLE ||
+    ""
+  )
+  .trim()
+  .toUpperCase()
+  .replace(/[\s-]+/g, "_");
+}
+
+function isOwner() {
+  return getUserRole() === "OWNER";
+}
+
+function isAccountOwner() {
+  return getUserRole() === "ACCOUNT_OWNER";
+}
+
+function isAdmin() {
+  return getUserRole() === "ADMIN";
+}
+
+function isSystemManager() {
+  return isOwner();
+}
+
+function getRoleLabel() {
+  const role = getUserRole();
+
+  const labels = {
+ OWNER: "OWNER - Mmiliki wa Mfumo",
+ ACCOUNT_OWNER: "ACCOUNT OWNER - Mmiliki wa Akaunti",
+ ADMIN: "ADMIN - Msimamizi Mkuu wa Akaunti",
+  USER: "USER - Mtumiaji"
+  };
+  return labels[role] || role || "Haijabainishwa";
+}
+
+
+    /*
+ Huduma za mtumiaji zisibuniwe kama hazijatumwa na API.
+ OWNER anaweza kuona huduma zote pamoja na ALL.
+    */
+
+    function getAuthorizedServices() {
+  if (isOwner()) {
+    return ["ALL", ...allServices];
+  }
+  const user = currentUser || {};
+  const supplied =
+    user.services ||
+    user.allowedServices ||
+    user.huduma ||
+    [];
+
+  if (!Array.isArray(supplied)) {
+    return [];
+  }
+
+  return [
+    ...new Set(
+      supplied
+        .map(item => {
+          if (typeof item === "string") {
+            return item.trim().toUpperCase();
+          }
+
+          return String(
+            item.service ||
+            item.name ||
+            item.label ||
+            ""
+          ).trim().toUpperCase();
+        })
+        .filter(item => allServices.includes(item))
+    )
+  ];
+}
+
+
+    /* LOGIN */
+    // KUONYESHA AU KUFICHA PASSWORD
+const passwordInput = $("password");
+const togglePassword = $("togglePassword");
+togglePassword.addEventListener("click", () => {
+  const isHidden = passwordInput.type === "password";
+  passwordInput.type = isHidden ? "text" : "password";
+  togglePassword.textContent = isHidden ? "🙈" : "👁";
+  togglePassword.setAttribute(
+    "aria-label",
+    isHidden ? "Ficha password" : "Onyesha password"
+  );
+  togglePassword.setAttribute(
+    "aria-pressed",
+    String(isHidden)
+  );
+});
+    $("loginForm").addEventListener("submit", async event => {
+      event.preventDefault();
+      const username = $("username").value.trim();
+      const password = $("password").value;
+      if (!username || !password) {
+        showMessage(
+          $("loginMessage"),
+          "Tafadhali jaza username na pasword.",
+          "error"
         );
+        return;
+      }
+      if (!navigator.onLine) {
+        showMessage(
+          $("loginMessage"),
+          "Hakuna mtandao. Unganisha mtandao ujaribu tena.",
+          "error"
+        );
+        return;
+      }
+
+      $("loginButton").disabled = true;
+      $("loginButton").textContent = "INGIA...";
+
+      showMessage(
+        $("loginMessage"),
+        "Mfumo unafunguka...",
+        "info"
+      );
+
+      try {
+        const result = await callAPI({
+          action: "login",
+          username,
+          password
+        });
+
+        if (!result || result.success !== true) {
+          showMessage(
+            $("loginMessage"),
+            result?.message || "Login haikukubaliwa. Kagua taarifa zako.",
+            "error"
+          );
+          return;
+        }
+
+        if (!result.token || !result.user) {
+          showMessage(
+            $("loginMessage"),
+            "Majibu ya API hayajakamilika.",
+            "error"
+          );
+          return;
+        }
+
+ sessionToken = result.token;
+currentUser = result.user;
+window.currentUser = currentUser;
+window.sessionToken = sessionToken;
+
+console.log("TAARIFA ZA MTUMIAJI:", result.user);
+        $("password").value = "";
+
+        openApplication();
+
+      } catch (error) {
+        console.error("DServices login error:", error);
+
+        showMessage(
+          $("loginMessage"),
+          "Imeshindikana kuwasiliana na mfumo. Kagua mtandao kisha ujaribu tena.",
+          "error"
+        );
+
+      } finally {
+        $("loginButton").disabled = false;
+        $("loginButton").textContent = "INGIA";
+      }
+    });
+
+/* =========================
+   KUFUTA TAARIFA ZA LOGIN
+========================= */
+$("clearButton").addEventListener("click", () => {
+  $("username").value = "";
+  $("password").value = "";
+  hideMessage($("loginMessage"));
+  $("username").focus();
+});
+
+  function openApplication() {
+    $("loginScreen").classList.add("hidden");
+    $("appScreen").classList.remove("hidden");
+
+    // JINA LA KWANZA
+    const firstName =
+        currentUser.firstName ||
+        currentUser.FIRST_NAME ||
+        currentUser.jinaLaKwanza ||
+        currentUser.JINA_LA_KWANZA ||
+        "";
+
+    // JINA LA MWISHO
+    const lastName =
+        currentUser.lastName ||
+        currentUser.LAST_NAME ||
+        currentUser.jinaLaMwisho ||
+        currentUser.JINA_LA_MWISHO ||
+        "";
+
+    // JINA KAMILI (JINA LA KWANZA + LA MWISHO)
+    const fullName = [
+        firstName,
+        lastName
+    ].filter(Boolean).join(" ") || "Mtumiaji";
+
+    // USERNAME
+    const username =
+        currentUser.username ||
+        currentUser.USERNAME ||
+        $("username").value.trim();
+
+    // KARIBU
+    const welcomeName = $("welcomeUserName");
+
+    if (welcomeName) {
+        welcomeName.textContent = "Ndugu, " + fullName + ".";
+    }
+
+    // WASIFU
+    $("avatarButton").textContent =
+        fullName.trim().charAt(0).toUpperCase() || "?";
+
+    $("profileName").textContent = fullName;
+    $("profileUsername").textContent = username;
+    $("profileRole").textContent = getRoleLabel();
+
+    // HUDUMA
+    populateServiceOptions();
+
+    // TAARIFA ZA MFUMO
+    showWelcome();
+    updateNetwork();
+    updateClock();
+
+    setInterval(updateClock, 1000);
+}
+
+    /* HUDUMA */
+    function populateServiceOptions() {
+      const select = $("serviceSelect");
+      select.replaceChildren();
+      const placeholder = document.createElement("option");
+      placeholder.value = "";
+      placeholder.textContent = "Chagua huduma";
+      select.appendChild(placeholder);
+      getAuthorizedServices().forEach(service => {
+        const option = document.createElement("option");
+        option.value = service;
+        option.textContent =
+          service === "ALL"
+            ? "ALL (USIMAMIZI)"
+            : service;
+        select.appendChild(option);
       });
- 
-</script>
+    }
+
+/* HUDUMA ZINAPOBADILISHWA */
+$("serviceSelect").addEventListener("change", async () => {
+  selectedService = $("serviceSelect").value;
+  selectedModule = "";
+  selectedMenu = "MUHTASARI";
+
+  closeDrawer();
+  closeFloatingPanels();
+
+  const moduleSelect = $("moduleSelect");
+
+  moduleSelect.replaceChildren();
+
+  const placeholder = document.createElement("option");
+  placeholder.value = "";
+  placeholder.textContent = "Chagua kipengele";
+
+  moduleSelect.appendChild(placeholder);
+
+  if (!selectedService) {
+    moduleSelect.disabled = true;
+    showWelcome();
+    buildDrawerMenu();
+    return;
+  }
+
+  /* USIMAMIZI MKUU */
+  if (selectedService === "ALL") {
+    moduleSelect.disabled = true;
+    await showAdminDashboard();
+    buildDrawerMenu();
+    return;
+  }
+
+  /* HUDUMA ZA KAWAIDA */
+  populateModules();
+  showServiceDashboard();
+  buildDrawerMenu();
+
+});
+
+
+/* KUJAZA VIPENGELE VYA HUDUMA */
+function populateModules() {
+  const select = $("moduleSelect");
+  select.replaceChildren();
+  const placeholder = document.createElement("option");
+  placeholder.value = "";
+  placeholder.textContent = "Chagua kipengele";
+  select.appendChild(placeholder);
+  const modules = serviceModules[selectedService] || [];
+
+  modules.forEach(module => {
+
+    const option = document.createElement("option");
+
+    option.value = module;
+    option.textContent = module;
+
+    select.appendChild(option);
+
+  });
+
+  select.disabled = modules.length === 0;
+
+  selectedModule = "";
+
+}
+
+
+/* KIPENGELE KINAPOCHAGULIWA */
+$("moduleSelect").addEventListener("change", () => {
+  selectedModule = $("moduleSelect").value;
+
+  selectedMenu = "MUHTASARI";
+
+  closeDrawer();
+  closeFloatingPanels();
+
+  if (!selectedModule) {
+
+    showServiceDashboard();
+    buildDrawerMenu();
+
+    return;
+  }
+
+  showServiceDashboard();
+  buildDrawerMenu();
+
+});
+
+    /* DASHBOARD YA MWANZO */
+    function showWelcome() {
+      $("welcomePanel").classList.remove("hidden");
+      $("adminDashboard").classList.add("hidden");
+      $("serviceDashboard").classList.add("hidden");
+    }
+
+    /* DASHBOARD YA MSIMAMIZI */
+    async function showAdminDashboard() {
+      $("welcomePanel").classList.add("hidden");
+      $("serviceDashboard").classList.add("hidden");
+      $("adminDashboard").classList.remove("hidden");
+
+      if (adminStatsLoaded) return;
+
+      hideMessage($("adminMessage"));
+
+      try {
+        const result = await callAPI({
+          action: "getAdminDashboard",
+          token: sessionToken
+        });
+
+        if (result && result.success) {
+          const stats = result.stats || {};
+
+          $("statAccounts").textContent =
+            stats.accounts ?? 0;
+
+
+          $("statUsers").textContent =
+            stats.users ?? 0;
+
+          $("statServices").textContent =
+            stats.services ?? 0;
+
+          $("statTeams").textContent =
+            stats.teams ?? 0;
+
+          adminStatsLoaded = true;
+
+        } else {
+          showMessage(
+            $("adminMessage"),
+            result?.message ||
+              "Muhtasari wa mfumo haukupatikana.",
+            "error"
+          );
+        }
+
+      } catch (error) {
+        console.error("Dashboard error:", error);
+
+
+        showMessage(
+          $("adminMessage"),
+          "Imeshindikana kupata muhtasari wa mfumo.",
+          "error"
+        );
+      }
+    }
+
+/* =================================
+   DASHBOARD YA HUDUMA NA MENYU
+================================= */
+function showServiceDashboard() {
+
+  $("welcomePanel").classList.add("hidden");
+  $("adminDashboard").classList.add("hidden");
+  $("serviceDashboard").classList.remove("hidden");
+
+  $("serviceNotice").textContent = "";
+  hideMessage($("serviceNotice"));
+
+  $("moduleWorkspace").replaceChildren();
+
+  // TAARIFA ZA ACCOUNT
+  const account =
+    currentUser?.account ||
+    currentUser?.taasisi ||
+    currentUser || {};
+
+  const accountName =
+    account.JINA_LA_ACCOUNT ||
+    account.jinaLaAccount ||
+    account.accountName ||
+    "";
+
+  const motto =
+    account.MOTTO ||
+    account.motto ||
+    "";
+
+  const reg =
+    account.REG ||
+    account.reg ||
+    account.registrationNumber ||
+    "";
+
+  const logo =
+    account.LOGO ||
+    account.logo ||
+    "";
+
+  $("accountName").textContent =
+    accountName || "JINA LA TAASISI";
+
+  $("accountMotto").textContent = motto;
+
+  $("accountReg").textContent =
+    reg ? "Reg No. " + reg : "";
+
+  // LOGO
+  const logoElement = $("accountLogo");
+  if (logo) {
+    logoElement.src = logo;
+  logoElement.classList.remove("hidden");
+  } else {
+    logoElement.removeAttribute("src");
+    logoElement.classList.add("hidden");
+  }
+
+  // KICHWA CHA MENYU
+  $("moduleHeading").textContent = selectedModule
+    ? selectedModule + " - " + selectedMenu
+    : selectedService;
+  if (selectedModule) {
+    renderModulePage();
+  }
+}
+
+
+/* =================================
+   UWANJA WA KAZI WA KILA MENYU
+================================= */
+function renderModulePage() {
+  const workspace = $("moduleWorkspace");
+  switch (selectedMenu) {
+
+    case "MUHTASARI":
+      if (
+        selectedService === "BIASHARA" &&
+        selectedModule === "BIASHARA"
+      ) {
+        if (typeof renderBiasharaDashboard === "function") {
+        renderBiasharaDashboard(workspace);
+        } else {
+          workspace.textContent =
+            "biashara.js haijapakiwa vizuri.";
+        }
+      } else if (typeof renderMuhtasariPage === "function") {
+        renderMuhtasariPage(workspace);
+      }
+      return;
+
+    case "WANAFUNZI":
+    case "WATOTO":
+      if (typeof renderWanafunziPage === "function") {
+        renderWanafunziPage(workspace);
+      }
+      return;
+
+    case "WATUMISHI":
+      if (typeof renderWatumishiPage === "function") {
+    renderWatumishiPage(workspace);
+      }
+      return;
+
+    case "MAHUDHURIO":
+      if (typeof renderMahudhurioPage === "function") {
+        renderMahudhurioPage(workspace);
+      }
+      return;
+
+    case "TAALUMA":
+      if (typeof renderTaalumaPage === "function") {
+        renderTaalumaPage(workspace);
+      }
+      return;
+
+    case "MALIPO":
+    case "MATUMIZI":
+      if (typeof window.renderFedhaPage === "function") {
+        window.renderFedhaPage(workspace);
+      } else {
+        workspace.textContent =
+          "fedha1.js haijapakiwa vizuri.";
+      }
+      return;
+
+    case "MPANGILIO":
+      if (typeof renderMpangilioPage === "function") {
+        renderMpangilioPage(workspace);
+      } else {
+        workspace.textContent =
+          "mpangilio.js haijapakiwa vizuri.";
+      }
+      return;
+
+    case "TAARIFA":
+  if (selectedService === "ELIMU") {
+    if (typeof window.renderTaarifaelimuPage === "function") { window.renderTaarifaelimuPage(workspace);
+    } else {
+      workspace.textContent =
+        "taarifaelimu.js haijapakiwa vizuri.";
+    }
+  }
+      return;
+
+      workspace.innerHTML = `
+        <section class="section-panel">
+          <h3>${selectedMenu}</h3>
+          <p>Sehemu ya taarifa na tathmini itaandaliwa hapa.</p>
+        </section>
+      `;
+      return;
+
+    default:
+
+      workspace.innerHTML = `
+        <section class="section-panel">
+          <h3>${selectedMenu}</h3>
+          <p>Ukurasa huu bado haujaunganishwa.</p>
+        </section>
+      `;
+  }
+}
+
+    /* PAZIA LA MENYU */
+    function openDrawer() {
+      buildDrawerMenu();
+      $("menuDrawer").classList.add("open");
+      $("drawerBackdrop").classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeDrawer() {
+      $("menuDrawer").classList.remove("open");
+      $("drawerBackdrop").classList.remove("open");
+      document.body.style.overflow = "";
+    }
+
+    $("brandButton").addEventListener("click", openDrawer);
+    $("closeDrawer").addEventListener("click", closeDrawer);
+    $("drawerBackdrop").addEventListener("click", closeDrawer);
+
+function buildDrawerMenu() {
+  const menu = $("drawerMenu");
+
+  menu.replaceChildren();
+
+  let items = [];
+
+  /* MENYU ZA MSIMAMIZI MKUU */
+  if (selectedService === "ALL" && isOwner()) {
+    $("drawerCaption").textContent = "MENYU ZA USIMAMIZI";
+    items = adminMenu;
+
+  }
+
+  /* MENYU ZA KIPENGELE */
+  else if (selectedService && selectedModule) {
+
+    $("drawerCaption").textContent =
+      selectedModule + " - MENYU";
+
+    const permittedItems =
+      moduleMenu[selectedModule] || [];
+
+    items = permittedItems.map(label => ({
+      label: label,
+      page: label
+    }));
+
+  }
+
+  /* HUDUMA IMECHAGULIWA LAKINI KIPENGELE HAKIJACHAGULIWA */
+  else if (selectedService) {
+
+    $("drawerCaption").textContent =
+      "CHAGUA KIPENGELE";
+    const note = document.createElement("p");
+
+    note.textContent =
+      "Chagua kipengele kuendelea.";
+
+    note.style.cssText =
+      "padding:10px 8px;color:#687078;font-size:13px;line-height:1.6";
+
+    menu.appendChild(note);
+
+    return;
+
+  }
+
+  /* HAKUNA HUDUMA ILIYOCHAGULIWA */
+  else {
+
+    $("drawerCaption").textContent =
+      "CHAGUA HUDUMA KWANZA";
+
+    const note = document.createElement("p");
+
+    note.textContent =
+      "Chagua huduma ili kuendelea.";
+
+    note.style.cssText =
+      "padding:10px 8px;color:#687078;font-size:13px;line-height:1.6";
+
+    menu.appendChild(note);
+
+    return;
+
+  }
+
+
+  /* KUJENGA VITufe VYA MENYU */
+  items.forEach(item => {
+    const button = document.createElement("button");
+
+    button.type = "button";
+    button.className = "drawer-item";
+    button.textContent = item.label;
+
+    if (
+      item.label === selectedMenu ||
+      (item.label === "DASHBOARD" &&
+       selectedMenu === "MUHTASARI")
+    ) {
+      button.classList.add("active");
+    }
+
+  button.addEventListener("click", () => {
+
+      closeDrawer();
+
+      openMenuPage(item);
+
+    });
+
+    menu.appendChild(button);
+
+  });
+
+}
+
+   /* KUFUNGUA MENYU ILIYOCHAGULIWA */
+function openMenuPage(item) {
+  closeFloatingPanels();
+
+  // DASHBOARD YA MSIMAMIZI
+  if (selectedService === "ALL" && isOwner()) {
+    if (item.page === "adminDashboard") {
+      showAdminDashboard();
+      return;
+    }
+    $("welcomePanel").classList.add("hidden");
+    $("adminDashboard").classList.remove("hidden");
+    $("serviceDashboard").classList.add("hidden");
+
+    const headings = {
+      accounts: "TAASISI / ACCOUNTS",
+      users: "WATUMIAJI",
+      teams: "TIMU ZA USIMAMIZI",
+      systemServices: "HUDUMA ZA MFUMO",
+      subscriptions: "USAJILI NA MALIPO",
+      settings: "MIPANGILIO YA MFUMO",
+      audit: "UKAGUZI WA MFUMO"
+    };
+
+    const heading = headings[item.page] || item.label;
+
+    $("adminDashboard")
+      .querySelector(".page-heading h2")
+      .textContent = heading;
+
+    $("adminDashboard")
+      .querySelector(".page-heading p")
+      .textContent = "Sehemu ya usimamizi wa mfumo mzima.";
+
+    $("adminDashboard")
+      .querySelector(".stats-grid")
+      .classList.add("hidden");
+
+    showMessage(
+      $("adminMessage"),
+      "Umefungua " + heading +
+      ". Data na vitendo vya sehemu hii vinahitaji kuunganishwa na API yake.",
+      "info"
+    );
+    return;
+  }
+
+  // MENYU ZA HUDUMA ZA KAWAIDA
+if (!selectedService || !selectedModule) {
+  return;
+}
+selectedMenu = item.label;
+closeDrawer();
+buildDrawerMenu();
+showServiceDashboard();}
+
+    /* NOTIFICATIONS */
+ $("notificationButton").addEventListener("click", () => {
+      $("profilePanel").classList.add("hidden");
+      $("notificationPanel").classList.toggle("hidden");
+    });
+
+
+    /* PROFILE */
+    $("avatarButton").addEventListener("click", () => {
+      $("notificationPanel").classList.add("hidden");
+      $("profilePanel").classList.toggle("hidden");
+
+      $("profileNetwork").textContent =
+        navigator.onLine ? "Online" : "Offline";
+    });
+
+    function closeFloatingPanels() {
+      $("notificationPanel").classList.add("hidden");
+      $("profilePanel").classList.add("hidden");
+    }
+    document.querySelectorAll("[data-close-panel]").forEach(button => {
+      button.addEventListener("click", () => {
+        $(button.dataset.closePanel).classList.add("hidden");
+      });
+    });
+
+
+    /* SAA NA TAREHE */
+    function updateClock() {
+      const now = new Date();
+
+
+      $("clock").textContent =
+        now.toLocaleTimeString("en-GB", {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false
+        });
+      const date = now.toLocaleDateString("sw-TZ", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+      });
+
+      $("dateLabel").textContent = date;
+    }
+
+
+    /* ONLINE / OFFLINE */
+    function updateNetwork() {
+      const online = navigator.onLine;
+      $("networkLabel").textContent =
+        online ? "Online" : "Offline";
+
+      $("statusDot").classList.toggle("offline", !online);
+
+
+      if ($("appScreen").classList.contains("hidden") === false) {
+        $("profileNetwork").textContent =
+          online ? "Online" : "Offline";
+      }
+    }
+    window.addEventListener("online", updateNetwork);
+    window.addEventListener("offline", updateNetwork);
+
+
+
+
+    /* FEEDBACK */
+   /* ==================================
+   DSERVICES - MAONI
+   ================================== */
+const WHATSAPP_NUMBER = "255716328888";
+const SMS_NUMBER = "0762524614";
+const feedbackModal = $("feedbackModal");
+const feedbackForm = $("feedbackForm");
+
+// Kuweka tarehe na muda wa sasa
+function setFeedbackDateTime() {
+  const now = new Date();
+  const date =
+    now.getFullYear() + "-" +
+    String(now.getMonth() + 1).padStart(2, "0") + "-" +
+ String(now.getDate()).padStart(2, "0");
+  const time =
+String(now.getHours()).padStart(2, "0") + ":" +
+    String(now.getMinutes()).padStart(2, "0");
+
+  $("feedbackDate").value = date;
+  $("feedbackTime").value = time;
+}
+
+
+// Kufungua fomu ya maoni
+$("feedbackButton").addEventListener("click", () => {
+  feedbackForm.reset();
+  $("feedbackError").textContent = "";
+  setFeedbackDateTime();
+  feedbackModal.classList.remove("hidden");
+});
+
+// Kufunga fomu
+function closeFeedbackForm() {
+  feedbackModal.classList.add("hidden");
+}
+$("feedbackClose").addEventListener("click", closeFeedbackForm);
+
+// Kukusanya taarifa za maoni
+function getFeedbackData(method) {
+  if (!feedbackForm.reportValidity()) {
+    return null;
+  }
+  const data = {
+    name: $("feedbackName").value.trim(),
+    phone: $("feedbackPhone").value.trim(),
+    type: $("feedbackType").value,
+    message: $("feedbackText").value.trim(),
+    date: $("feedbackDate").value,
+    time: $("feedbackTime").value,
+    method: method
+  };
+  if (
+    !data.name ||
+    !data.phone ||
+    !data.type ||
+    !data.message ||
+    !data.date ||
+    !data.time
+  ) {
+    $("feedbackError").textContent =
+      "Tafadhali jaza sehemu zote za fomu.";
+    return null;
+  }
+  return data;
+}
+
+
+// Kutengeneza ujumbe wa WhatsApp au SMS
+function buildFeedbackMessage(data) {
+  return (
+    "MAONI YA MTUMIAJI DS\n\n" +
+    "Jina Kamili: " + data.name + "\n" +
+    "Simu: " + data.phone + "\n" +
+    "Aina ya Maoni: " + data.type + "\n" +
+    "Ujumbe: " + data.message + "\n" +
+    "Tarehe: " + data.date + "\n" +
+    "Muda: " + data.time
+  );
+}
+
+// Kuhifadhi maoni kwanza, kisha kufungua WhatsApp/SMS
+async function saveFeedbackAndOpen(method) {
+  const data = getFeedbackData(method);
+  if (!data) return;
+  const errorElement = $("feedbackError");
+  const whatsappButton = $("sendWhatsApp");
+  const smsButton = $("sendSMS");
+
+
+  // Kufungua dirisha mapema ili kupunguza uwezekano
+  // wa browser kuzuia kufungua programu baada ya kuhifadhi.
+  const targetWindow = window.open("about:blank", "_blank");
+  whatsappButton.disabled = true;
+  smsButton.disabled = true;
+  errorElement.textContent = "Tafadhali subiri, tunahifadhi maoni...";
+  try {
+    // Hatua ya kwanza: hifadhi taarifa kwenye Google Sheets
+    const result = await callAPI({
+      action: "saveFeedback",
+      data: data
+    });
+    if (!result || result.success !== true) {
+      throw new Error(
+        result && result.message
+          ? result.message
+          : "Maoni hayakuhifadhiwa. Tafadhali jaribu tena."
+      );}
+
+
+    // Hatua ya pili: tengeneza ujumbe wa kutuma
+    const message = buildFeedbackMessage(data);
+    let url = "";
+    if (method === "WHATSAPP") {
+      url =
+        "https://wa.me/" +
+        WHATSAPP_NUMBER +
+        "?text=" +
+        encodeURIComponent(message);
+    } else {
+      url =
+        "sms:" +
+        SMS_NUMBER +
+        "?body=" +
+        encodeURIComponent(message);
+    }
+
+    // Funga fomu baada ya kuhifadhi kufanikiwa
+    closeFeedbackForm();
+
+    // Fungua programu iliyochaguliwa
+    if (targetWindow && !targetWindow.closed) {
+      targetWindow.location.href = url;
+    } else {
+      window.location.href = url;
+    }
+  } catch (error) {
+    // Usifungue WhatsApp/SMS kama kuhifadhi kumeshindwa
+    if (targetWindow && !targetWindow.closed) {
+      targetWindow.close();
+    }
+    errorElement.textContent =
+      error.message ||
+      "Imeshindikana kuhifadhi maoni. Tafadhali jaribu tena.";
+  } finally {
+    whatsappButton.disabled = false;
+    smsButton.disabled = false;
+  }}
+
+// Kitufe cha WhatsApp
+$("sendWhatsApp").addEventListener("click", () => {
+  saveFeedbackAndOpen("WHATSAPP");
+});
+
+// Kitufe cha SMS
+$("sendSMS").addEventListener("click", () => {
+  saveFeedbackAndOpen("SMS");
+});
+
+
+
+    /* LOGOUT */
+    async function logout() {
+      const token = sessionToken;
+      sessionToken = null;
+      currentUser = null;
+      selectedService = "";
+      selectedModule = "";
+      adminStatsLoaded = false;
+
+      closeDrawer();
+      closeFloatingPanels();
+      $("appScreen").classList.add("hidden");
+      $("loginScreen").classList.remove("hidden");
+      $("username").value = "";
+      $("password").value = "";
+
+$("serviceSelect").replaceChildren();
+
+$("moduleSelect").disabled = true;
+selectedMenu = "MUHTASARI";
+      $("moduleSelect").replaceChildren();
+      $("welcomePanel").classList.remove("hidden");
+      $("adminDashboard").classList.add("hidden");
+      $("serviceDashboard").classList.add("hidden");
+      $("adminDashboard").querySelector(".stats-grid")
+        .classList.remove("hidden");
+      showMessage(
+        $("loginMessage"),
+        "Umetoka kwenye mfumo.",
+        "info"
+      );
+      if (token) {
+        try {
+          await callAPI({
+            action: "logout",
+            token
+          });
+        } catch (error) {
+          console.warn("Logout ya server haikukamilika.", error);
+        }
+      }
+    }
+    $("logoutButton").addEventListener("click", logout);
+    $("profileLogoutButton").addEventListener("click", logout);
+
+
+   /* KUFUNGA PANELI KWA ESCAPE */
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") {
+    closeDrawer();
+    closeFloatingPanels();
+  }
+});
+
+/* KUSAJILI SERVICE WORKER */
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("./service-worker.js")
+      .then(registration => {
+        console.log(
+ "DServices Service Worker imesajiliwa:",
+          registration.scope
+        );
+      })
+      .catch(error => {
+        console.error
 
 <script src="./js/muhtasari.js"></script>
 <script src="./js/watumishi.js"></script>
