@@ -6422,8 +6422,17 @@ if ("serviceWorker" in navigator) {
           registration.scope
         );
       })
-      .catch(error => {
-        console.error
+            .catch(error => {
+        console.error(
+          "Service Worker imeshindwa kusajiliwa:",
+          error
+        );
+      });
+
+  }); // Kufunga window.addEventListener
+} // Kufunga if ("serviceWorker" in navigator)
+
+</script>
 
 <script src="./js/muhtasari.js"></script>
 <script src="./js/watumishi.js"></script>
