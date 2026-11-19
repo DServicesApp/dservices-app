@@ -113,6 +113,30 @@ async function loadFinanceClasses(date) {
 
   return response.classes || [];
 }
+/* =====================================
+   KUPATA WANAFUNZI WA MALIPO
+===================================== */
+
+async function loadFinanceStudents(date, className) {
+
+  const response = await callAPI({
+    action: "getFinanceStudents",
+    token: sessionToken,
+    payload: {
+      moduleId: getModuleId(),
+      date: date,
+      className: className
+    }
+  });
+
+  if (!response || !response.success) {
+    throw new Error(
+      response?.message || "Imeshindikana kupata wanafunzi."
+    );
+  }
+
+  return response.students || [];
+}
 
   function makeId(prefix) {
   const now = new Date();
@@ -716,11 +740,14 @@ showHistory(workspace);
   }
 ),
         field(
-          "JINA LA MWANAFUNZI",
-          "JINA_LA_MWANAFUNZI",
-          "text",
-          { required: true }
-        ),
+  "JINA LA MWANAFUNZI",
+  "JINA_LA_MWANAFUNZI",
+  "select",
+  {
+    items: [],
+    required: true
+  }
+),
 
         field(
           "ID MWANAFUNZI",
@@ -920,7 +947,183 @@ content.innerHTML = `
   </div>
 `;
 
- const formModal = $f("dsfFormModal", workspace);
+ /* =====================================
+   KUJAZA DROPDOWN YA MADARASA
+===================================== */
+
+const financeForm = $f("dsfFinanceForm", workspace);
+
+const classSelect = financeForm.querySelector(
+  '[name="DARASA"]'
+);
+
+const dateInput = financeForm.querySelector(
+  '[name="TAREHE"]'
+);
+
+if (classSelect && dateInput) {
+
+  async function refreshFinanceClasses() {
+
+    classSelect.innerHTML =
+      '<option value="">Inapakia madarasa...</option>';
+
+    try {
+
+      const classes = await loadFinanceClasses(
+        dateInput.value
+      );
+
+      classSelect.innerHTML =
+        '<option value="">-- Chagua darasa --</option>';
+
+      classes.forEach(item => {
+
+        const option = document.createElement("option");
+
+        option.value = item.name;
+        option.textContent = item.name;
+
+        classSelect.appendChild(option);
+
+      });
+
+      if (classes.length === 0) {
+
+        classSelect.innerHTML =
+          '<option value="">Hakuna madarasa yaliyopatikana</option>';
+
+      }
+
+    } catch (error) {
+
+      console.error("Finance classes error:", error);
+
+      classSelect.innerHTML =
+        '<option value="">Imeshindikana kupata madarasa</option>';
+
+    }
+
+  }
+
+  refreshFinanceClasses();
+dateInput.addEventListener(
+  "change",
+  refreshFinanceClasses
+);
+
+
+ /* ===============================
+   KUJAZA WANAFUNZI KWA DARASA
+============================== */
+const studentSelect = financeForm.querySelector(
+  '[name="JINA_LA_MWANAFUNZI"]'
+);
+const studentIdInput = financeForm.querySelector(
+  '[name="ID_MWANAFUNZI"]'
+);
+
+const registrationInput = financeForm.querySelector(
+  '[name="NA_USAJILI"]'
+);
+
+
+async function refreshFinanceStudents() {
+
+  if (!studentSelect || !classSelect.value) {
+
+    if (studentSelect) {
+      studentSelect.innerHTML =
+        '<option value="">-- Chagua mwanafunzi --</option>';
+    }
+
+    if (studentIdInput) studentIdInput.value = "";
+    if (registrationInput) registrationInput.value = "";
+
+    return;
+  }
+
+  studentSelect.innerHTML =
+    '<option value="">Inapakia wanafunzi...</option>';
+
+  try {
+
+    const students = await loadFinanceStudents(
+      dateInput.value,
+      classSelect.value
+    );
+
+    studentSelect.innerHTML =
+      '<option value="">-- Chagua mwanafunzi --</option>';
+
+    students.forEach(student => {
+
+      const option = document.createElement("option");
+
+      option.value = student.name;
+      option.textContent = student.name;
+
+      option.dataset.id = student.id || "";
+      option.dataset.registration = student.registration || "";
+
+      studentSelect.appendChild(option);
+
+    });
+
+    if (students.length === 0) {
+      studentSelect.innerHTML =
+        '<option value="">Hakuna wanafunzi waliopatikana</option>';
+    }
+
+  } catch (error) {
+
+    console.error("Finance students error:", error);
+
+    studentSelect.innerHTML =
+      '<option value="">Imeshindikana kupata wanafunzi</option>';
+
+  }
+
+}
+
+
+// DARASA LIKIBADILIKA
+classSelect.addEventListener(
+  "change",
+  refreshFinanceStudents
+);
+
+
+// MWANAFUNZI AKICHAGULIWA
+if (studentSelect) {
+
+  studentSelect.addEventListener("change", () => {
+
+    const selectedOption =
+      studentSelect.options[studentSelect.selectedIndex];
+
+    studentIdInput.value =
+      selectedOption?.dataset.id || "";
+
+    registrationInput.value =
+      selectedOption?.dataset.registration || "";
+
+  });
+
+}
+
+
+// TAREHE IKIBADILIKA
+dateInput.addEventListener("change", () => {
+
+  studentSelect.innerHTML =
+    '<option value="">-- Chagua mwanafunzi --</option>';
+
+  studentIdInput.value = "";
+  registrationInput.value = "";
+
+});
+}
 
 // KUFUNGA KWA ALAMA ×
 $f("dsfCloseForm", workspace)
