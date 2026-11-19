@@ -44,22 +44,12 @@ const $f = (id, root = document) => {
   }
 
   function getServiceId() {
-    return String(
-      window.selectedService?.id ||
-      window.selectedService?.serviceId ||
-      window.selectedService ||
-      ""
-    );
-  }
+  return String(selectedService || "");
+}
 
-  function getModuleId() {
-    return String(
-      window.selectedModule?.id ||
-      window.selectedModule?.moduleId ||
-      window.selectedModule ||
-      ""
-    );
-  }
+function getModuleId() {
+  return String(selectedModule || "");
+}
 
   function today() {
     const d = new Date();
@@ -72,16 +62,18 @@ const $f = (id, root = document) => {
 
 async function loadFinanceSettings() {
 
-  const response = await window.callAPI(
-    "getFinanceSettings",
-    {
+  const response = await callAPI({
+    action: "getFinanceSettings",
+    token: sessionToken,
+    payload: {
       moduleId: getModuleId()
     }
-  );
+  });
 
   if (!response || !response.success) {
     throw new Error(
-      response?.message || "Imeshindikana kupata mipangilio ya fedha."
+      response?.message ||
+      "Imeshindikana kupata mipangilio ya fedha."
     );
   }
 
@@ -110,13 +102,12 @@ async function loadFinanceClasses(date) {
       response?.message || "Imeshindikana kupata madarasa."
     );
   }
-
   return response.classes || [];
 }
+
 /* =====================================
    KUPATA WANAFUNZI WA MALIPO
 ===================================== */
-
 async function loadFinanceStudents(date, className) {
 
   const response = await callAPI({
@@ -155,15 +146,26 @@ async function loadFinanceStudents(date, className) {
 }
 
   function showFinanceMessage(message, isError = false) {
-    if (typeof window.showMessage === "function") {
-      window.showMessage(
-        message,
-        isError ? "error" : "success"
-      );
-    } else {
-      alert(message);
-    }
+
+  const element = document.getElementById("serviceNotice");
+
+  if (
+    element &&
+    typeof window.showMessage === "function"
+  ) {
+
+    window.showMessage(
+      element,
+      message,
+      isError ? "error" : "info"
+    );
+
+  } else {
+
+    alert(message);
+
   }
+}
 
 
   /* ===============================
@@ -946,6 +948,7 @@ content.innerHTML = `
 
   </div>
 `;
+const formModal = $f("dsfFormModal", workspace);
 
  /* =====================================
    KUJAZA DROPDOWN YA MADARASA
