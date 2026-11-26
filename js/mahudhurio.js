@@ -1151,15 +1151,16 @@ function addMahudhurioStyles() {
     }
 
     .mah-work {
-      width: 100%;
-      box-sizing: border-box;
-      padding: 10px 0;
-    }
+  width: 100%;
+  box-sizing: border-box;
+  padding: 2px 0;
+  margin-top: 0;
+}
 
-    .mah-work h3 {
-      margin: 15px 0;
-      font-size: 16px;
-    }
+.mah-work h3 {
+  margin: 5px 0 12px;
+  font-size: 16px;
+}
 
     .mah-back {
       padding: 9px 14px;
@@ -1307,7 +1308,6 @@ function addMahudhurioStyles() {
       .mah-table {
         font-size: 11px;
       }
-
     }
 
   `;
