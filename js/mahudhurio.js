@@ -120,7 +120,7 @@ function mahudhurioPermission(action) {
 
 /* ===================================
    RUHUSA ZA WANAFUNZI / WATUMISHI
-================================== */
+=================================== */
 function mahudhurioAinaPermission(aina) {
 
   if (typeof isOwner === "function" && isOwner()) {
@@ -141,7 +141,9 @@ function mahudhurioAinaPermission(aina) {
 
   if (!Array.isArray(permissions)) return false;
 
-  const specific = permissions.filter(p => {
+  const ainaZote = ["WANAFUNZI", "WATUMISHI"];
+
+  const zinaRuhusaMaalum = permissions.some(p => {
 
     const scopes = [
       p.module,
@@ -149,23 +151,33 @@ function mahudhurioAinaPermission(aina) {
       p.kipengele
     ].map(mahUpper);
 
-    return scopes.includes(ainaUpper);
+    return scopes.some(s => ainaZote.includes(s));
   });
 
-  if (specific.length === 0) {
+  // Kama hakuna ruhusa maalum, tumia ruhusa ya jumla.
+  if (!zinaRuhusaMaalum) {
     return true;
   }
 
-  return specific.some(p => {
+  // Kama zipo ruhusa maalum, hakikisha aina husika imeruhusiwa.
+  return permissions.some(p => {
+
+    const scopes = [
+      p.module,
+      p.diaryId,
+      p.kipengele
+    ].map(mahUpper);
+
+    const inahusika = scopes.includes(ainaUpper);
 
     const value = p.view;
 
-    return (
+    const allowed =
       value === true ||
       value === 1 ||
-      ["YES", "TRUE", "1"].includes(mahUpper(value))
-    );
+      ["YES", "TRUE", "1"].includes(mahUpper(value));
 
+    return inahusika && allowed;
   });
 }
 
@@ -241,8 +253,11 @@ function openMahudhurioAina(aina) {
     return;
   }
 
-  mahudhurioAina = aina;
+  mahudhurioAina = mahUpper(aina);
   mahudhurioRecords = [];
+
+  // Ondoa darasa la awali tunapobadilisha aina.
+  mahudhurioClass = "";
 
   const buttons = document.getElementById("mahMainButtons");
 
@@ -250,15 +265,13 @@ function openMahudhurioAina(aina) {
     buttons.style.display = "none";
   }
 
-  if (aina === "WANAFUNZI") {
+  if (mahudhurioAina === "WANAFUNZI") {
     renderMahudhurioWanafunzi();
   }
 
-  if (aina === "WATUMISHI") {
+  if (mahudhurioAina === "WATUMISHI") {
     renderMahudhurioWatumishi();
   }
-
-  mahudhurioOngezaKitufeChaKufunga();
 }
 
 
@@ -681,7 +694,6 @@ function setMahStudentStatus(index, status) {
 /* ================================
    UKURASA WA WATUMISHI
 =================================== */
-
 function renderMahudhurioWatumishi() {
 
   const content = document.getElementById(
