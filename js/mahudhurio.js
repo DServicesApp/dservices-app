@@ -9,10 +9,9 @@ let mahudhurioRecords = [];
 let mahudhurioBusy = false;
 
 
-/* ==========================================
+/* ==================================
    MSAIDIZI
-========================================== */
-
+=================================== */
 function mahText(value) {
   return String(value ?? "").trim();
 }
@@ -43,10 +42,9 @@ function mahToday() {
 }
 
 
-/* ==========================================
+/* ================================
    RUHUSA ZA JUMLA
-========================================== */
-
+================================= */
 function mahudhurioPermission(action) {
 
   if (typeof isOwner === "function" && isOwner()) {
@@ -640,8 +638,7 @@ function renderMahudhurioStudentList() {
 
 /* ================================
    KUWEKA HALI YA MWANAFUNZI
-===================================== */
-
+================================= */
 function setMahStudentStatus(index, status) {
 
   if (!mahudhurioRecords[index]) return;
@@ -649,10 +646,9 @@ function setMahStudentStatus(index, status) {
   mahudhurioRecords[index].attendance = status;
 }
 
-/* ==================================
+/* ================================
    UKURASA WA WATUMISHI
 =================================== */
-
 function renderMahudhurioWatumishi() {
 
   const content = document.getElementById(
@@ -706,10 +702,9 @@ function renderMahudhurioWatumishi() {
 }
 
 
-/* ==========================================
+/* ===================================
    KUVUTA WATUMISHI
-========================================== */
-
+==================================== */
 async function loadMahudhurioWatumishi() {
 
   if (!mahudhurioAinaPermission("WATUMISHI")) return;
@@ -791,10 +786,9 @@ async function loadMahudhurioWatumishi() {
 }
 
 
-/* ==========================================
+/* =================================
    ORODHA YA WATUMISHI
-========================================== */
-
+==================================== */
 function renderMahudhurioStaffList() {
 
   const list = document.getElementById("mahStaffList");
@@ -884,10 +878,9 @@ function renderMahudhurioStaffList() {
 }
 
 
-/* ==========================================
+/* =================================
    KUHIFADHI MAHUDHURIO
-========================================== */
-
+==================================== */
 async function saveMahudhurio() {
 
   if (mahudhurioBusy) return;
@@ -972,17 +965,13 @@ async function saveMahudhurio() {
     console.error(error);
 
   } finally {
-
     mahudhurioBusy = false;
-
   }
 }
 
-
-/* ==========================================
+/* ===================================
    RIPOTI
-========================================== */
-
+=================================== */
 function showMahudhurioReport() {
 
   if (!mahudhurioPermission("view")) return;
@@ -996,18 +985,6 @@ function showMahudhurioReport() {
   content.innerHTML = `
 
     <section class="mah-work">
-
-      <button
-        class="mah-back"
-        onclick="
-          mahudhurioAina === 'WANAFUNZI'
-          ? renderMahudhurioWanafunzi()
-          : renderMahudhurioWatumishi()
-        ">
-
-        ← RUDI
-
-      </button>
 
       <h3>RIPOTI ZA MAHUDHURIO</h3>
 
@@ -1042,13 +1019,15 @@ function showMahudhurioReport() {
 
     </section>
   `;
+  // WEKA KITufe CHA KUFUNGA ✕
+  mahudhurioOngezaKitufeChaKufunga();
 }
+ 
 
 
-/* ==========================================
+/* ================================
    KUPATA RIPOTI
-========================================== */
-
+================================== */
 async function loadMahudhurioReport() {
 
   const date = document.getElementById(
@@ -1130,12 +1109,10 @@ async function loadMahudhurioReport() {
 }
 
 
-/* ==========================================
+/* =================================
    CSS
-========================================== */
-
+================================= */
 function addMahudhurioStyles() {
-
   if (document.getElementById("mahudhurioStyles")) {
     return;
   }
