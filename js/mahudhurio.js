@@ -313,13 +313,13 @@ function fungaMahudhurioFomu() {
   if (window.mahudhurioWorkspace) {
     renderMahudhurioPage(window.mahudhurioWorkspace);
   }
-
 }
 
 /* ==============================
    UKURASA WA WANAFUNZI
 =============================== */
 function renderMahudhurioWanafunzi() {
+
   const content = document.getElementById(
     "mahudhurioContent"
   );
@@ -330,7 +330,39 @@ function renderMahudhurioWanafunzi() {
 
     <section class="mah-work">
 
-      <h3>MAHUDHURIO YA WANAFUNZI</h3>
+      <div style="
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap:8px;
+        margin:0 0 15px;
+      ">
+
+        <h3 style="
+          margin:0;
+          font-size:15px;
+        ">
+          MAHUDHURIO YA WANAFUNZI
+        </h3>
+
+        <button
+          onclick="fungaMahudhurioFomu()"
+          style="
+            width:32px;
+            height:32px;
+            border:none;
+            border-radius:50%;
+            background:#d00000;
+            color:white;
+            font-size:23px;
+            font-weight:bold;
+            cursor:pointer;
+            flex-shrink:0;
+          ">
+          ×
+        </button>
+
+      </div>
 
       <div class="mah-filters">
 
@@ -649,6 +681,7 @@ function setMahStudentStatus(index, status) {
 /* ================================
    UKURASA WA WATUMISHI
 =================================== */
+
 function renderMahudhurioWatumishi() {
 
   const content = document.getElementById(
@@ -661,7 +694,39 @@ function renderMahudhurioWatumishi() {
 
     <section class="mah-work">
 
-      <h3>MAHUDHURIO YA WATUMISHI</h3>
+      <div style="
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap:8px;
+        margin:0 0 15px;
+      ">
+
+        <h3 style="
+          margin:0;
+          font-size:15px;
+        ">
+          MAHUDHURIO YA WATUMISHI
+        </h3>
+
+        <button
+          onclick="fungaMahudhurioFomu()"
+          style="
+            width:32px;
+            height:32px;
+            border:none;
+            border-radius:50%;
+            background:#d00000;
+            color:white;
+            font-size:23px;
+            font-weight:bold;
+            cursor:pointer;
+            flex-shrink:0;
+          ">
+          ×
+        </button>
+
+      </div>
 
       <div class="mah-filters">
 
@@ -700,7 +765,6 @@ function renderMahudhurioWatumishi() {
 
   loadMahudhurioWatumishi();
 }
-
 
 /* ===================================
    KUVUTA WATUMISHI
@@ -972,6 +1036,7 @@ async function saveMahudhurio() {
 /* ===================================
    RIPOTI
 =================================== */
+
 function showMahudhurioReport() {
 
   if (!mahudhurioPermission("view")) return;
@@ -986,7 +1051,39 @@ function showMahudhurioReport() {
 
     <section class="mah-work">
 
-      <h3>RIPOTI ZA MAHUDHURIO</h3>
+      <div style="
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap:8px;
+        margin:0 0 15px;
+      ">
+
+        <h3 style="
+          margin:0;
+          font-size:15px;
+        ">
+          RIPOTI ZA MAHUDHURIO
+        </h3>
+
+        <button
+          onclick="fungaMahudhurioFomu()"
+          style="
+            width:32px;
+            height:32px;
+            border:none;
+            border-radius:50%;
+            background:#d00000;
+            color:white;
+            font-size:23px;
+            font-weight:bold;
+            cursor:pointer;
+            flex-shrink:0;
+          ">
+          ×
+        </button>
+
+      </div>
 
       <label>TAREHE</label>
 
@@ -1006,7 +1103,6 @@ function showMahudhurioReport() {
         `
         : ""
       }
-
       <button
         class="mah-action-btn"
         onclick="loadMahudhurioReport()">
@@ -1019,8 +1115,6 @@ function showMahudhurioReport() {
 
     </section>
   `;
-  // WEKA KITufe CHA KUFUNGA ✕
-  mahudhurioOngezaKitufeChaKufunga();
 }
  
 
