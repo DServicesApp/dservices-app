@@ -120,10 +120,9 @@ function mahudhurioPermission(action) {
 }
 
 
-/* ==========================================
+/* ===================================
    RUHUSA ZA WANAFUNZI / WATUMISHI
-========================================== */
-
+================================== */
 function mahudhurioAinaPermission(aina) {
 
   if (typeof isOwner === "function" && isOwner()) {
@@ -172,11 +171,9 @@ function mahudhurioAinaPermission(aina) {
   });
 }
 
-
-/* ==========================================
+/* ================================
    KUFUNGUA MAHUDHURIO
-========================================== */
-
+=================================== */
 function renderMahudhurioPage(workspace) {
 
   if (!mahudhurioPermission("view")) {
@@ -190,6 +187,8 @@ function renderMahudhurioPage(workspace) {
     return;
   }
 
+  window.mahudhurioWorkspace = workspace;
+
   mahudhurioAina = "";
   mahudhurioRecords = [];
 
@@ -199,7 +198,7 @@ function renderMahudhurioPage(workspace) {
 
     <section class="mah-page">
 
-      <div class="mah-main-buttons">
+      <div class="mah-main-buttons" id="mahMainButtons">
 
         ${
           mahudhurioAinaPermission("WATUMISHI")
@@ -207,9 +206,7 @@ function renderMahudhurioPage(workspace) {
             <button
               class="mah-main-btn"
               onclick="openMahudhurioAina('WATUMISHI')">
-
               WATUMISHI
-
             </button>
           `
           : ""
@@ -221,9 +218,7 @@ function renderMahudhurioPage(workspace) {
             <button
               class="mah-main-btn"
               onclick="openMahudhurioAina('WANAFUNZI')">
-
               WANAFUNZI
-
             </button>
           `
           : ""
@@ -238,10 +233,9 @@ function renderMahudhurioPage(workspace) {
 }
 
 
-/* ==========================================
+/* =============================
    KUCHAGUA WANAFUNZI / WATUMISHI
-========================================== */
-
+=================================== */
 function openMahudhurioAina(aina) {
 
   if (!mahudhurioAinaPermission(aina)) {
@@ -250,8 +244,13 @@ function openMahudhurioAina(aina) {
   }
 
   mahudhurioAina = aina;
-
   mahudhurioRecords = [];
+
+  const buttons = document.getElementById("mahMainButtons");
+
+  if (buttons) {
+    buttons.style.display = "none";
+  }
 
   if (aina === "WANAFUNZI") {
     renderMahudhurioWanafunzi();
@@ -260,15 +259,69 @@ function openMahudhurioAina(aina) {
   if (aina === "WATUMISHI") {
     renderMahudhurioWatumishi();
   }
+
+  mahudhurioOngezaKitufeChaKufunga();
 }
 
 
-/* ==========================================
+/* ==================================
+   KITufe CHA KUFUNGA FOMU
+=================================== */
+function mahudhurioOngezaKitufeChaKufunga() {
+
+  const content = document.getElementById("mahudhurioContent");
+
+  if (!content) return;
+
+  const header = document.createElement("div");
+
+  header.style.cssText = `
+    display:flex;
+    justify-content:flex-end;
+    width:100%;
+    margin-bottom:10px;
+  `;
+
+  header.innerHTML = `
+    <button
+      onclick="fungaMahudhurioFomu()"
+      style="
+        width:38px;
+        height:38px;
+        border:none;
+        border-radius:50%;
+        background:#dc2626;
+        color:white;
+        font-size:23px;
+        font-weight:bold;
+        cursor:pointer;
+      ">
+      ×
+    </button>
+  `;
+
+  content.prepend(header);
+}
+
+
+/* ================================
+   KUFUNGA FOMU
+================================== */
+function fungaMahudhurioFomu() {
+
+  mahudhurioAina = "";
+  mahudhurioRecords = [];
+
+  if (window.mahudhurioWorkspace) {
+    renderMahudhurioPage(window.mahudhurioWorkspace);
+  }
+
+}
+
+/* ==============================
    UKURASA WA WANAFUNZI
-========================================== */
-
+=============================== */
 function renderMahudhurioWanafunzi() {
-
   const content = document.getElementById(
     "mahudhurioContent"
   );
@@ -278,16 +331,6 @@ function renderMahudhurioWanafunzi() {
   content.innerHTML = `
 
     <section class="mah-work">
-
-      <button
-        class="mah-back"
-        onclick="renderMahudhurioPage(
-          document.querySelector('.mah-page').parentElement
-        )">
-
-        ← RUDI
-
-      </button>
 
       <h3>MAHUDHURIO YA WANAFUNZI</h3>
 
@@ -347,10 +390,9 @@ function renderMahudhurioWanafunzi() {
 }
 
 
-/* ==========================================
+/* ===================================
    KUPATA MADARASA
-========================================== */
-
+================================== */
 async function loadMahudhurioClasses() {
 
   const select = document.getElementById("mahClass");
@@ -404,9 +446,9 @@ async function loadMahudhurioClasses() {
 }
 
 
-/* ==========================================
+/* =====================================
    KUVUTA WANAFUNZI
-========================================== */
+==================================== */
 
 async function loadMahudhurioWanafunzi() {
 
@@ -511,10 +553,9 @@ async function loadMahudhurioWanafunzi() {
 }
 
 
-/* ==========================================
+/* ====================================
    KUONYESHA ORODHA YA WANAFUNZI
-========================================== */
-
+====================================== */
 function renderMahudhurioStudentList() {
 
   const list = document.getElementById("mahStudentList");
@@ -597,9 +638,9 @@ function renderMahudhurioStudentList() {
 }
 
 
-/* ==========================================
+/* ================================
    KUWEKA HALI YA MWANAFUNZI
-========================================== */
+===================================== */
 
 function setMahStudentStatus(index, status) {
 
@@ -608,10 +649,9 @@ function setMahStudentStatus(index, status) {
   mahudhurioRecords[index].attendance = status;
 }
 
-
-/* ==========================================
+/* ==================================
    UKURASA WA WATUMISHI
-========================================== */
+=================================== */
 
 function renderMahudhurioWatumishi() {
 
@@ -624,16 +664,6 @@ function renderMahudhurioWatumishi() {
   content.innerHTML = `
 
     <section class="mah-work">
-
-      <button
-        class="mah-back"
-        onclick="renderMahudhurioPage(
-          document.querySelector('.mah-page').parentElement
-        )">
-
-        ← RUDI
-
-      </button>
 
       <h3>MAHUDHURIO YA WATUMISHI</h3>
 
