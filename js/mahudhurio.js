@@ -275,46 +275,6 @@ function openMahudhurioAina(aina) {
 }
 
 
-/* ==================================
-   KITufe CHA KUFUNGA FOMU
-=================================== */
-function mahudhurioOngezaKitufeChaKufunga() {
-
-  const content = document.getElementById("mahudhurioContent");
-
-  if (!content) return;
-
-  const header = document.createElement("div");
-
-  header.style.cssText = `
-    display:flex;
-    justify-content:flex-end;
-    width:100%;
-    margin-bottom:10px;
-  `;
-
-  header.innerHTML = `
-    <button
-      onclick="fungaMahudhurioFomu()"
-      style="
-        width:38px;
-        height:38px;
-        border:none;
-        border-radius:50%;
-        background:#dc2626;
-        color:white;
-        font-size:23px;
-        font-weight:bold;
-        cursor:pointer;
-      ">
-      ×
-    </button>
-  `;
-
-  content.prepend(header);
-}
-
-
 /* ================================
    KUFUNGA FOMU
 ================================== */
